@@ -1,7 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork", "UrbanSpork\UrbanSpork.csproj", "{03283A75-4DE1-4DC1-A5A1-FB8754264BF5}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.Domain", "Domain\UrbanSpork.Domain.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{03283A75-4DE1-4DC1-A5A1-FB8754264BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03283A75-4DE1-4DC1-A5A1-FB8754264BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03283A75-4DE1-4DC1-A5A1-FB8754264BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03283A75-4DE1-4DC1-A5A1-FB8754264BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {981953FB-3DC6-4E3F-951B-3324CDBEB4D5}
 	EndGlobalSection
 EndGlobal
