@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace UrbanSpork.Domain.ReadModel
 {
     public class UserRM

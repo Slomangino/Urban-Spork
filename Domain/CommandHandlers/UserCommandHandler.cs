@@ -20,11 +20,11 @@ namespace UrbanSpork.Domain.CommandHandlers
             _session = session;
         }
 
-        public void Handle(CreateUserCommand command)
+        public async Task Handle(CreateUserCommand command)
         {
             User user = new User(command.Id, command.UserID, command.FirstName, command.LastName, command.Email, command.Position, command.Department, command.IsActive, command.Assets);
-            _session.Add(user);
-            _session.Commit();
+            await _session.Add(user);
+            await _session.Commit();
         }
     }
 }

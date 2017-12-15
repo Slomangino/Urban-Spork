@@ -8,79 +8,116 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.Domain.ReadModel;
+using Newtonsoft.Json.Linq;
 
 //Must be changed to reflect UrbanSpork project structure
 
-namespace CQRSLiteDemo.Domain.ReadModel.Repositories
+namespace UrbanSpork.Domain.ReadModel.Repositories
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public UserRepository(NpgsqlConnection pgsqlsConnection) : base(pgsqlsConnection, "user") { }
 
-        public UserRM GetByID(int userID)
+        const string tableName = "users";
+        public UserRepository(NpgsqlConnection pgsqlsConnection) : base(pgsqlsConnection) { }
+
+
+        public async Task<List<JObject>> GetAll()
         {
-            return Get<UserRM>(userID);
+            return await Get(tableName);
+
         }
 
-        public List<UserRM> GetMultiple(List<int> userIDs)
+        public async Task<List<JObject>> GetById(int userID)
         {
-            return GetMultiple<UserRM>(userIDs);
+            return await Get(userID.ToString(), tableName, "user_id");
+
         }
 
-        public IEnumerable<UserRM> GetAll()
-        {
-            return Get<List<UserRM>>("all");
-        }
+        //public async Task<List<JObject>> GetByAttribute(string attr, string columnName)
+        //{
+        //    return await Get(tableName, attr );
 
-        public void Save(UserRM user)
-        {
-            Save(user.userID, user);
-            MergeIntoAllCollection(user);
-        }
+        //}
 
-        private void MergeIntoAllCollection(UserRM user)
-        {
-            List<UserRM> allusers = new List<UserRM>();
-            if (Exists("all"))
-            {
-                allusers = Get<List<UserRM>>("all");
-            }
+        //public List<UserRM> GetMultiple(List<int> userIDs)
+        //{
+        //    return GetMultiple<UserRM>(userIDs);
+        //}
 
-            //If the district already exists in the ALL collection, remove that entry
-            if (allusers.Any(x => x.userID == user.userID))
-            {
-                allusers.Remove(allusers.First(x => x.userID == user.userID));
-            }
+        //public IEnumerable<UserRM> GetAll()
+        //{
+        //    return Get<List<UserRM>>("all");
+        //}
 
-            //Add the modified district to the ALL collection
-            allusers.Add(user);
+        //public void Save(UserRM user)
+        //{
+        //    Save(user.userID, user);
+        //    MergeIntoAllCollection(user);
+        //}
 
-            Save("all", allusers);
-        }
+        //private void MergeIntoAllCollection(UserRM user)
+        //{
+        //    List<UserRM> allusers = new List<UserRM>();
+        //    if (Exists("all"))
+        //    {
+        //        allusers = Get<List<UserRM>>("all");
+        //    }
 
-        IEnumerable<UserRM> IUserRepository.GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        //    //If the district already exists in the ALL collection, remove that entry
+        //    if (allusers.Any(x => x.userID == user.userID))
+        //    {
+        //        allusers.Remove(allusers.First(x => x.userID == user.userID));
+        //    }
 
-        UserRM IBaseRepository<UserRM>.GetByID(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //    //Add the modified district to the ALL collection
+        //    allusers.Add(user);
 
-        List<UserRM> IBaseRepository<UserRM>.GetMultiple(List<int> ids)
-        {
-            throw new NotImplementedException();
-        }
+        //    Save("all", allusers);
+        //}
 
-        public bool Exists(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //IEnumerable<UserRM> IUserRepository.GetAll()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void Save(UserRM item)
-        {
-            throw new NotImplementedException();
-        }
+        //UserRM IBaseRepository<UserRM>.GetByID(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //List<UserRM> IBaseRepository<UserRM>.GetMultiple(List<int> ids)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public bool Exists(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public void Save(UserRM item)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
+
+
+
+
+/// TESTING COMMENTS ////
+/// 
+/// 
+///  //while(dataReader.Read()){
+//    listOfUsers.Add(new UserRM()
+//    {
+//        UserID = (int)dataReader[0],
+//        FirstName = dataReader[1].ToString(),
+//        LastName = dataReader[2].ToString(),
+//        Email = dataReader[3].ToString(),
+//        Position = dataReader[4].ToString(),
+//        Department = dataReader[5].ToString(),
+//        IsActive = (bool)dataReader[6]//,
+//        //Assets = (JO) dataReader[7]
+//    });
+//}
