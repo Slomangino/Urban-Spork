@@ -8,34 +8,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Json;
 using Newtonsoft.Json.Linq;
+using Autofac;
+using UrbanSpork.Domain.ReadModel.Repositories.Interfaces;
 
 
 //Must Be Changed to reflect PostgreSQL DB Connection, rather than Redis
 
 namespace UrbanSpork.Domain.ReadModel.Repositories
 {
-    public class BaseRepository
+    public class BaseRepository : IBaseRepository<JObject>
     {
         private readonly NpgsqlConnection _postgresConnection;
+        private readonly IComponentContext _context;
 
         // CONSTRUCTOR 
-        public BaseRepository(NpgsqlConnection postgresConnection)
+        public BaseRepository(IComponentContext context, NpgsqlConnection postgresConnection)
         {
             _postgresConnection = postgresConnection;
+            _context = context;
         }
-
-
-
 
         // THIS GETS ALL
         public async Task<List<JObject>> Get(string tableName)
         {
-            NpgsqlConnection conn = _postgresConnection;
+            //NpgsqlConnection conn = _postgresConnection;
 
-            await conn.OpenAsync();
+            await _postgresConnection.OpenAsync();
 
             //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
-            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName}", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName}", _postgresConnection);
 
             NpgsqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -60,12 +61,12 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
                 listOfResults.Add(user);
             }
 
-
+            //_postgresConnection.Close();
             return listOfResults;
         }
 
 
-        // Gets By Id
+        // Gets By Id *******NOW GARBAGE*******
         public async Task<List<JObject>> Get(string val, string tableName, string column)
         {
             
@@ -142,6 +143,44 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
 
             ////return JsonConvert.DeserializeObject<T>(output.ToString());
             //return listOfUsers.ToArray();
+        }
+
+        // Implemented GetById
+        public async Task<List<JObject>> GetById(string val, string tableName, string column)
+        {
+
+            //NpgsqlConnection conn = _postgresConnection;
+
+            await _postgresConnection.OpenAsync();
+
+            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName} where {column}={val}", _postgresConnection);
+
+            NpgsqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<JObject> listOfResults = new List<JObject>();
+
+            while (dataReader.Read())
+            {
+                dynamic user = new JObject();
+
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    if (dataReader.GetDataTypeName(i) != "json")
+                    {
+                        user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
+                    }
+                    else
+                    {
+                        user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
+                    }
+                }
+
+                listOfResults.Add(user);
+            }
+
+
+            return listOfResults;
         }
 
         // OVERLOAD HERE

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
+using UrbanSpork.Domain.ReadModel.Repositories;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.API
@@ -54,8 +55,11 @@ namespace UrbanSpork.API
             //builder.RegisterType<GetAllUsersQueryHandler>().As<IQueryHandler<GetAllUsersQuery, string>>().InstancePerLifetimeScope();
             //builder.RegisterType<GetAllUsersQuery>().As<IQuery<string>>().InstancePerLifetimeScope();
 
+            builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            // suposedly good
+
+            //good
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();

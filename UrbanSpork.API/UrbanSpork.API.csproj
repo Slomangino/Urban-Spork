@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>WinExe</OutputType>
-    <StartupObject>UrbanSpork.API.Program</StartupObject>
+    <StartupObject></StartupObject>
     <ApplicationInsightsResourceId>/subscriptions/5d22f3a4-ecb4-4772-8c3d-c43021580798/resourcegroups/UrbanSporkResourceGroup/providers/microsoft.insights/components/UrbanSpork</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/5d22f3a4-ecb4-4772-8c3d-c43021580798/resourcegroups/UrbanSporkResourceGroup/providers/microsoft.insights/components/UrbanSpork</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>

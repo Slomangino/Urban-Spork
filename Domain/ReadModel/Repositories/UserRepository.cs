@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.Domain.ReadModel;
 using Newtonsoft.Json.Linq;
+using Autofac;
 
 //Must be changed to reflect UrbanSpork project structure
 
@@ -16,21 +17,28 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
+        //testing here
+        const string tableName = "NotUsers";
+        //const string tableName = "users";
 
-        const string tableName = "users";
-        public UserRepository(NpgsqlConnection pgsqlsConnection) : base(pgsqlsConnection) { }
+        private readonly IComponentContext _context;
+
+        // CONSTRUCTOR 
+       
+        public UserRepository(IComponentContext context, NpgsqlConnection pgsqlsConnection) : base(context, pgsqlsConnection)
+        {
+            _context = context;
+        }
 
 
-        public async Task<List<JObject>> GetAll()
+        public async Task<List<JObject>> GetAll(String tableName)
         {
             return await Get(tableName);
-
         }
 
         public async Task<List<JObject>> GetById(int userID)
         {
             return await Get(userID.ToString(), tableName, "user_id");
-
         }
 
         //public async Task<List<JObject>> GetByAttribute(string attr, string columnName)

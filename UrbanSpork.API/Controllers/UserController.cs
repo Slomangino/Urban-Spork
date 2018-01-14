@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
+using Newtonsoft.Json.Linq;
 
 namespace UrbanSpork.API.Controllers
 
@@ -30,10 +31,11 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public Task<List<JObject>> Get()
         {
-            var message = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(message);
+            var tableName = "users";
+            var query = new GetAllUsersQuery(tableName);
+            var result = _queryProcessor.Process(query);
             return result;
         }
         
