@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.Domain", "Domain\UrbanSpork.Domain.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.Domain", "Domain\UrbanSpork.Domain.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.API", "UrbanSpork.API\UrbanSpork.API.csproj", "{E6137D90-DBED-4934-9B38-5E0437F9BFC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.API", "UrbanSpork.API\UrbanSpork.API.csproj", "{E6137D90-DBED-4934-9B38-5E0437F9BFC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
