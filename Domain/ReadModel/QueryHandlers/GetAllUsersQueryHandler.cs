@@ -10,27 +10,18 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {
     public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Task<List<JObject>>>
     {
-        private readonly IUserRepository _userRepository;
-
-        public GetAllUsersQueryHandler(IUserRepository userRepository)
+        public GetAllUsersQueryHandler()
         {
-            _userRepository = userRepository;
         }
 
         public async Task<List<JObject>> Handle(GetAllUsersQuery query)
         {
-
-            NpgsqlConnection conn = ConnectionFactory.GetUserConnection();
-
+            NpgsqlConnection conn = new NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb");
             await conn.OpenAsync();
-
             //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
             NpgsqlCommand cmd = new NpgsqlCommand($"select * from {query.TableName}", conn);
-
             NpgsqlDataReader dataReader = cmd.ExecuteReader();
-
             List<JObject> listOfResults = new List<JObject>();
-
             while (dataReader.Read())
             {
                 dynamic user = new JObject();
@@ -40,8 +31,7 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
                     if (dataReader.GetDataTypeName(i) != "json")
                     {
                         user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
-                    }
-                    else
+                    }else
                     {
                         user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
                     }
@@ -50,7 +40,7 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
                 listOfResults.Add(user);
             }
 
-            //_postgresConnection.Close();
+            conn.Close();
             return listOfResults;
 
 

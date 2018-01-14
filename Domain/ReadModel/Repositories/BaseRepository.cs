@@ -18,87 +18,85 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
 {
     public class BaseRepository : IBaseRepository<JObject>
     {
-        private readonly NpgsqlConnection _postgresConnection;
         private readonly IComponentContext _context;
 
         // CONSTRUCTOR 
-        public BaseRepository(IComponentContext context, NpgsqlConnection postgresConnection)
+        public BaseRepository(IComponentContext context)
         {
-            _postgresConnection = postgresConnection;
             _context = context;
         }
 
-        // THIS GETS ALL
+        //// THIS GETS ALL
         public async Task<List<JObject>> Get(string tableName)
         {
-            //NpgsqlConnection conn = _postgresConnection;
+            //    //NpgsqlConnection conn = _postgresConnection;
 
-            await _postgresConnection.OpenAsync();
+            //    await _postgresConnection.OpenAsync();
 
-            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
-            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName}", _postgresConnection);
+            //    //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
+            //    NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName}", _postgresConnection);
 
-            NpgsqlDataReader dataReader = cmd.ExecuteReader();
+            //    NpgsqlDataReader dataReader = cmd.ExecuteReader();
 
             List<JObject> listOfResults = new List<JObject>();
 
-            while (dataReader.Read())
-            {
-                dynamic user = new JObject();
+            //    while (dataReader.Read())
+            //    {
+            //        dynamic user = new JObject();
 
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    if (dataReader.GetDataTypeName(i) != "json")
-                    {
-                        user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
-                    }
-                    else
-                    {
-                        user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
-                    }
-                }
+            //        for (int i = 0; i < dataReader.FieldCount; i++)
+            //        {
+            //            if (dataReader.GetDataTypeName(i) != "json")
+            //            {
+            //                user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
+            //            }
+            //            else
+            //            {
+            //                user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
+            //            }
+            //        }
 
-                listOfResults.Add(user);
-            }
+            //        listOfResults.Add(user);
+            //    }
 
-            //_postgresConnection.Close();
+            //    //_postgresConnection.Close();
             return listOfResults;
         }
 
 
-        // Gets By Id *******NOW GARBAGE*******
-        public async Task<List<JObject>> Get(string val, string tableName, string column)
+    // Gets By Id *******NOW GARBAGE*******
+    public async Task<List<JObject>> Get(string val, string tableName, string column)
         {
             
-            NpgsqlConnection conn = _postgresConnection;
+            //NpgsqlConnection conn = _postgresConnection;
 
-            await conn.OpenAsync();
+            //await conn.OpenAsync();
 
-            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
-            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName} where {column}={val}", conn);
+            ////NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
+            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName} where {column}={val}", conn);
 
-            NpgsqlDataReader dataReader = cmd.ExecuteReader();
+            //NpgsqlDataReader dataReader = cmd.ExecuteReader();
 
             List<JObject> listOfResults = new List<JObject>();
 
-            while (dataReader.Read())
-            {
-                dynamic user = new JObject();
+            //while (dataReader.Read())
+            //{
+            //    dynamic user = new JObject();
 
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    if (dataReader.GetDataTypeName(i) != "json")
-                    {
-                        user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
-                    }
-                    else
-                    {
-                        user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
-                    }
-                }
+            //    for (int i = 0; i < dataReader.FieldCount; i++)
+            //    {
+            //        if (dataReader.GetDataTypeName(i) != "json")
+            //        {
+            //            user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
+            //        }
+            //        else
+            //        {
+            //            user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
+            //        }
+            //    }
 
-                listOfResults.Add(user);
-            }
+            //    listOfResults.Add(user);
+            //}
 
 
             return listOfResults;
@@ -149,35 +147,35 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
         public async Task<List<JObject>> GetById(string val, string tableName, string column)
         {
 
-            //NpgsqlConnection conn = _postgresConnection;
+            ////NpgsqlConnection conn = _postgresConnection;
 
-            await _postgresConnection.OpenAsync();
+            //await _postgresConnection.OpenAsync();
 
-            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
-            NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName} where {column}={val}", _postgresConnection);
+            ////NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
+            //NpgsqlCommand cmd = new NpgsqlCommand($"select * from {tableName} where {column}={val}", _postgresConnection);
 
-            NpgsqlDataReader dataReader = cmd.ExecuteReader();
+            //NpgsqlDataReader dataReader = cmd.ExecuteReader();
 
             List<JObject> listOfResults = new List<JObject>();
 
-            while (dataReader.Read())
-            {
-                dynamic user = new JObject();
+            //while (dataReader.Read())
+            //{
+            //    dynamic user = new JObject();
 
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    if (dataReader.GetDataTypeName(i) != "json")
-                    {
-                        user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
-                    }
-                    else
-                    {
-                        user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
-                    }
-                }
+            //    for (int i = 0; i < dataReader.FieldCount; i++)
+            //    {
+            //        if (dataReader.GetDataTypeName(i) != "json")
+            //        {
+            //            user[dataReader.GetName(i)] = JToken.FromObject(dataReader[i]);
+            //        }
+            //        else
+            //        {
+            //            user[dataReader.GetName(i)] = JObject.Parse((string)JToken.FromObject(dataReader[i]));
+            //        }
+            //    }
 
-                listOfResults.Add(user);
-            }
+            //    listOfResults.Add(user);
+            //}
 
 
             return listOfResults;

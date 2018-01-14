@@ -25,7 +25,7 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
 
         // CONSTRUCTOR 
        
-        public UserRepository(IComponentContext context, NpgsqlConnection pgsqlsConnection) : base(context, pgsqlsConnection)
+        public UserRepository(IComponentContext context) : base(context)
         {
             _context = context;
         }
