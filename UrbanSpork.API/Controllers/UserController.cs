@@ -20,10 +20,10 @@ namespace UrbanSpork.API.Controllers
     public class UserController : Controller
     {
         // private readonly UserRepository _userRepository;
-        private readonly QueryProcessor _queryProcessor;
+        private readonly IQueryProcessor _queryProcessor;
 
         //public UserController(UserRepository userRepository)
-        public UserController(QueryProcessor queryProcessor)
+        public UserController(IQueryProcessor queryProcessor)
         {
             // _userRepository = new UserRepository(new Npgsql.NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb"));
             _queryProcessor = queryProcessor;
@@ -34,7 +34,7 @@ namespace UrbanSpork.API.Controllers
         {
             var message = new GetAllUsersQuery();
             var result = _queryProcessor.Process(message);
-            return "derp";
+            return result;
         }
         
         //[HttpGet]

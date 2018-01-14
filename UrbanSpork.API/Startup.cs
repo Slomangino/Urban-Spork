@@ -17,11 +17,6 @@ namespace UrbanSpork.API
 {
     public class Startup
     {
-        //public Startup(IConfiguration configuration)
-        //{
-        //    Configuration = configuration;
-        //}
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -60,6 +55,7 @@ namespace UrbanSpork.API
             //builder.RegisterType<GetAllUsersQuery>().As<IQuery<string>>().InstancePerLifetimeScope();
 
 
+            // suposedly good
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();

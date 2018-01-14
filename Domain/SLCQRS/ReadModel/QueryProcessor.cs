@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 
@@ -21,7 +22,6 @@ namespace UrbanSpork.Domain.SLCQRS.ReadModel
         }
 
         //public TResult Process<TResult>(IQuery<TResult> query)
-
         //{
         //    //var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
         //    //var handler = (IQueryHandler<IQuery<TResult>, TResult>)_context.GetService(handlerType);
@@ -42,17 +42,25 @@ namespace UrbanSpork.Domain.SLCQRS.ReadModel
             // create process internal method dynamically
             // TQuery = tQueryType
             // TResult = tResultType
-            TResult myResult = (TResult)Activator.CreateInstance(tResultType);
-            IQuery<TResult> myQuery = (IQuery<TResult>) Activator.CreateInstance(tQueryType);
+            //TResult myResult = (TResult)Activator.CreateInstance(tResultType);
+
+            //var myQuery = (IQuery<TResult>)Activator.CreateInstance(tQueryType);
+            //var myResult = (TResult)Activator.CreateInstance(tResultType);
+
             //object myResult = Activator.CreateInstance(tResultType);
 
 
             // invoke method dynamically
-            object result = ProcessInternal<IQuery<TResult>, TResult>(myQuery);
+            MethodInfo method = typeof(QueryProcessor).GetMethod("ProcessInternal");
+            MethodInfo generic = method.MakeGenericMethod(tQueryType, tResultType);
+            object result = generic.Invoke(this, new[] { query });
+            
+
+            //object result = ProcessInternal<tQueryType, TResult>(myQuery);
             return (TResult)result;
         }
 
-        private TResult ProcessInternal<TQuery, TResult>(TQuery query)
+        public TResult ProcessInternal<TQuery, TResult>(TQuery query)
             where TQuery : IQuery<TResult>
         {
             var handler = _context.Resolve<IQueryHandler<TQuery, TResult>>();

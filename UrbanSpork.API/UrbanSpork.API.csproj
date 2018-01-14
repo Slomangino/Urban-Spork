@@ -5,6 +5,8 @@
     <ApplicationIcon />
     <OutputType>WinExe</OutputType>
     <StartupObject>UrbanSpork.API.Program</StartupObject>
+    <ApplicationInsightsResourceId>/subscriptions/5d22f3a4-ecb4-4772-8c3d-c43021580798/resourcegroups/UrbanSporkResourceGroup/providers/microsoft.insights/components/UrbanSpork</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/5d22f3a4-ecb4-4772-8c3d-c43021580798/resourcegroups/UrbanSporkResourceGroup/providers/microsoft.insights/components/UrbanSpork</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
@@ -23,5 +26,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\UrbanSpork.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 </Project>

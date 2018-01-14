@@ -21,6 +21,7 @@ namespace UrbanSpork.API
             // have the call to AddAutofac here, you won't get
             // ConfigureContainer support.
             var host = new WebHostBuilder()
+                .UseApplicationInsights()
                 .UseKestrel()
                 .ConfigureServices(services => services.AddAutofac())
                 .UseContentRoot(Directory.GetCurrentDirectory())
