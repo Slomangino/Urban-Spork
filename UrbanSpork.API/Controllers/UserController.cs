@@ -4,10 +4,16 @@ using UrbanSpork.Domain.ReadModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UrbanSpork.Domain.ReadModel.Messages;
+
 
 namespace UrbanSpork.API.Controllers
 
 //"Host = 127.0.0.1; Username=iceman371;Password=password;Database=democqrs"
+                    /*
+                     * implement some sort of payload to return data
+                     * 
+                     */
 
 {
     [Route("api/[controller]")]
@@ -34,20 +40,26 @@ namespace UrbanSpork.API.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id) 
-        {
-            var user = await _userRepository.GetById(id);
-
-            if (user == null)
-            {
-                return BadRequest("No user was found with ID " + id.ToString() + ".");
-            }
-
-
-            return Ok(user);
-
-            //return $"value {id}";
+        [HttpGet]
+        public async Task<String> Get(int id){
+            var message = new GetUserQuery(id);
+            var result = await queryProcessor.ProcessWQuery(message);
         }
+
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(int id) 
+        //{
+        //    var user = await _userRepository.GetById(id);
+
+        //    if (user == null)
+        //    {
+        //        return BadRequest("No user was found with ID " + id.ToString() + ".");
+        //    }
+
+
+        //    return Ok(user);
+
+        //    //return $"value {id}";
+        //}
     }
 }

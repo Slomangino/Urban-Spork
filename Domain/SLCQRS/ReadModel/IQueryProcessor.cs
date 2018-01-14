@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 namespace UrbanSpork.Domain.SLCQRS.ReadModel
 {
-    public class IQueryProcessor
+    public interface IQueryProcessor
     {
-        public IQueryProcessor()
-        {
-        }
+        TResult Process<TResult>(IQuery<TResult> query);
     }
 }

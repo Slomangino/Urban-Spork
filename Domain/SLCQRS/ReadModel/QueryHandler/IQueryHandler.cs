@@ -1,7 +1,6 @@
 ﻿using System;
-using SLCQRS.ReadModel.Query;
 
-namespace SLCQRS.ReadModel.QueryHandler
+namespace UrbanSpork.Domain.SLCQRS.ReadModel
 {
     public interface IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
     {
