@@ -16,5 +16,15 @@
     <Folder Include="SLCQRS\ReadModel\" />
     <Folder Include="SLCQRS\ReadModel\Query\" />
     <Folder Include="SLCQRS\ReadModel\QueryHandler\" />
+    <Folder Include="SLCQRS\WriteModel\" />
+    <Folder Include="SLCQRS\WriteModel\Command\" />
+    <Folder Include="SLCQRS\WriteModel\CommandHandler\" />
+    <Folder Include="WriteModel\Commands\" />
+    <Folder Include="WriteModel\CommandHandlers\" />
+    <Folder Include="DataTransfer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="SLCQRS\WriteModel\Command\IQueryProcessorModule.cs" />
+    <Compile Remove="SLCQRS\WriteModel\Command\QueryProcessor.cs" />
   </ItemGroup>
 </Project>

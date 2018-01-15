@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.SLCQRS.WriteModel;
+using UrbanSpork.Domain.WriteModel;
+using UrbanSpork.Domain.WriteModel.Commands;
 
 namespace UrbanSpork.API
 {
@@ -56,9 +53,27 @@ namespace UrbanSpork.API
 
 
             // suposedly good
-            builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            //queries
+            builder.RegisterType<QueryProcessor>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<GetAllUsersQueryHandler>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<GetAllUsersQuery>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+
+            //commands
+            builder.RegisterType<CommandDispatcher>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<CreateSingleUserCommandHandler>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<CreateSingleUserCommand>()
+                  .AsImplementedInterfaces()
+                  .InstancePerLifetimeScope();
 
         }
 
