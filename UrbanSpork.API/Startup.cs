@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
+using UrbanSpork.Domain.ReadModel.Repositories;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
 using UrbanSpork.Domain.WriteModel;
@@ -46,23 +47,9 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            //builder.RegisterType<QueryProcessor>().As<IQueryProcessor>().InstancePerLifetimeScope();
-            //builder.RegisterType<GetAllUsersQueryHandler>().As<IQueryHandler<GetAllUsersQuery, string>>().InstancePerLifetimeScope();
-            //builder.RegisterType<GetAllUsersQuery>().As<IQuery<string>>().InstancePerLifetimeScope();
-
-
-            // suposedly good
-            //queries
-            builder.RegisterType<QueryProcessor>()
-                   .AsImplementedInterfaces()
-                   .InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQueryHandler>()
-                   .AsImplementedInterfaces()
-                   .InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQuery>()
-                   .AsImplementedInterfaces()
-                   .InstancePerLifetimeScope();
 
             //commands
             builder.RegisterType<CommandDispatcher>()
@@ -74,6 +61,10 @@ namespace UrbanSpork.API
             builder.RegisterType<CreateSingleUserCommand>()
                   .AsImplementedInterfaces()
                   .InstancePerLifetimeScope();
+            //good
+            builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
         }
 

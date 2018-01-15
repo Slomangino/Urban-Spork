@@ -10,7 +10,7 @@ namespace UrbanSpork.Domain.ReadModel.Repositories.Interfaces
 {
     public interface IBaseRepository<T>
     {
-        Task<List<T>> GetById(int id);
+        Task<List<T>> GetById(string val, string tableName, string column);
         //List<T> GetMultiple(List<int> ids);
         //bool Exists(int id);
         //void Save(T item);

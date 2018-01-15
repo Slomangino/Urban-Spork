@@ -9,6 +9,7 @@ using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.WriteModel.Commands;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
 using UrbanSpork.Domain.DataTransfer;
+using Newtonsoft.Json.Linq;
 
 namespace UrbanSpork.API.Controllers
 
@@ -44,6 +45,14 @@ namespace UrbanSpork.API.Controllers
 
             var message = new CreateSingleUserCommand("string");
             var result = _commandDispatcher.Execute(message);
+            return result;
+        }
+
+        public Task<List<JObject>> Get()
+        {
+            var tableName = "users";
+            var query = new GetAllUsersQuery(tableName);
+            var result = _queryProcessor.Process(query);
             return result;
         }
         
