@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UrbanSpork.API.Data;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
 using UrbanSpork.Domain.ReadModel.Repositories;
@@ -36,6 +38,9 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             //services.AddAutofac();
+            services.AddEntityFrameworkNpgsql().AddDbContext<USDbContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
+            ));
             services.AddMvc();
         }
 
@@ -71,8 +76,12 @@ namespace UrbanSpork.API
         // Configure is where you add middleware. This is called after
         // ConfigureContainer. You can use IApplicationBuilder.ApplicationServices
         // here if you need to resolve things from the container.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
             app.UseMvc();
         }
 
