@@ -26,7 +26,6 @@
     <Folder Include="SLCQRS\WriteModel\CommandHandler\" />
     <Folder Include="WriteModel\Commands\" />
     <Folder Include="WriteModel\CommandHandlers\" />
-    <Folder Include="DataTransfer\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="SLCQRS\WriteModel\Command\IQueryProcessorModule.cs" />
