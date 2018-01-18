@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using UrbanSpork.Domain.ReadModel;
 
-namespace UrbanSpork.API.Data
+namespace UrbanSpork.DataAccess.Data
 {
     public class USDbContext : DbContext
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace UrbanSpork.Domain.ReadModel
+namespace UrbanSpork.DataAccess.Data
 {
     public class UserRM
     {

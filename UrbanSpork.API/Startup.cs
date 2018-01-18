@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanSpork.API.Data;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
 using UrbanSpork.Domain.ReadModel.Repositories;
@@ -12,6 +11,7 @@ using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
 using UrbanSpork.Domain.WriteModel;
 using UrbanSpork.Domain.WriteModel.Commands;
+using UrbanSpork.D
 
 namespace UrbanSpork.API
 {
