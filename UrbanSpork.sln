@@ -6,11 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.Domain", "Domain\UrbanSpork.Domain.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.API", "UrbanSpork.API\UrbanSpork.API.csproj", "{E6137D90-DBED-4934-9B38-5E0437F9BFC3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE} = {BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UprbanSpork.DataAccess", "UprbanSpork.DataAccess\UprbanSpork.DataAccess.csproj", "{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.DataAccess", "UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj", "{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
