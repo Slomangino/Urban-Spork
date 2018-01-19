@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Npgsql;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.ReadModel.Repositories.Interfaces;
+using UrbanSpork.Domain.DataTransferObjects;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {
-    public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Task<List<JObject>>>
+    public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Task<List<UserDTO>>>
     {
-        public GetAllUsersQueryHandler()
+        public GetAllUsersQueryHandler()//USDbContext context)
         {
         }
 
-        public async Task<List<JObject>> Handle(GetAllUsersQuery query)
+        public async Task<List<UserDTO>> Handle(GetAllUsersQuery query)
         {
-            NpgsqlConnection conn = new NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb");
+            /*NpgsqlConnection conn = new NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb");
             await conn.OpenAsync();
             //NpgsqlCommand cmd = new NpgsqlCommand($"select * from users where userid={userId}", conn);
             NpgsqlCommand cmd = new NpgsqlCommand($"select * from {query.TableName}", conn);
@@ -41,9 +41,14 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
             }
 
             conn.Close();
-            return listOfResults;
+            return listOfResults;*/
 
+            /*using var context = new USDbContext()
+            {
 
+            }*/
+                
+            return new List<UserDTO>();
 
             //await _userRepository.Get(query.TableName);
             //return await _userRepository.GetAll(query.TableName);
