@@ -10,7 +10,7 @@ namespace UrbanSpork.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     UserID = table.Column<int>(nullable: false)
@@ -26,14 +26,14 @@ namespace UrbanSpork.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserID);
+                    table.PrimaryKey("PK_Users", x => x.UserID);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }
