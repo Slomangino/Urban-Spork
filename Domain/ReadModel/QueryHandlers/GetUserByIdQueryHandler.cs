@@ -12,6 +12,7 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
     {
         public GetUserByIdQueryHandler()
         {
+            // comment
         }
 
         public Task<List<JObject>> Handle(GetUserByIdQuery query)
