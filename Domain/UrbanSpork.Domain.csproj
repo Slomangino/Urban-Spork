@@ -10,6 +10,8 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Npgsql" Version="3.2.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
@@ -17,5 +19,14 @@
     <Folder Include="SLCQRS\ReadModel\" />
     <Folder Include="SLCQRS\ReadModel\Query\" />
     <Folder Include="SLCQRS\ReadModel\QueryHandler\" />
+    <Folder Include="SLCQRS\WriteModel\" />
+    <Folder Include="SLCQRS\WriteModel\Command\" />
+    <Folder Include="SLCQRS\WriteModel\CommandHandler\" />
+    <Folder Include="WriteModel\Commands\" />
+    <Folder Include="WriteModel\CommandHandlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="SLCQRS\WriteModel\Command\IQueryProcessorModule.cs" />
+    <Compile Remove="SLCQRS\WriteModel\Command\QueryProcessor.cs" />
   </ItemGroup>
 </Project>

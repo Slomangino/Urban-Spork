@@ -8,8 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.Domain.ReadModel;
+
 using Newtonsoft.Json.Linq;
 using Autofac;
+
 
 //Must be changed to reflect UrbanSpork project structure
 
@@ -21,10 +23,16 @@ namespace UrbanSpork.Domain.ReadModel.Repositories
         const string tableName = "NotUsers";
         //const string tableName = "users";
 
-        private readonly IComponentContext _context;
+         private readonly IComponentContext _context;
 
         // CONSTRUCTOR 
-       
+        //private readonly USDbContext _context;
+
+        //public UserRepository(USfDbContext context)
+        //{
+        //    _context = context;
+        //}
+
         public UserRepository(IComponentContext context) : base(context)
         {
             _context = context;

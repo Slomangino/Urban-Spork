@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
 using UrbanSpork.Domain.ReadModel.Repositories;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.SLCQRS.WriteModel;
+using UrbanSpork.Domain.WriteModel;
+using UrbanSpork.Domain.WriteModel.Commands;
+using UrbanSpork.D
 
 namespace UrbanSpork.API
 {
@@ -39,6 +38,9 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             //services.AddAutofac();
+            services.AddEntityFrameworkNpgsql().AddDbContext<USDbContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
+            ));
             services.AddMvc();
         }
 
@@ -50,15 +52,20 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-
-            //builder.RegisterType<QueryProcessor>().As<IQueryProcessor>().InstancePerLifetimeScope();
-            //builder.RegisterType<GetAllUsersQueryHandler>().As<IQueryHandler<GetAllUsersQuery, string>>().InstancePerLifetimeScope();
-            //builder.RegisterType<GetAllUsersQuery>().As<IQuery<string>>().InstancePerLifetimeScope();
-
             builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
+            //commands
+            builder.RegisterType<CommandDispatcher>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<CreateSingleUserCommandHandler>()
+                   .AsImplementedInterfaces()
+                   .InstancePerLifetimeScope();
+            builder.RegisterType<CreateSingleUserCommand>()
+                  .AsImplementedInterfaces()
+                  .InstancePerLifetimeScope();
             //good
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -69,8 +76,12 @@ namespace UrbanSpork.API
         // Configure is where you add middleware. This is called after
         // ConfigureContainer. You can use IApplicationBuilder.ApplicationServices
         // here if you need to resolve things from the container.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
             app.UseMvc();
         }
 
