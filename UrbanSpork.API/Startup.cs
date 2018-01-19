@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
 using UrbanSpork.Domain.WriteModel;
 using UrbanSpork.Domain.WriteModel.Commands;
+using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.API
 {
@@ -37,9 +39,9 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             //services.AddAutofac();
-            //services.AddEntityFrameworkNpgsql().AddDbContext<USDbContext>(opt =>
-            //    opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
-            //));
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")));
+
             services.AddMvc();
         }
 
@@ -51,8 +53,8 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            // builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            // builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             //commands
