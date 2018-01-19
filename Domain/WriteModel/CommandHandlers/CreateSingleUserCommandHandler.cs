@@ -1,7 +1,7 @@
 ﻿using System;
 using UrbanSpork.Domain.WriteModel.Commands;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
-using UrbanSpork.Domain.DataTransferObjects;
+using UrbanSpork.Domain.DataTransfer;
 
 namespace UrbanSpork.Domain.WriteModel
 {

@@ -8,8 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Npgsql" Version="3.2.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
@@ -17,9 +15,6 @@
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NewFolder\" />
-    <Folder Include="ReadModel\QueryCommands\" />
-    <Folder Include="ReadModel\QueryHandlers\" />
     <Folder Include="SLCQRS\" />
     <Folder Include="SLCQRS\ReadModel\" />
     <Folder Include="SLCQRS\ReadModel\Query\" />
@@ -33,8 +28,5 @@
   <ItemGroup>
     <Compile Remove="SLCQRS\WriteModel\Command\IQueryProcessorModule.cs" />
     <Compile Remove="SLCQRS\WriteModel\Command\QueryProcessor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
   </ItemGroup>
 </Project>
