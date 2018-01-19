@@ -11,7 +11,6 @@ using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
 using UrbanSpork.Domain.WriteModel;
 using UrbanSpork.Domain.WriteModel.Commands;
-using UrbanSpork.D
 
 namespace UrbanSpork.API
 {
@@ -38,9 +37,9 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             //services.AddAutofac();
-            services.AddEntityFrameworkNpgsql().AddDbContext<USDbContext>(opt =>
-                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
-            ));
+            //services.AddEntityFrameworkNpgsql().AddDbContext<USDbContext>(opt =>
+            //    opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")
+            //));
             services.AddMvc();
         }
 
