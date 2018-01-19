@@ -13,8 +13,6 @@
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ReadModel\QueryCommands\" />
-    <Folder Include="ReadModel\QueryHandlers\" />
     <Folder Include="SLCQRS\" />
     <Folder Include="SLCQRS\ReadModel\" />
     <Folder Include="SLCQRS\ReadModel\Query\" />
