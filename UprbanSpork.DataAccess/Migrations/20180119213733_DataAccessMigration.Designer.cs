@@ -11,7 +11,7 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    [Migration("20180119212609_DataAccessMigration")]
+    [Migration("20180119213733_DataAccessMigration")]
     partial class DataAccessMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.User", b =>
+            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.Users", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd();
@@ -46,7 +46,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
