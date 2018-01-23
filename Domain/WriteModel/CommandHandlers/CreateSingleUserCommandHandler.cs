@@ -6,6 +6,7 @@ using UrbanSpork.DataAccess.DataAccess;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.Domain.DataTransferObjects;
 
 namespace UrbanSpork.Domain.WriteModel
 {

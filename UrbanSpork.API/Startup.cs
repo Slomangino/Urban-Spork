@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using UrbanSpork.DataAccess.DataAccess;
 using AutoMapper;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.API
 {
