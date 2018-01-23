@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UrbanSpork.Domain.DataTransferObjects;
+using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryCommands

@@ -15,7 +15,7 @@ namespace UrbanSpork.Domain.SLCQRS.ReadModel
             _context = context;
         }
 
-        public TResult Process<TResult>(IQuery<TResult> query)
+        public Task<TResult> Process<TResult>(IQuery<TResult> query)
         {
             var tQueryType = query.GetType();
             var tResultType = typeof(TResult);
@@ -29,10 +29,10 @@ namespace UrbanSpork.Domain.SLCQRS.ReadModel
 
             // invoke method dynamically
             object result = generic.Invoke(this, new[] { query });
-            return (TResult)result;
+            return Task.FromResult((TResult)result);
         }
 
-        public TResult ProcessInternal<TQuery, TResult>(TQuery query)
+        public Task<TResult> ProcessInternal<TQuery, TResult>(TQuery query)
             where TQuery : IQuery<TResult>
         {
             var handler = _context.Resolve<IQueryHandler<TQuery, TResult>>();

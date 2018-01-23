@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Npgsql;
+using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.DataTransferObjects;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {
     public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Task<List<UserDTO>>>
     {
-        public GetAllUsersQueryHandler()//USDbContext context)
+        public GetAllUsersQueryHandler()
         {
         }
 
@@ -52,6 +50,11 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 
             //await _userRepository.Get(query.TableName);
             //return await _userRepository.GetAll(query.TableName);
+        }
+
+        Task<Task<List<UserDTO>>> IQueryHandler<GetAllUsersQuery, Task<List<UserDTO>>>.Handle(GetAllUsersQuery query)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

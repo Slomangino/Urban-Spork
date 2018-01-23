@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.DataTransferObjects;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
-        Task<T> GetSingleUser<T>(T message);
+        //Task<TResult> GetSingleUser(TResult message);
 
+        Task<UserDTO> GetSingleUser(int id);
 
-        // Task<T> CreateUser<T>(T message);
+        void CreateUser(Users message);
     }
 }

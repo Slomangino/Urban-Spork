@@ -28,11 +28,12 @@ namespace UrbanSpork.Domain.SLCQRS.WriteModel
             return (TResult)result;
         }
 
-        public TResult ExecuteInternal<TCommand, TResult>(TCommand command)
+        public void ExecuteInternal<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
         {
             var handler = _context.Resolve<ICommandHandler<TCommand, TResult>>();
-            return handler.Handle(command);
+            //return handler.Handle(command);
+            handler.Handle(command);
         }
     }
 }
