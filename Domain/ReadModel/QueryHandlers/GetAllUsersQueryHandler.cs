@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Npgsql;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.DataTransferObjects;
+using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers

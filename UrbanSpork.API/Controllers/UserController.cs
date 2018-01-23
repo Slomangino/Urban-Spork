@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Domain.DataTransferObjects;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 using UrbanSpork.Domain.SLCQRS.WriteModel;
@@ -34,26 +35,26 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet]
-        public async Task<UserDTO> Get(int id)
-        {
-            var message = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(message);
-            return await result;
+        //[HttpGet]
+        //public async Task<UserDTO> Get(int id)
+        //{
+        //    var message = new GetAllUsersQuery();
+        //    var result = await _queryProcessor.Process(message);
+        //    return result;
 
-            //var message = new CreateSingleUserCommand(id);
-            //var result = _commandDispatcher.Execute(message);
-            //return result;
-        }*/
+        //    //var message = new CreateSingleUserCommand(id);
+        //    //var result = _commandDispatcher.Execute(message);
+        //    //return result;
+        //}
 
-        [HttpGet]
-        public async Task<List<UserDTO>> GetAllUsers()
-        {
-            // var tableName = "users";
-            var query = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(query);
-            return await result;
-        }
+        //[HttpGet]
+        //public async Task<List<UserDTO>> GetAllUsers()
+        //{
+        //    // var tableName = "users";
+        //    var query = new GetAllUsersQuery();
+        //    var result = _queryProcessor.Process(query);
+        //    return await result;
+        //}
 
         /*[HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
