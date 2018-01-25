@@ -23,6 +23,7 @@ namespace UrbanSpork.API
     {
         public Startup(IHostingEnvironment env)
         {
+            //this is the builder object
             var builder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
