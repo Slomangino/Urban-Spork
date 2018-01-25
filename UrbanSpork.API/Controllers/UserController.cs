@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UrbanSpork.Domain.ReadModel.Repositories;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.WriteModel.Commands;
-using UrbanSpork.Domain.SLCQRS.WriteModel;
-using Newtonsoft.Json.Linq;
+using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.DataTransferObjects;
+using UrbanSpork.Domain.ReadModel.QueryCommands;
+using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.SLCQRS.WriteModel;
+using UrbanSpork.Domain.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
 
@@ -36,33 +35,42 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
+        //[HttpGet]
+        //public async Task<UserDTO> Get(int id)
+        //{
+        //    var message = new GetAllUsersQuery();
+        //    var result = await _queryProcessor.Process(message);
+        //    return result;
+
+        //    //var message = new CreateSingleUserCommand(id);
+        //    //var result = _commandDispatcher.Execute(message);
+        //    //return result;
+        //}
+
+        //[HttpGet]
+        //public async Task<List<UserDTO>> GetAllUsers()
+        //{
+        //    // var tableName = "users";
+        //    var query = new GetAllUsersQuery();
+        //    var result = _queryProcessor.Process(query);
+        //    return await result;
+        //}
+
         /*[HttpGet]
-        public async Task<UserDTO> Get(int id)
-        {
-            var message = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(message);
-            return await result;
-
-            //var message = new CreateSingleUserCommand(id);
-            //var result = _commandDispatcher.Execute(message);
-            //return result;
-        }*/
-
-        [HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
         {
             // var tableName = "users";
             var query = new GetAllUsersQuery();
             var result = _queryProcessor.Process(query);
             return await result;
-        }
+        }*/
 
-        /*[HttpPost]
+        [HttpPost]
         public void CreateUser(UserDTO input)
         {
-            var message = new CreateSingleUserCommand("string");
-            var result = _commandDispatcher.Execute(message);
-        }*/
+            var message = new CreateSingleUserCommand(input);
+            _commandDispatcher.Execute(message);
+        }
 
         //[HttpGet]
         //public async Task<IActionResult> Get(){

@@ -3,22 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.SLCQRS.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {
-    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Task<List<JObject>>>
+    public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDTO>
     {
-        public GetUserByIdQueryHandler()
+        private IUserRepository _userRepository;
+
+        public GetUserByIdQueryHandler(IUserRepository userRepository)
         {
-            // comment
+            _userRepository = userRepository;
         }
 
-        public Task<List<JObject>> Handle(GetUserByIdQuery query)
+        public Task<UserDTO> Handle(GetUserByIdQuery query)
         {
-            return Task.FromResult(new List<JObject>());
-
+            return _userRepository.GetSingleUser(query.Id);
         }
     }
 }

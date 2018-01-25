@@ -1,5 +1,7 @@
 ﻿using System;
-namespace UrbanSpork.Domain.DataTransferObjects
+using UrbanSpork.DataAccess.DataTransferObjects;
+
+namespace UrbanSpork.DataAccess.DataTransferObjects
 {
     public class UserAssetDTO
     {
