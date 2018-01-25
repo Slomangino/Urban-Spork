@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.Interfaces.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryCommands
 {

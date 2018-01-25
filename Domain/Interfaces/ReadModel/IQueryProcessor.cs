@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace UrbanSpork.Domain.SLCQRS.ReadModel
+namespace UrbanSpork.Domain.Interfaces.ReadModel
 {
     public interface IQueryProcessor
     {

@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.DataTransferObjects;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
-using UrbanSpork.Domain.SLCQRS.WriteModel;
+using UrbanSpork.Domain.Interfaces.ReadModel;
+using UrbanSpork.Domain.Interfaces.WriteModel;
 using UrbanSpork.Domain.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
@@ -35,17 +34,17 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        //[HttpGet]
-        //public async Task<UserDTO> Get(int id)
-        //{
-        //    var message = new GetAllUsersQuery();
-        //    var result = await _queryProcessor.Process(message);
-        //    return result;
+        [HttpGet("{id}")]
+        public async Task<UserDTO> Get(int id)
+        {
+            var message = new GetUserByIdQuery(id);
+            var result = await _queryProcessor.Process(message);
+            return result;
 
-        //    //var message = new CreateSingleUserCommand(id);
-        //    //var result = _commandDispatcher.Execute(message);
-        //    //return result;
-        //}
+            //var message = new CreateSingleUserCommand(id);
+            //var result = _commandDispatcher.Execute(message);
+            //return result;
+        }
 
         //[HttpGet]
         //public async Task<List<UserDTO>> GetAllUsers()

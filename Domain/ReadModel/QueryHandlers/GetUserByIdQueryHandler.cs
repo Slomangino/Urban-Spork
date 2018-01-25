@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.Interfaces.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {

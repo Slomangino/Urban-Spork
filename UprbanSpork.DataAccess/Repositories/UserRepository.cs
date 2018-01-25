@@ -13,20 +13,20 @@ namespace UrbanSpork.DataAccess.Repositories
     public class UserRepository : IUserRepository
     {
         private UrbanDbContext _context;
-        private IMapper _mapper;
+        // private IMapper _mapper;
 
-        public UserRepository(UrbanDbContext context, IMapper mapper)
+        public UserRepository(UrbanDbContext context/*, IMapper mapper*/)
         {
             _context = context;
-            _mapper = mapper;
+            //_mapper = mapper;
         }
 
         public Task<UserDTO> GetSingleUser(int id)
         {
             var foo = _context.Users
-                .Single(b => b.UserID == 1);
+                .Single(b => b.UserID == id);
 
-            return Task.FromResult(_mapper.Map<UserDTO>(foo));
+            return Task.FromResult(Mapper.Map<UserDTO>(foo));
         }
 
         public void CreateUser(Users message)

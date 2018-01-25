@@ -2,7 +2,7 @@
 using Autofac;
 using Autofac.Core;
 
-namespace UrbanSpork.Domain.SLCQRS.ReadModel
+namespace UrbanSpork.Domain.Interfaces.ReadModel
 {
     public class IQueryProcessorModule : Module
     {

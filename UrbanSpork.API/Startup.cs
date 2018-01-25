@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.Domain.ReadModel.QueryHandlers;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
-using UrbanSpork.Domain.SLCQRS.WriteModel;
+using UrbanSpork.Domain.Interfaces.ReadModel;
+using UrbanSpork.Domain.Interfaces.WriteModel;
 using UrbanSpork.Domain.WriteModel;
 using UrbanSpork.Domain.WriteModel.Commands;
 using UrbanSpork.DataAccess.DataAccess;
@@ -62,7 +62,7 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            // builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             // builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
@@ -83,7 +83,8 @@ namespace UrbanSpork.API
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
         }
 

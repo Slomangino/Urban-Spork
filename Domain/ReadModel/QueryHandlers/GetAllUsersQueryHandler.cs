@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using Npgsql;
 using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.SLCQRS.ReadModel;
+using UrbanSpork.Domain.Interfaces.ReadModel;
 
 namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 {
@@ -14,7 +14,7 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
         {
         }
 
-        public async Task<List<UserDTO>> Handle(GetAllUsersQuery query)
+        public Task<List<UserDTO>> Handle(GetAllUsersQuery query)
         {
             /*NpgsqlConnection conn = new NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb");
             await conn.OpenAsync();
@@ -48,7 +48,7 @@ namespace UrbanSpork.Domain.ReadModel.QueryHandlers
 
             }*/
                 
-            return new List<UserDTO>();
+            return Task.FromResult(new List<UserDTO>());
 
             //await _userRepository.Get(query.TableName);
             //return await _userRepository.GetAll(query.TableName);

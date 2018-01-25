@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 
-namespace UrbanSpork.Domain.SLCQRS.ReadModel
+namespace UrbanSpork.Domain.Interfaces.ReadModel
 {
     public class QueryProcessor : IQueryProcessor
     {
@@ -29,7 +29,8 @@ namespace UrbanSpork.Domain.SLCQRS.ReadModel
 
             // invoke method dynamically
             object result = generic.Invoke(this, new[] { query });
-            return Task.FromResult((TResult)result);
+            //return Task.FromResult((TResult)result);
+            return (Task<TResult>)result;
         }
 
         public Task<TResult> ProcessInternal<TQuery, TResult>(TQuery query)

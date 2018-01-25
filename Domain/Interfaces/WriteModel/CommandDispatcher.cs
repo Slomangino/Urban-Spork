@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 
-namespace UrbanSpork.Domain.SLCQRS.WriteModel
+namespace UrbanSpork.Domain.Interfaces.WriteModel
 {
     public class CommandDispatcher : ICommandDispatcher
     {
@@ -15,7 +15,7 @@ namespace UrbanSpork.Domain.SLCQRS.WriteModel
             _context = context;
         }
 
-        public TResult Execute<TResult>(ICommand<TResult> command)
+        public Task<TResult> Execute<TResult>(ICommand<TResult> command)
         {
             var tCommandType = command.GetType();
             var tResultType = typeof(TResult);
@@ -25,15 +25,15 @@ namespace UrbanSpork.Domain.SLCQRS.WriteModel
             MethodInfo generic = method.MakeGenericMethod(tCommandType, tResultType);
             object result = generic.Invoke(this, new[] { command });
 
-            return (TResult)result;
+            return (Task<TResult>)result;
         }
 
-        public void ExecuteInternal<TCommand, TResult>(TCommand command)
+        public Task<TResult> ExecuteInternal<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
         {
             var handler = _context.Resolve<ICommandHandler<TCommand, TResult>>();
             //return handler.Handle(command);
-            handler.Handle(command);
+            return handler.Handle(command);
         }
     }
 }

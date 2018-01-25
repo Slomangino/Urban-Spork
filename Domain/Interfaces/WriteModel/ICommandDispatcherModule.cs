@@ -2,7 +2,7 @@
 using Autofac;
 using Autofac.Core;
 
-namespace UrbanSpork.Domain.SLCQRS.WriteModel
+namespace UrbanSpork.Domain.Interfaces.WriteModel
 {
     public class ICommandDispatcherModule : Module
     {
