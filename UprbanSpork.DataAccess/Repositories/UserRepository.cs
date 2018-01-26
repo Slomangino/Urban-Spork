@@ -30,7 +30,19 @@ namespace UrbanSpork.Common.Repositories
             return Task.FromResult(Mapper.Map<UserDTO>(foo));
         }
 
-        public void CreateUser(User message)
+        public Task<List<UserDTO>> GetAllUsers()
+        {
+            var users = _context.Users.ToList();
+            var userList = new List<UserDTO>();
+            foreach(var user in users)
+            {
+                var userDto = Mapper.Map<UserDTO>(user);
+                userList.Add(userDto);
+            }
+            return Task.FromResult(userList);
+        }
+
+        public void CreateUser(Users message)
         {
             //_userManager.CreateNewUser();
             _context.Users2.Add(message);

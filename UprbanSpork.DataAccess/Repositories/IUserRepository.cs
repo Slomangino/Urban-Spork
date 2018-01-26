@@ -13,6 +13,8 @@ namespace UrbanSpork.Common.Repositories
 
         Task<UserDTO> GetSingleUser(int id);
 
-        void CreateUser(User message);
+        Task<List<UserDTO>> GetAllUsers();
+
+        void CreateUser(Users message);
     }
 }

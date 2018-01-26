@@ -19,5 +19,6 @@ namespace UrbanSpork.ReadModel.QueryHandlers
         {
             return _userRepository.GetSingleUser(query.Id);
         }
+
     }
 }
