@@ -47,13 +47,13 @@ namespace UrbanSpork.API.Controllers
         }
 
         //[HttpGet]
-        //public async Task<List<UserDTO>> GetAllUsers()
-        //{
-        //    // var tableName = "users";
-        //    var query = new GetAllUsersQuery();
-        //    var result = _queryProcessor.Process(query);
-        //    return await result;
-        //}
+        public async Task<List<UserDTO>> GetAllUsers()
+        {
+            // var tableName = "users";
+            var query = new GetAllUsersQuery();
+            var result = _queryProcessor.Process(query);
+            return  await result;
+        }
 
         /*[HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
