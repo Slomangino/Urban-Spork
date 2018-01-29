@@ -22,17 +22,7 @@
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ReadModel\QueryCommands\" />
-    <Folder Include="ReadModel\QueryHandlers\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="WriteModel\Commands\" />
-    <Folder Include="WriteModel\CommandHandlers\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Interfaces\WriteModel\Command\IQueryProcessorModule.cs" />
     <Compile Remove="Interfaces\WriteModel\Command\QueryProcessor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
   </ItemGroup>
 </Project>

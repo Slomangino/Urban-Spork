@@ -7,18 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Domain.Interfaces;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private UrbanDbContext _context;
-        // private IMapper _mapper;
+        private IUserManager _userManager;
 
-        public UserRepository(UrbanDbContext context/*, IMapper mapper*/)
+        public UserRepository(UrbanDbContext context, IUserManager userManager)
         {
             _context = context;
-            //_mapper = mapper;
+            _userManager = userManager;
         }
 
         public Task<UserDTO> GetSingleUser(int id)
@@ -31,6 +32,7 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public void CreateUser(Users message)
         {
+            _userManager.CreateNewUser();
             _context.Users.Add(message);
             _context.SaveChanges();
             //_context.FindAsync(message);

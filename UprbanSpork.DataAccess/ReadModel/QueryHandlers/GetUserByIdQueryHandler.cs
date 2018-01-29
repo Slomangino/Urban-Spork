@@ -1,14 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
+using UrbanSpork.DataAccess.ReadModel.QueryCommands;
 using UrbanSpork.Domain.Interfaces.ReadModel;
 
-namespace UrbanSpork.Domain.ReadModel.QueryHandlers
+namespace UrbanSpork.DataAccess.ReadModel.QueryHandlers
 {
     public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDTO>
     {

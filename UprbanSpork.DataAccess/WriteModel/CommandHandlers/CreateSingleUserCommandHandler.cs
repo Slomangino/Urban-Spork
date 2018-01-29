@@ -1,34 +1,30 @@
 ﻿using AutoMapper;
 using System;
-using UrbanSpork.Domain.WriteModel.Commands;
 using UrbanSpork.Domain.Interfaces.WriteModel;
 using UrbanSpork.DataAccess.DataAccess;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
 
-namespace UrbanSpork.Domain.WriteModel
+namespace UrbanSpork.DataAccess.WriteModel
 {
     public class CreateSingleUserCommandHandler : ICommandHandler<CreateSingleUserCommand, UserDTO>
     {
-        private IMapper _mapper;
         private IUserRepository _userRepository;
 
-        public CreateSingleUserCommandHandler(IMapper mapper, IUserRepository userRepository)
+        public CreateSingleUserCommandHandler(IUserRepository userRepository)
         {
-            _mapper = mapper;
             _userRepository = userRepository;
         }
 
         //fix return type
         public Task<UserDTO> Handle(CreateSingleUserCommand command)
         {
-            var userDTO = _mapper.Map<Users>(command._input);
+            var userDTO = Mapper.Map<Users>(command._input);
 
             _userRepository.CreateUser(userDTO);
 
-            //fix this return
-            return Task.FromResult(new UserDTO());
+            return Task.FromResult(command._input);
 
 
             //var result = new UserDTO

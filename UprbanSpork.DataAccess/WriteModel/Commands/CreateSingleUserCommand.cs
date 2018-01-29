@@ -2,7 +2,7 @@
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.Interfaces.WriteModel;
 
-namespace UrbanSpork.Domain.WriteModel.Commands
+namespace UrbanSpork.DataAccess.WriteModel
 {
     public class CreateSingleUserCommand : ICommand<UserDTO>
     {

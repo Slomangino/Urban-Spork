@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Npgsql;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
 using UrbanSpork.DataAccess.DataTransferObjects;
 using UrbanSpork.Domain.Interfaces.ReadModel;
+using UrbanSpork.DataAccess.ReadModel.QueryCommands;
 
-namespace UrbanSpork.Domain.ReadModel.QueryHandlers
+namespace UrbanSpork.DataAccess.ReadModel.QueryHandlers
 {
     public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Task<List<UserDTO>>>
     {

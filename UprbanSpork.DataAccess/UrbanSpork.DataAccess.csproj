@@ -16,4 +16,8 @@
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\UrbanSpork.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
