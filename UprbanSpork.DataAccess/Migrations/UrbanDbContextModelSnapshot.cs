@@ -66,6 +66,13 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.ToTable("Users2");
                 });
+            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.userevents", b =>
+            {
+                b.Property<string>("id").ValueGeneratedOnAdd();
+                b.Property<string>("firstName");
+                b.HasKey("id");
+                b.ToTable("userevents");
+            });
 #pragma warning restore 612, 618
         }
     }

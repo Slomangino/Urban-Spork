@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UrbanSpork.CQRS.Interfaces.Events
+namespace UrbanSpork.Domain.Interfaces.Events
 {
     public interface IEvent
     {

@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UrbanSpork.CQRS.Interfaces.Events;
-using UrbanSpork.CQRS.Interfaces.Infrastructure;
+using UrbanSpork.Domain.Interfaces.Events;
+using UrbanSpork.Domain.Interfaces;
+using UrbanSpork.Domain.Interfaces.Infrastructure;
 
-namespace UrbanSpork.CQRS.Interfaces.Domain
+namespace UrbanSpork.Domain.Interfaces.Domain
 {
     public abstract class AggregateRoot
     {
-        //change to context.usereventstore
         private readonly List<IEvent> _changes = new List<IEvent>();
-        // private readonly UrbanDbContext _context;
 
         public Guid Id { get; protected set; }
         public int Version { get; protected set; }
-
-        public AggregateRoot() { }
-
-        //public AggregateRoot(UrbanDbContext context)
-        //{
-        //    _context = context;
-        //}
 
         public IEvent[] GetUncommittedChanges()
         {
@@ -87,9 +79,6 @@ namespace UrbanSpork.CQRS.Interfaces.Domain
 
         protected void ApplyChange(IEvent @event)
         {
-            //ApplyEvent(@event);
-            //_context.UserEvents.Add((UserEvents)@event);
-
             lock (_changes)
             {
                 ApplyEvent(@event);

@@ -27,6 +27,17 @@ namespace UrbanSpork.API.Migrations
                 {
                     table.PrimaryKey("PK_UserRM", x => x.UserID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "userevents",
+                columns: table => new
+                {
+                    id = table.Column<string>(nullable: false).Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    firstName = table.Column<string>(nullable: true)
+                }, constraints: table =>
+                {
+                    table.PrimaryKey("pk_id", x => x.id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

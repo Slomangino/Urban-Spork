@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace UrbanSpork.CQRS.Interfaces.Events
+namespace UrbanSpork.Domain.Interfaces.Events
 {
     public interface IEventPublisher
     {
