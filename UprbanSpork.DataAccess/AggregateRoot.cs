@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UrbanSpork.Domain.Interfaces.Events;
-using UrbanSpork.Domain.Interfaces;
-using UrbanSpork.Domain.Interfaces.Infrastructure;
+using UrbanSpork.CQRS.Interfaces.Events;
+using UrbanSpork.CQRS.Interfaces.Infrastructure;
 
-namespace UrbanSpork.Domain.Interfaces.Domain
+namespace UrbanSpork.DataAccess
 {
     public abstract class AggregateRoot
     {
+        //change to context.usereventstore
         private readonly List<IEvent> _changes = new List<IEvent>();
 
         public Guid Id { get; protected set; }
@@ -82,6 +82,7 @@ namespace UrbanSpork.Domain.Interfaces.Domain
             lock (_changes)
             {
                 ApplyEvent(@event);
+                //change to context.usereventstore
                 _changes.Add(@event);
             }
         }

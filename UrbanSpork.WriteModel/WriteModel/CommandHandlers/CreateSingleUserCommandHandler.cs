@@ -25,10 +25,10 @@ namespace UrbanSpork.WriteModel
         {
             //var userDTO = Mapper.Map<Users>(command._input);
 
-            var userAgg = await _userManager.CreateNewUser(command._input);
+            var result = await _userManager.CreateNewUser(command._input);
             //_userRepository.CreateUser(userDTO);
-            Console.WriteLine($"User created in handle! {userAgg.firstName}");
-            return userAgg;
+
+            return result;
 
 
             //var result = new UserDTO

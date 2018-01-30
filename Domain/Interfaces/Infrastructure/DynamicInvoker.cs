@@ -4,15 +4,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace UrbanSpork.Domain.Interfaces.Infrastructure
+namespace UrbanSpork.CQRS.Interfaces.Infrastructure
 {
-    internal static class DynamicInvoker
+    public static class DynamicInvoker
     {
         private const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
         private static volatile Dictionary<int, CompiledMethodInfo> _cachedMembers = new Dictionary<int, CompiledMethodInfo>();
         private static readonly object _lockObj = new object();
 
-        internal static object Invoke<T>(this T obj, string methodname, params object[] args)
+        public static object Invoke<T>(this T obj, string methodname, params object[] args)
         {
             var type = obj.GetType();
             var hash = Hash(type, methodname, args);

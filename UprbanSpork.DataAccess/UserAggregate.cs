@@ -2,6 +2,7 @@
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces.Domain;
 using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.Domain.Interfaces.Domain;
 
 namespace UrbanSpork.DataAccess
 {

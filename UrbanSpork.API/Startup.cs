@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanSpork.Domain.Interfaces.ReadModel;
-using UrbanSpork.Domain.Interfaces.WriteModel;
 using UrbanSpork.DataAccess.DataAccess;
 using AutoMapper;
 using UrbanSpork.Common.DataTransferObjects;

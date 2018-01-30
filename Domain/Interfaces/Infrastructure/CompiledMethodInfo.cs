@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace UrbanSpork.Domain.Interfaces.Infrastructure
+namespace UrbanSpork.CQRS.Interfaces.Infrastructure
 {
     internal class CompiledMethodInfo
     {
