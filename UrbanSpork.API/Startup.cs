@@ -1,19 +1,17 @@
 ﻿using Autofac;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanSpork.Domain.Interfaces.ReadModel;
-using UrbanSpork.Domain.Interfaces.WriteModel;
 using UrbanSpork.DataAccess.DataAccess;
 using AutoMapper;
-using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.DataAccess.Repositories;
-using UrbanSpork.DataAccess.WriteModel;
-using UrbanSpork.DataAccess.ReadModel.QueryCommands;
-using UrbanSpork.DataAccess.ReadModel.QueryHandlers;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.Repositories;
+using UrbanSpork.WriteModel;
+using UrbanSpork.ReadModel.QueryCommands;
+using UrbanSpork.ReadModel.QueryHandlers;
+using UrbanSpork.ReadModel;
 
 namespace UrbanSpork.API
 {

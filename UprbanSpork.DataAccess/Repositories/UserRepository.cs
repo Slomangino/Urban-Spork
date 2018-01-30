@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.Interfaces;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Interfaces;
 
-namespace UrbanSpork.DataAccess.Repositories
+namespace UrbanSpork.Common.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -32,7 +32,7 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public void CreateUser(Users message)
         {
-            _userManager.CreateNewUser();
+            //_userManager.CreateNewUser();
             _context.Users.Add(message);
             _context.SaveChanges();
             //_context.FindAsync(message);

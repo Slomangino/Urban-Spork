@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.Domain", "Domain\UrbanSpork.Domain.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.CQRS", "Domain\UrbanSpork.CQRS.csproj", "{1FC24923-C17D-4D8C-A2F2-E91EB60CBF0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.API", "UrbanSpork.API\UrbanSpork.API.csproj", "{E6137D90-DBED-4934-9B38-5E0437F9BFC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.DataAccess", "UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj", "{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.ReadModel", "UrbanSpork.ReadModel\UrbanSpork.ReadModel.csproj", "{44BD986A-C1B7-482D-882A-787C13417A77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.WriteModel", "UrbanSpork.WriteModel\UrbanSpork.WriteModel.csproj", "{356B30A5-4ECD-4341-B5B7-7EFC9C49C781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanSpork.Common", "UrbanSpork.Common\UrbanSpork.Common.csproj", "{3DE481D3-1E22-4014-B51C-7479A88EEF0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD39E656-F9D9-4CC6-861E-1F13FFC81CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44BD986A-C1B7-482D-882A-787C13417A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44BD986A-C1B7-482D-882A-787C13417A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44BD986A-C1B7-482D-882A-787C13417A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44BD986A-C1B7-482D-882A-787C13417A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356B30A5-4ECD-4341-B5B7-7EFC9C49C781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356B30A5-4ECD-4341-B5B7-7EFC9C49C781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356B30A5-4ECD-4341-B5B7-7EFC9C49C781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356B30A5-4ECD-4341-B5B7-7EFC9C49C781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DE481D3-1E22-4014-B51C-7479A88EEF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DE481D3-1E22-4014-B51C-7479A88EEF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DE481D3-1E22-4014-B51C-7479A88EEF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DE481D3-1E22-4014-B51C-7479A88EEF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

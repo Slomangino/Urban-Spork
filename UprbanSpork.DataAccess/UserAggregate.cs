@@ -1,33 +1,36 @@
 ﻿using System;
+using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Events.Users;
-using UrbanSpork.Domain.Interfaces.Domain;
 
 namespace UrbanSpork.DataAccess
 {
     public class UserAggregate : AggregateRoot
     {
+        public UserDTO userDTO { get; set; }
         public string FirstName { get; private set; } = "";
         public DateTime DateCreated { get; set; }
 
         private UserAggregate() { }
 
-        protected UserAggregate(Guid userId, DateTime dateCreated)
+        protected UserAggregate(Guid userId, UserDTO userDTO, DateTime dateCreated)
         {
-            Id = userId;
-            ApplyChange(new UserCreatedEvent("", dateCreated));
+            this.userDTO = userDTO;
+            this.userDTO.userId = userId;
+            this.userDTO.dateCreated = dateCreated;
+            ApplyChange(new UserCreatedEvent(userDTO));
         }
 
-        public static UserAggregate CreateNewUser()
+        public static UserAggregate CreateNewUser(UserDTO userDTO)
         {
             var userId = Guid.NewGuid();
             var creationDate = DateTime.Today;
-            return new UserAggregate(userId, creationDate);
+            return new UserAggregate(userId, userDTO, creationDate);
         }
 
         private void Apply(UserCreatedEvent @event)
         {
-            FirstName = @event.FirstName;
-            DateCreated = @event.DateCreated;
+            //userDTO = @event.UserDTO;
+            //DateCreated = @event.DateCreated;
         }
     }
 }

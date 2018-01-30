@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.Domain.Interfaces;
+using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.Common.DataTransferObjects;
+using AutoMapper;
 
 namespace UrbanSpork.DataAccess
 {
@@ -17,14 +19,16 @@ namespace UrbanSpork.DataAccess
             _context = context;
         }
 
-        public async Task<Guid> CreateNewUser()
+        public async Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO)
         {
+            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
+
             Console.WriteLine("New User created!");
-            var user = UserAggregate.CreateNewUser();
+            var user = UserAggregate.CreateNewUser(userDTO);
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
             Console.WriteLine($"Context saved {user.FirstName}");
-            return user.Id;
+            return user.userDTO;
         }
     }
 }

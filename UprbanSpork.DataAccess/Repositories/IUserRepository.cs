@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects;
 
-namespace UrbanSpork.DataAccess.Repositories
+namespace UrbanSpork.Common.Repositories
 {
     public interface IUserRepository
     {

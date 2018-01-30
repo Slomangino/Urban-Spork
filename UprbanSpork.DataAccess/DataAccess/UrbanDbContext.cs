@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UrbanSpork.Domain.Interfaces.Events;
+using UrbanSpork.CQRS.Interfaces.Events;
+using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess.DataAccess
 {
@@ -15,6 +16,6 @@ namespace UrbanSpork.DataAccess.DataAccess
         }
 
         public DbSet<Users> Users { get; set; }
-        public DbSet<IEvent> UserEvents { get; set; }
+        public DbSet<UserEvents> UserEvents { get; set; }
     }
 }

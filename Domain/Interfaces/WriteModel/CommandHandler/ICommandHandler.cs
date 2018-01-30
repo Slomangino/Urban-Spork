@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace UrbanSpork.Domain.Interfaces.WriteModel
+namespace UrbanSpork.CQRS.Interfaces.WriteModel
 {
     public interface ICommandHandler<TCommand, TResult> where TCommand : ICommand<TResult>
     {

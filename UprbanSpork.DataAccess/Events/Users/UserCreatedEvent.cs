@@ -1,6 +1,7 @@
 
 using System;
-using UrbanSpork.Domain.Interfaces.Events;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Interfaces.Events;
 
 namespace UrbanSpork.DataAccess.Events.Users
 {
@@ -10,13 +11,14 @@ namespace UrbanSpork.DataAccess.Events.Users
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public string FirstName { get; set; }
-        public DateTime DateCreated { get; set; }
+        public UserDTO UserDTO{ get; set; }
+        // public DateTime DateCreated { get; set; }
 
-        public UserCreatedEvent(string name, DateTime dateCreated)
+        public UserCreatedEvent(UserDTO userDTO)
         {
-            FirstName = name;
-            DateCreated = dateCreated;
+            UserDTO = userDTO;
+            //UserDTO.userId = userId;
+            //DateCreated = dateCreated;
         }
     }
 }
