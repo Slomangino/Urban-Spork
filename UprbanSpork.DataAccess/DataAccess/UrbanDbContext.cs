@@ -15,7 +15,7 @@ namespace UrbanSpork.DataAccess.DataAccess
 
         }
 
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users2 { get; set; }
         public DbSet<UserEvents> UserEvents { get; set; }
     }
 }

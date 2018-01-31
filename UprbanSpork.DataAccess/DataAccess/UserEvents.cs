@@ -16,6 +16,9 @@ namespace UrbanSpork.DataAccess.DataAccess
         public string EventType { get; set; }
 
         [Column(TypeName = "json")]
-        public string UserDTO { get; set; }
+        public string OldUserDTO { get; set; }
+
+        [Column(TypeName = "json")]
+        public string UpdatedUserDTO { get; set; }
     }
 }

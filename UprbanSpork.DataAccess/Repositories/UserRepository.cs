@@ -24,16 +24,16 @@ namespace UrbanSpork.Common.Repositories
 
         public Task<UserDTO> GetSingleUser(int id)
         {
-            var foo = _context.Users
+            var foo = _context.Users2
                 .Single(b => b.UserID == id);
 
             return Task.FromResult(Mapper.Map<UserDTO>(foo));
         }
 
-        public void CreateUser(Users message)
+        public void CreateUser(User message)
         {
             //_userManager.CreateNewUser();
-            _context.Users.Add(message);
+            _context.Users2.Add(message);
             _context.SaveChanges();
             //_context.FindAsync(message);
             //return Task.FromResult(message);

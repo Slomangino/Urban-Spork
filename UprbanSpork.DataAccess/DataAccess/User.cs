@@ -7,7 +7,7 @@ using System.Text;
 
 namespace UrbanSpork.DataAccess.DataAccess
 {
-    public class Users
+    public class User
     {
        [Key]
         public int UserID { get; set; }

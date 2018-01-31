@@ -27,9 +27,12 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("EventType");
 
+                    b.Property<string>("OldUserDTO")
+                        .HasColumnType("json");
+
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<string>("UserDTO")
+                    b.Property<string>("UpdatedUserDTO")
                         .HasColumnType("json");
 
                     b.Property<int>("Version");
@@ -67,7 +70,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users2");
                 });
 #pragma warning restore 612, 618
         }

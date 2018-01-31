@@ -12,6 +12,7 @@ using UrbanSpork.WriteModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.ReadModel.QueryHandlers;
 using UrbanSpork.ReadModel;
+using UrbanSpork.DataAccess;
 
 namespace UrbanSpork.API
 {
@@ -29,8 +30,10 @@ namespace UrbanSpork.API
             this.Configuration = builder.Build();
 
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<Users, UserDTO>();
-                cfg.CreateMap<UserDTO, Users>();
+                cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<UserDTO, User>();
+                cfg.CreateMap<UserDTO, UserInputDTO>();
+                cfg.CreateMap<UserInputDTO, UserDTO>();
                 // cfg.CreateMap<Bar, BarDto>();
             });
         }
@@ -64,6 +67,10 @@ namespace UrbanSpork.API
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
 
             //Commands
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();

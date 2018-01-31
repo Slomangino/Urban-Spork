@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace UrbanSpork.DataAccess.Migrations
 {
-    public partial class ES_Migration : Migration
+    public partial class stephen : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,9 @@ namespace UrbanSpork.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     EventType = table.Column<string>(nullable: true),
+                    OldUserDTO = table.Column<string>(type: "json", nullable: true),
                     TimeStamp = table.Column<DateTime>(nullable: false),
-                    UserDTO = table.Column<string>(type: "json", nullable: true),
+                    UpdatedUserDTO = table.Column<string>(type: "json", nullable: true),
                     Version = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -25,7 +26,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Users2",
                 columns: table => new
                 {
                     UserID = table.Column<int>(nullable: false)
@@ -42,7 +43,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserID);
+                    table.PrimaryKey("PK_Users2", x => x.UserID);
                 });
         }
 
@@ -52,7 +53,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 name: "UserEvents");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Users2");
         }
     }
 }
