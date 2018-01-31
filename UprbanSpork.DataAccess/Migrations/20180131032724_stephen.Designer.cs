@@ -11,8 +11,8 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    [Migration("20180130030908_ES_Migration")]
-    partial class ES_Migration
+    [Migration("20180131032724_stephen")]
+    partial class stephen
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,12 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("EventType");
 
+                    b.Property<string>("OldUserDTO")
+                        .HasColumnType("json");
+
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<string>("UserDTO")
+                    b.Property<string>("UpdatedUserDTO")
                         .HasColumnType("json");
 
                     b.Property<int>("Version");
@@ -68,7 +71,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users2");
                 });
 #pragma warning restore 612, 618
         }

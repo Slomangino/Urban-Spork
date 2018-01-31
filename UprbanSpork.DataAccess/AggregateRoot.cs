@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UrbanSpork.CQRS.Interfaces.Events;
 using UrbanSpork.CQRS.Interfaces.Infrastructure;
+using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess
 {
@@ -10,9 +11,17 @@ namespace UrbanSpork.DataAccess
     {
         //change to context.usereventstore
         private readonly List<IEvent> _changes = new List<IEvent>();
+        // private readonly UrbanDbContext _context;
 
         public Guid Id { get; protected set; }
         public int Version { get; protected set; }
+
+        public AggregateRoot() { }
+
+        //public AggregateRoot(UrbanDbContext context)
+        //{
+        //    _context = context;
+        //}
 
         public IEvent[] GetUncommittedChanges()
         {
@@ -79,10 +88,12 @@ namespace UrbanSpork.DataAccess
 
         protected void ApplyChange(IEvent @event)
         {
+            //ApplyEvent(@event);
+            //_context.UserEvents.Add((UserEvents)@event);
+
             lock (_changes)
             {
                 ApplyEvent(@event);
-                //change to context.usereventstore
                 _changes.Add(@event);
             }
         }
