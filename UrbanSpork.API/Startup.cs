@@ -1,21 +1,20 @@
 ﻿using Autofac;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.ReadModel.QueryHandlers;
-using UrbanSpork.Domain.Interfaces.ReadModel;
-using UrbanSpork.Domain.Interfaces.WriteModel;
-using UrbanSpork.Domain.WriteModel;
-using UrbanSpork.Domain.WriteModel.Commands;
 using UrbanSpork.DataAccess.DataAccess;
 using AutoMapper;
-using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.WriteModel;
+using UrbanSpork.ReadModel.QueryCommands;
+using UrbanSpork.ReadModel.QueryHandlers;
+using UrbanSpork.ReadModel;
+using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Repositories;
-using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.CommandHandlers;
 
 namespace UrbanSpork.API
 {
@@ -33,8 +32,10 @@ namespace UrbanSpork.API
             this.Configuration = builder.Build();
 
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<Users, UserDTO>();
-                cfg.CreateMap<UserDTO, Users>();
+                cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<UserDTO, User>();
+                cfg.CreateMap<UserDTO, UserInputDTO>();
+                cfg.CreateMap<UserInputDTO, UserDTO>();
                 // cfg.CreateMap<Bar, BarDto>();
             });
         }
@@ -63,29 +64,29 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism shown later.
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            //Utility
             builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            // builder.RegisterType<BaseRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-
-            //commands
-            builder.RegisterType<CommandDispatcher>()
-                   .AsImplementedInterfaces()
-                   .InstancePerLifetimeScope();
-            builder.RegisterType<CreateSingleUserCommandHandler>()
-                   .AsImplementedInterfaces()
-                   .InstancePerLifetimeScope();
-            //builder.RegisterType<CreateSingleUserCommandHandler>().As<IUserRepository>
-            builder.RegisterType<CreateSingleUserCommand>()
-                  .AsImplementedInterfaces()
-                  .InstancePerLifetimeScope();
-            //good
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
+
+            //Commands
+            builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            //Command Handlers
+            builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            //Query
+            builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
         }
 

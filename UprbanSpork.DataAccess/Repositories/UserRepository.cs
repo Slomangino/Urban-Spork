@@ -6,24 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Interfaces;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private UrbanDbContext _context;
-        // private IMapper _mapper;
+        private IUserManager _userManager;
 
-        public UserRepository(UrbanDbContext context/*, IMapper mapper*/)
+        public UserRepository(UrbanDbContext context, IUserManager userManager)
         {
             _context = context;
-            //_mapper = mapper;
+            _userManager = userManager;
         }
 
         public Task<UserDTO> GetSingleUser(int id)
         {
-            var foo = _context.Users
+            var foo = _context.Users2
                 .Single(b => b.UserID == id);
 
             return Task.FromResult(Mapper.Map<UserDTO>(foo));
@@ -31,7 +32,7 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public Task<List<UserDTO>> GetAllUsers()
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users2.ToList();
             var userList = new List<UserDTO>();
             foreach(var user in users)
             {
@@ -41,9 +42,10 @@ namespace UrbanSpork.DataAccess.Repositories
             return Task.FromResult(userList);
         }
 
-        public void CreateUser(Users message)
+        public void CreateUser(User message)
         {
-            _context.Users.Add(message);
+            //_userManager.CreateNewUser();
+            _context.Users2.Add(message);
             _context.SaveChanges();
             //_context.FindAsync(message);
             //return Task.FromResult(message);

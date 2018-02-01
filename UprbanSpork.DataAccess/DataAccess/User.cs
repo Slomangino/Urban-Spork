@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Json;
 using System.Text;
 
 namespace UrbanSpork.DataAccess.DataAccess
 {
-    public class Users
+    public class User
     {
-        [Key]
+       [Key]
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,7 +21,10 @@ namespace UrbanSpork.DataAccess.DataAccess
         [Column(TypeName = "date")]
         public  DateTime InitialApprovedDate { get; set; }
 
-        [Column(TypeName = "jsonb")]
-        public string Assets { get; set; }
+        [Column(TypeName = "json")]
+        public string Access { get; set; }
+
+        [Column(TypeName = "json")]
+        public string Equipment { get; set; }
     }
 }

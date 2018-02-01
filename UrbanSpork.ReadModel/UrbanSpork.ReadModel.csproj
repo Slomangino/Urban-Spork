@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="System.Json" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\UrbanSpork.CQRS.csproj" />
+    <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
+    <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
+  </ItemGroup>
+
+</Project>

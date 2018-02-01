@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
-using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.Domain.Interfaces.ReadModel;
-using UrbanSpork.Domain.Interfaces.WriteModel;
-using UrbanSpork.Domain.WriteModel.Commands;
+using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Interfaces.ReadModel;
+using UrbanSpork.CQRS.Interfaces.WriteModel;
+using UrbanSpork.ReadModel.QueryCommands;
+using UrbanSpork.WriteModel;
+using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
 
@@ -65,10 +65,11 @@ namespace UrbanSpork.API.Controllers
         }*/
 
         [HttpPost]
-        public void CreateUser(UserDTO input)
+        public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
         {
             var message = new CreateSingleUserCommand(input);
-            _commandDispatcher.Execute(message);
+            var result = await _commandDispatcher.Execute(message);
+            return result;
         }
 
         //[HttpGet]

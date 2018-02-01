@@ -25,6 +25,7 @@
     <PackageReference Include="Npgsql" Version="3.2.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\UrbanSpork.Domain.csproj" />
+    <ProjectReference Include="..\Domain\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
+    <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
+    <ProjectReference Include="..\UrbanSpork.ReadModel\UrbanSpork.ReadModel.csproj" />
+    <ProjectReference Include="..\UrbanSpork.WriteModel\UrbanSpork.WriteModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

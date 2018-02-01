@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.DataAccess.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
@@ -15,6 +15,6 @@ namespace UrbanSpork.DataAccess.Repositories
 
         Task<List<UserDTO>> GetAllUsers();
 
-        void CreateUser(Users message);
+        void CreateUser(User message);
     }
 }
