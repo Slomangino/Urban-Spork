@@ -32,7 +32,7 @@ namespace UrbanSpork.Common.Repositories
 
         public Task<List<UserDTO>> GetAllUsers()
         {
-            var users = _context.Users.ToList();
+            var users = _context.Users2.ToList();
             var userList = new List<UserDTO>();
             foreach(var user in users)
             {
@@ -42,7 +42,7 @@ namespace UrbanSpork.Common.Repositories
             return Task.FromResult(userList);
         }
 
-        public void CreateUser(Users message)
+        public void CreateUser(User message)
         {
             //_userManager.CreateNewUser();
             _context.Users2.Add(message);

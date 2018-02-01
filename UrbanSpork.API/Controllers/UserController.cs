@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces.ReadModel;
