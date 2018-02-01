@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UrbanSpork.CQRS.Interfaces.Events;
 using UrbanSpork.CQRS.Interfaces.Infrastructure;
-using UrbanSpork.DataAccess.DataAccess;
 
-namespace UrbanSpork.DataAccess
+namespace UrbanSpork.CQRS.Interfaces.Domain
 {
     public abstract class AggregateRoot
     {

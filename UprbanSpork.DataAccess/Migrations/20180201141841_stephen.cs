@@ -10,19 +10,17 @@ namespace UrbanSpork.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserEvents",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    EventData = table.Column<string>(nullable: true),
                     EventType = table.Column<string>(nullable: true),
-                    OldUserDTO = table.Column<string>(type: "json", nullable: true),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
-                    UpdatedUserDTO = table.Column<string>(type: "json", nullable: true),
                     Version = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEvents", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,7 +48,7 @@ namespace UrbanSpork.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserEvents");
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "Users2");

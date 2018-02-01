@@ -28,7 +28,4 @@
   <ItemGroup>
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Domain\" />
-  </ItemGroup>
 </Project>

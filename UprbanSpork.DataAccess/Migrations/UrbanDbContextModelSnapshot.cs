@@ -20,29 +20,23 @@ namespace UrbanSpork.DataAccess.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.UserEvents", b =>
+            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.EventStoreDataRow", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("EventData");
+
                     b.Property<string>("EventType");
-
-                    b.Property<string>("OldUserDTO")
-                        .HasColumnType("json");
-
-                    b.Property<DateTime>("TimeStamp");
-
-                    b.Property<string>("UpdatedUserDTO")
-                        .HasColumnType("json");
 
                     b.Property<int>("Version");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEvents");
+                    b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.Users", b =>
+            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.User", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd();

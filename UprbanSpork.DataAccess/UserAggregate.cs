@@ -1,6 +1,6 @@
 ﻿using System;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.CQRS.Interfaces.Domain;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess
