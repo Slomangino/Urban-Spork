@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
+    <ProjectReference Include="..\UrbanSpork.CQRS\UrbanSpork.CQRS.csproj" />
   </ItemGroup>
 
 </Project>

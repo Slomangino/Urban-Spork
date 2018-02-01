@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\UrbanSpork.CQRS.csproj" />
-    <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
+    <ProjectReference Include="..\UrbanSpork.CQRS\UrbanSpork.CQRS.csproj" />
+    <ProjectReference Include="..\UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
