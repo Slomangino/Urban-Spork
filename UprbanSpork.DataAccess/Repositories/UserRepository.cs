@@ -9,7 +9,7 @@ using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces;
 
-namespace UrbanSpork.Common.Repositories
+namespace UrbanSpork.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {

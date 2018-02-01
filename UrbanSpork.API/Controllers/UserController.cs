@@ -7,6 +7,7 @@ using UrbanSpork.CQRS.Interfaces.ReadModel;
 using UrbanSpork.CQRS.Interfaces.WriteModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel;
+using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
 

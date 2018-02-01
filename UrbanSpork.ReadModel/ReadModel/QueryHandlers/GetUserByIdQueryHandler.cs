@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.Repositories;
 using UrbanSpork.CQRS.Interfaces.ReadModel;
+using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.ReadModel.QueryCommands;
 
 namespace UrbanSpork.ReadModel.QueryHandlers

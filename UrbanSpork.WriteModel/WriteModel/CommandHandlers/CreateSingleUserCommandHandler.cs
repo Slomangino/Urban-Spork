@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using System;
 using UrbanSpork.CQRS.Interfaces.WriteModel;
-using UrbanSpork.DataAccess.DataAccess;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.Repositories;
 using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.WriteModel.Commands;
 
-namespace UrbanSpork.WriteModel
+namespace UrbanSpork.WriteModel.CommandHandlers
 {
     public class CreateSingleUserCommandHandler : ICommandHandler<CreateSingleUserCommand, UserDTO>
     {

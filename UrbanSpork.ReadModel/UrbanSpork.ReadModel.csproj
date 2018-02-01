@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Domain\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UprbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
+    <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
   </ItemGroup>
 
 </Project>

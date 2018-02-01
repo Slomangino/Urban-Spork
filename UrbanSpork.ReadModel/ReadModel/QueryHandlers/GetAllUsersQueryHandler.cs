@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Npgsql;
-using UrbanSpork.Domain.ReadModel.QueryCommands;
-using UrbanSpork.DataAccess.DataTransferObjects;
-using UrbanSpork.Domain.Interfaces.ReadModel;
-using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces.ReadModel;
+using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.ReadModel.QueryCommands;
 
 namespace UrbanSpork.ReadModel.QueryHandlers

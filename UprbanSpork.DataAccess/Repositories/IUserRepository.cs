@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
 
-namespace UrbanSpork.Common.Repositories
+namespace UrbanSpork.DataAccess.Repositories
 {
     public interface IUserRepository
     {

@@ -7,12 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using UrbanSpork.DataAccess.DataAccess;
 using AutoMapper;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.Repositories;
 using UrbanSpork.WriteModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.ReadModel.QueryHandlers;
 using UrbanSpork.ReadModel;
 using UrbanSpork.DataAccess;
+using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.CommandHandlers;
 
 namespace UrbanSpork.API
 {

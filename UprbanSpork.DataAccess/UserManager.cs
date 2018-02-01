@@ -7,7 +7,6 @@ using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.Common.DataTransferObjects;
 using AutoMapper;
-using UrbanSpork.CQRS.Interfaces.Domain;
 using UrbanSpork.CQRS.Interfaces.Events;
 using UrbanSpork.DataAccess.Events.Users;
 

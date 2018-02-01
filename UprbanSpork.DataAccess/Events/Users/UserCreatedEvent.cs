@@ -6,7 +6,7 @@ using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess.Events.Users
 {
-    public class UserCreatedEvent : UserEvents, IEvent
+    public class UserCreatedEvent : IEvent
     {
         public UserDTO UserDTO{ get; }
         public Guid Id { get; set; } = Guid.NewGuid();
