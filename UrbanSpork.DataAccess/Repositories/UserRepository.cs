@@ -8,18 +8,19 @@ using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.CQRS.Interfaces.Events;
+using Newtonsoft.Json;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private UrbanDbContext _context;
-        private IUserManager _userManager;
 
-        public UserRepository(UrbanDbContext context, IUserManager userManager)
+        public UserRepository(UrbanDbContext context)
         {
             _context = context;
-            _userManager = userManager;
+            
         }
 
         public Task<UserDTO> GetSingleUser(int id)
@@ -42,13 +43,44 @@ namespace UrbanSpork.DataAccess.Repositories
             return Task.FromResult(userList);
         }
 
-        public void CreateUser(User message)
+        public void CreateUser(User user)
         {
-            //_userManager.CreateNewUser();
-            _context.Users2.Add(message);
+            _context.Users2.Add(user);
             _context.SaveChanges();
             //_context.FindAsync(message);
             //return Task.FromResult(message);
         }
+
+        public async void SaveEvent(IEvent[] events)
+        {
+            foreach (IEvent e in events)
+            {
+
+                var serializedEvent = BuildEventRowFromEvent(e);
+                await _context.Events.AddAsync(serializedEvent);  ////needs to be done in userRepository
+            }
+
+        }
+
+        private EventStoreDataRow BuildEventRowFromEvent(IEvent e)
+        {
+            var eventData = new EventStoreDataRow
+            {
+                Id = e.Id,
+                Version = e.Version,
+                EventType = e.GetType().FullName,
+                EventData = SerializeEvent(e)
+            };
+            return eventData;
+        }
+
+        public string SerializeEvent(IEvent e)
+        {
+            var ev = JsonConvert.SerializeObject(e);
+            return ev;
+
+        }
+
+
     }
 }

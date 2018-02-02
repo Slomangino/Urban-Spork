@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Interfaces.Events;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
@@ -16,5 +17,7 @@ namespace UrbanSpork.DataAccess.Repositories
         Task<List<UserDTO>> GetAllUsers();
 
         void CreateUser(User message);
+
+        void SaveEvent(IEvent[] events);
     }
 }

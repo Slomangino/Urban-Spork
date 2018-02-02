@@ -64,6 +64,7 @@ namespace UrbanSpork.API.Controllers
             return await result;
         }*/
 
+       // [Route("create/{input}")]
         [HttpPost]
         public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
         {
