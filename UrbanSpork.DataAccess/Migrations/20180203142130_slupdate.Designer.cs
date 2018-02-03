@@ -11,8 +11,8 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    [Migration("20180202030401_InitMigration")]
-    partial class InitMigration
+    [Migration("20180203142130_slupdate")]
+    partial class slupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,10 +54,9 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<DateTime>("InitialApprovedDate")
-                        .HasColumnType("date");
-
                     b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsAdmin");
 
                     b.Property<string>("LastName");
 

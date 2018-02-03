@@ -9,13 +9,11 @@ namespace UrbanSpork.DataAccess.DataAccess
 {
     public class UrbanDbContext : DbContext
     {
+        public DbSet<User> Users2 { get; set; }
+        public DbSet<EventStoreDataRow> Events { get; set; }
 
         public UrbanDbContext(DbContextOptions<UrbanDbContext> options) : base(options)
         {
-
         }
-
-        public DbSet<User> Users2 { get; set; }
-        public DbSet<EventStoreDataRow> Events { get; set; }
     }
 }

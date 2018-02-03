@@ -49,7 +49,6 @@ namespace UrbanSpork.API
             // Add services to the collection. Don't build or return
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
-            //services.AddAutofac();
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")));
 
@@ -72,8 +71,6 @@ namespace UrbanSpork.API
             builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-
-
             //Commands
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
@@ -87,7 +84,6 @@ namespace UrbanSpork.API
             //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
         }
 
         // Configure is where you add middleware. This is called after
@@ -101,6 +97,5 @@ namespace UrbanSpork.API
             }
             app.UseMvc();
         }
-
     }
 }

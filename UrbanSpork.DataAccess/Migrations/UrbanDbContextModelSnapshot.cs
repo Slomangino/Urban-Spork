@@ -53,10 +53,9 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<DateTime>("InitialApprovedDate")
-                        .HasColumnType("date");
-
                     b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsAdmin");
 
                     b.Property<string>("LastName");
 

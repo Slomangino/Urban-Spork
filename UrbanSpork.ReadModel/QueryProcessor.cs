@@ -22,15 +22,11 @@ namespace UrbanSpork.ReadModel
             var tResultType = typeof(TResult);
 
             // create process internal method dynamically
-            // TQuery = tQueryType
-            // TResult = tResultType
             MethodInfo method = typeof(QueryProcessor).GetMethod("ProcessInternal");
             MethodInfo generic = method.MakeGenericMethod(tQueryType, tResultType);
             
-
             // invoke method dynamically
             object result = generic.Invoke(this, new[] { query });
-            //return Task.FromResult((TResult)result);
             return (Task<TResult>)result;
         }
 

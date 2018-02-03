@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace UrbanSpork.DataAccess.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class slupdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,8 +34,8 @@ namespace UrbanSpork.DataAccess.Migrations
                     Email = table.Column<string>(nullable: true),
                     Equipment = table.Column<string>(type: "json", nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    InitialApprovedDate = table.Column<DateTime>(type: "date", nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
+                    IsAdmin = table.Column<bool>(nullable: false),
                     LastName = table.Column<string>(nullable: true),
                     Position = table.Column<string>(nullable: true)
                 },

@@ -33,7 +33,6 @@ namespace UrbanSpork.WriteModel
             where TCommand : ICommand<TResult>
         {
             var handler = _context.Resolve<ICommandHandler<TCommand, TResult>>();
-            //return handler.Handle(command);
             return handler.Handle(command);
         }
     }

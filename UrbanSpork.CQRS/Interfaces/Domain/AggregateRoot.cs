@@ -8,19 +8,12 @@ namespace UrbanSpork.CQRS.Interfaces.Domain
 {
     public abstract class AggregateRoot
     {
-        //change to context.usereventstore
         private readonly List<IEvent> _changes = new List<IEvent>();
-        // private readonly UrbanDbContext _context;
 
         public Guid Id { get; protected set; }
         public int Version { get; protected set; }
 
         public AggregateRoot() { }
-
-        //public AggregateRoot(UrbanDbContext context)
-        //{
-        //    _context = context;
-        //}
 
         public IEvent[] GetUncommittedChanges()
         {
@@ -87,9 +80,6 @@ namespace UrbanSpork.CQRS.Interfaces.Domain
 
         protected void ApplyChange(IEvent @event)
         {
-            //ApplyEvent(@event);
-            //_context.UserEvents.Add((UserEvents)@event);
-
             lock (_changes)
             {
                 ApplyEvent(@event);

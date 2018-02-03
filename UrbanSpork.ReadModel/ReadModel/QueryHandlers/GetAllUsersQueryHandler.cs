@@ -11,7 +11,6 @@ namespace UrbanSpork.ReadModel.QueryHandlers
     {
         private IUserRepository _userRepository;
 
-
         public GetAllUsersQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;

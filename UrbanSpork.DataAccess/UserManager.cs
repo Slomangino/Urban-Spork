@@ -17,10 +17,8 @@ namespace UrbanSpork.DataAccess
     {
         private readonly IUserRepository _userRepository;
 
-
         public UserManager(IUserRepository userRepository)
         {
-            
             _userRepository = userRepository;
         }
 
@@ -35,11 +33,8 @@ namespace UrbanSpork.DataAccess
 
             _userRepository.SaveEvent(events);
             _userRepository.CreateUser(user);
-
         
             return Task.FromResult(userAgg.userDTO);
         }
-
-       
     }
 }
