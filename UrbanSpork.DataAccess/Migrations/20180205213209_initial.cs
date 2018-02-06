@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
 namespace UrbanSpork.DataAccess.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,11 +23,10 @@ namespace UrbanSpork.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users2",
+                name: "Users",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    UserID = table.Column<Guid>(nullable: false),
                     Access = table.Column<string>(type: "json", nullable: true),
                     Department = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -41,7 +39,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users2", x => x.UserID);
+                    table.PrimaryKey("PK_Users", x => x.UserID);
                 });
         }
 
@@ -51,7 +49,7 @@ namespace UrbanSpork.DataAccess.Migrations
                 name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Users2");
+                name: "Users");
         }
     }
 }

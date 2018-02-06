@@ -14,16 +14,22 @@ namespace UrbanSpork.DataAccess
 
         protected UserAggregate(UserDTO userDTO)
         {
-            Id = userDTO.userId;
-            DateCreated = userDTO.dateCreated;
+            Id = userDTO.userID;
+            DateCreated = userDTO.InitialApprovedDate;
             ApplyChange(new UserCreatedEvent(userDTO));
         }
 
         public static UserAggregate CreateNewUser(UserDTO userDTO)
         {
             var dto = userDTO;
-            dto.userId = Guid.NewGuid();
-            dto.dateCreated = DateTime.Today;
+            dto.userID = Guid.NewGuid();
+            dto.InitialApprovedDate = DateTime.Today;
+            return new UserAggregate(dto);
+        }
+
+        public static UserAggregate UpdateUser(UserDTO user)
+        {
+            var dto = user;
             return new UserAggregate(dto);
         }
 

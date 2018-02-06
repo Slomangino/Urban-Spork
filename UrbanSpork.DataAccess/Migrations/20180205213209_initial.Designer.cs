@@ -11,8 +11,8 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    [Migration("20180202030401_InitMigration")]
-    partial class InitMigration
+    [Migration("20180205213209_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
             modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Access")
@@ -65,7 +65,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users2");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
