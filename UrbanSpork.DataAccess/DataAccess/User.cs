@@ -17,9 +17,10 @@ namespace UrbanSpork.DataAccess.DataAccess
         public string Position { get; set; }
         public string Department { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAdmin { get; set; }
 
         [Column(TypeName = "date")]
-        public  DateTime InitialApprovedDate { get; set; }
+        public  DateTime DateCreated { get; set; }
 
         [Column(TypeName = "json")]
         public string Access { get; set; }

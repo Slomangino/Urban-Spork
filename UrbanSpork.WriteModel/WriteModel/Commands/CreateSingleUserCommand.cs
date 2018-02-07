@@ -6,9 +6,9 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class CreateSingleUserCommand : ICommand<UserDTO>
     {
-        public UserDTO _input { get; set; }
+        public UserInputDTO _input { get; set; }
 
-        public CreateSingleUserCommand(UserDTO input)
+        public CreateSingleUserCommand(UserInputDTO input)
         {
             _input = input;
         }

@@ -8,11 +8,11 @@ namespace UrbanSpork.WriteModel.WriteModel.Commands
 {
     public class UpdateSingleUserCommand : ICommand<UserDTO>
     {
-        public UserDTO user;
+        public UserInputDTO userInputDTO;
 
-        public UpdateSingleUserCommand(UserDTO User)
+        public UpdateSingleUserCommand(UserInputDTO User)
         {
-            user = User;
+            userInputDTO = User;
         }
     }
 }

@@ -24,8 +24,9 @@ namespace UrbanSpork.DataAccess
             _userRepository = userRepository;
         }
 
-        public Task<UserDTO> CreateNewUser(UserDTO userDTO)
-        {            
+        public Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO)
+        {
+            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
             var userAgg = UserAggregate.CreateNewUser(userDTO);
 
             var user = Mapper.Map<User>(userAgg.userDTO);
@@ -40,8 +41,9 @@ namespace UrbanSpork.DataAccess
             return Task.FromResult(userAgg.userDTO);
         }
 
-        public Task<UserDTO> UpdateUser(UserDTO userDTO)
+        public Task<UserDTO> UpdateUser(UserInputDTO userInputDTO)
         {
+            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
             var userAgg = UserAggregate.UpdateUser(userDTO);
             var user = Mapper.Map<User>(userAgg.userDTO);
             var events = userAgg.GetUncommittedChanges();
