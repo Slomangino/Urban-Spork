@@ -43,7 +43,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        //[HttpGet]
+        [HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
         {
             // var tableName = "users";

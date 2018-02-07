@@ -24,7 +24,7 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public Task<UserDTO> GetSingleUser(Guid id)
         {
-            var foo = _context.Users2.Single(b => b.UserID == id);
+            var foo = _context.Users.Single(b => b.UserID == id);
             return Task.FromResult(Mapper.Map<UserDTO>(foo));
         }
 
