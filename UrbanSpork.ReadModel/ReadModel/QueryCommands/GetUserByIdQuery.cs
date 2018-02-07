@@ -6,9 +6,9 @@ namespace UrbanSpork.ReadModel.QueryCommands
 {
     public class GetUserByIdQuery : IQuery<UserDTO>
     {
-        internal int Id;
+        internal Guid Id;
 
-        public GetUserByIdQuery(int id)
+        public GetUserByIdQuery(Guid id)
         {
             Id = id;
         }

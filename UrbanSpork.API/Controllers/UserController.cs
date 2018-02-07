@@ -8,6 +8,7 @@ using UrbanSpork.CQRS.Interfaces.WriteModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
 
@@ -35,15 +36,11 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<UserDTO> Get(int id)
+        public async Task<UserDTO> Get(Guid id)
         {
             var message = new GetUserByIdQuery(id);
             var result = await _queryProcessor.Process(message);
             return result;
-
-            //var message = new CreateSingleUserCommand(id);
-            //var result = _commandDispatcher.Execute(message);
-            //return result;
         }
 
         //[HttpGet]
@@ -55,17 +52,8 @@ namespace UrbanSpork.API.Controllers
             return  await result;
         }
 
-        /*[HttpGet]
-        public async Task<List<UserDTO>> GetAllUsers()
-        {
-            // var tableName = "users";
-            var query = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(query);
-            return await result;
-        }*/
-
-       // [Route("create/{input}")]
-        [HttpPost]
+       
+        [HttpPost("create")]
         public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
         {
             var message = new CreateSingleUserCommand(input);
@@ -73,30 +61,12 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get(){
-        //    var users = await _userRepository.GetAll();
-        //    if (users == null)
-        //    {
-        //        return BadRequest("No users found.");
-        //    }
-        //    return Ok(users);
-        //}
-
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> Get(int id) 
-        //{
-        //    var user = await _userRepository.GetById(id);
-
-        //    if (user == null)
-        //    {
-        //        return BadRequest("No user was found with ID " + id.ToString() + ".");
-        //    }
-
-
-        //    return Ok(user);
-
-        //    //return $"value {id}";
-        //}
+        [HttpPut("update")]
+        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input)
+        {
+            var message = new UpdateSingleUserCommand(input);
+            var result = await _commandDispatcher.Execute(message);
+            return result;
+        }
     }
 }

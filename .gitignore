@@ -1,6 +1,9 @@
 # Autosave files
 *~
 
+#dont import DB Migrations
+UrbanSpork.DataAccess/Migrations/
+
 # build
 [Oo]bj/
 [Bb]in/

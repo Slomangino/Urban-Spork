@@ -22,7 +22,7 @@ namespace UrbanSpork.DataAccess.Repositories
             _context = context;
         }
 
-        public Task<UserDTO> GetSingleUser(int id)
+        public Task<UserDTO> GetSingleUser(Guid id)
         {
             var foo = _context.Users2.Single(b => b.UserID == id);
             return Task.FromResult(Mapper.Map<UserDTO>(foo));
@@ -30,7 +30,7 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public Task<List<UserDTO>> GetAllUsers()
         {
-            var users = _context.Users2.ToList();
+            var users = _context.Users.ToList();
             var userList = new List<UserDTO>();
             foreach(var user in users)
             {
@@ -42,8 +42,14 @@ namespace UrbanSpork.DataAccess.Repositories
 
         public void CreateUser(User user)
         {
-            _context.Users2.Add(user);
+            _context.Users.Add(user);
             _context.SaveChanges();
+        }
+
+        public  void UpdateUser(User user)
+        {
+            _context.Users.Update(user);
+             _context.SaveChanges();
         }
 
         public async void SaveEvent(IEvent[] events)
@@ -51,7 +57,7 @@ namespace UrbanSpork.DataAccess.Repositories
             foreach (IEvent e in events)
             {
                 var serializedEvent = BuildEventRowFromEvent(e);
-                await _context.Events.AddAsync(serializedEvent);
+                await _context.Events.AddAsync(serializedEvent);  ////needs to be done in userRepository
             }
 
         }

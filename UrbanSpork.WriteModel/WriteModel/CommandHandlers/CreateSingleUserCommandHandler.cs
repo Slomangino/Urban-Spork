@@ -11,12 +11,12 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 {
     public class CreateSingleUserCommandHandler : ICommandHandler<CreateSingleUserCommand, UserDTO>
     {
-        private IUserRepository _userRepository;
+        
         private IUserManager _userManager;
 
-        public CreateSingleUserCommandHandler(IUserRepository userRepository, IUserManager userManager)
+        public CreateSingleUserCommandHandler(IUserManager userManager)
         {
-            _userRepository = userRepository;
+           
             _userManager = userManager;
         }
 

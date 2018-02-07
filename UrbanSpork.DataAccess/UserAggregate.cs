@@ -14,16 +14,23 @@ namespace UrbanSpork.DataAccess
 
         protected UserAggregate(UserDTO userDTO)
         {
-            Id = userDTO.userId;
-            DateCreated = userDTO.dateCreated;
+            Id = userDTO.userID;
+            DateCreated = userDTO.DateCreated;
             ApplyChange(new UserCreatedEvent(userDTO));
         }
 
         public static UserAggregate CreateNewUser(UserDTO userDTO)
         {
             var dto = userDTO;
-            dto.userId = Guid.NewGuid();
-            dto.dateCreated = DateTime.Today;
+            dto.userID = Guid.NewGuid();
+            dto.DateCreated = DateTime.Today;
+            return new UserAggregate(dto);
+        }
+
+        public static UserAggregate UpdateUser(UserDTO userDTO)
+        {
+            var dto = userDTO;
+            //wrong, needs to be changed to session.get<UserAggregate>(UserID); in userManager, all the aggregate does is apply events
             return new UserAggregate(dto);
         }
 

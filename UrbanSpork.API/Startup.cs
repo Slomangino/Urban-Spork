@@ -15,6 +15,8 @@ using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.CommandHandlers;
+using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.WriteModel.WriteModel.CommandHandlers;
 
 namespace UrbanSpork.API
 {
@@ -74,8 +76,13 @@ namespace UrbanSpork.API
             //Commands
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
             //Command Handlers
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
             //Query
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();

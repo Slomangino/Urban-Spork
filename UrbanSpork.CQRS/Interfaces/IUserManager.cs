@@ -6,5 +6,6 @@ namespace UrbanSpork.CQRS.Interfaces
     public interface IUserManager
     {
         Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO);
+        Task<UserDTO> UpdateUser(UserInputDTO user);
     }
 }

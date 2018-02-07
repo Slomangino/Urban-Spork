@@ -10,7 +10,7 @@ namespace UrbanSpork.DataAccess.DataAccess
     public class User
     {
        [Key]
-        public int UserID { get; set; }
+        public Guid UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -18,6 +18,9 @@ namespace UrbanSpork.DataAccess.DataAccess
         public string Department { get; set; }
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
+
+        [Column(TypeName = "date")]
+        public  DateTime DateCreated { get; set; }
 
         [Column(TypeName = "json")]
         public string Access { get; set; }

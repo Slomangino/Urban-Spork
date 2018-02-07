@@ -4,10 +4,10 @@ namespace UrbanSpork.Common.DataTransferObjects
 {
     public class UserDTO : UserInputDTO
     {
-        public Guid userId { get; set; }
-        public bool isActive { get; set; }
-        public DateTime dateCreated { get; set; }
-        public UserAccessDTO userAccess { get; set; }
-        public UserEquipmentDTO userEquipment { get; set; }
+        public Guid userID { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string access { get; set; }
+        public string equipment { get; set; }
     }
 }

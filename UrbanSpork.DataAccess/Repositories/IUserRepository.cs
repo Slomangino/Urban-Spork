@@ -12,12 +12,12 @@ namespace UrbanSpork.DataAccess.Repositories
     {
         //Task<TResult> GetSingleUser(TResult message);
 
-        Task<UserDTO> GetSingleUser(int id);
+        Task<UserDTO> GetSingleUser(Guid id);
 
         Task<List<UserDTO>> GetAllUsers();
 
         void CreateUser(User message);
-
+        void UpdateUser(User user);
         void SaveEvent(IEvent[] events);
     }
 }
