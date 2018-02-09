@@ -32,7 +32,7 @@ namespace UrbanSpork.DataAccess.Projections
         public bool IsAdmin { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Column(TypeName = "json")]
         public string Access { get; set; }

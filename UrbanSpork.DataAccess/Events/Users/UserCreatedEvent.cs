@@ -10,7 +10,7 @@ namespace UrbanSpork.DataAccess.Events.Users
         public UserDTO UserDTO{ get; set; }
         public Guid Id { get; set; }
         public int Version { get; set; } = 0;
-        public DateTimeOffset TimeStamp { get; set; } = DateTime.Now;
+        public DateTime TimeStamp { get; set; } = DateTime.Now;
 
         public UserCreatedEvent() { }
 

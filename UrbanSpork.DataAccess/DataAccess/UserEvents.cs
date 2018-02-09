@@ -10,7 +10,7 @@ namespace UrbanSpork.DataAccess.DataAccess
         [Key]
         public Guid Id { get; set; }
         public int Version { get; set; }
-        public DateTimeOffset TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
         public string EventType { get; set; }
 
         [Column(TypeName = "json")]
