@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using System;
-using UrbanSpork.CQRS.Interfaces.WriteModel;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.WriteModel.Commands;
+using CQRSLite.WriteModel.CommandHandler;
 
 namespace UrbanSpork.WriteModel.CommandHandlers
 {
@@ -23,7 +23,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         public async Task<UserDTO> Handle(CreateSingleUserCommand command)
         {
             var userDTO = await _userManager.CreateNewUser(command._input);
-            Console.WriteLine($"User created in handle! {userDTO.firstName}");
+            Console.WriteLine($"User created in handle! {userDTO.FirstName}");
             return userDTO;
         }
     }

@@ -6,11 +6,11 @@ namespace UrbanSpork.Common.DataTransferObjects
 {
     public class UserInputDTO
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string position { get; set; }
-        public string department { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Position { get; set; }
+        public string Department { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

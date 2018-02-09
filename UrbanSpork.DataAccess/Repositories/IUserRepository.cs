@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces.Events;
+using CQRSlite.Events;
 
 namespace UrbanSpork.DataAccess.Repositories
 {
@@ -18,6 +18,6 @@ namespace UrbanSpork.DataAccess.Repositories
 
         void CreateUser(User message);
         void UpdateUser(User user);
-        void SaveEvent(IEvent[] events);
+        //void SaveEvent(IEvent[] events);
     }
 }

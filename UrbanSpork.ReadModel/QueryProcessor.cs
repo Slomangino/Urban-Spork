@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
-using UrbanSpork.CQRS.Interfaces.ReadModel;
+using CQRSLite.Queries;
+using CQRSLite.Queries.Query;
+using CQRSLite.Queries.QueryHandler;
 
 namespace UrbanSpork.ReadModel
 {

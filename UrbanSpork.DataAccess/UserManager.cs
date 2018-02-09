@@ -7,19 +7,20 @@ using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.Common.DataTransferObjects;
 using AutoMapper;
-using UrbanSpork.CQRS.Interfaces.Events;
-using UrbanSpork.DataAccess.Events.Users;
 using UrbanSpork.DataAccess.Repositories;
+using CQRSlite.Domain;
 
 namespace UrbanSpork.DataAccess
 {
     public class UserManager : IUserManager
     {
+        private readonly ISession _session;
         private readonly IUserRepository _userRepository;
 
-        public UserManager(IUserRepository userRepository)
+        public UserManager(IUserRepository userRepository, ISession session)
         {
             _userRepository = userRepository;
+            _session = session;
         }
 
         public Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO)
@@ -27,29 +28,39 @@ namespace UrbanSpork.DataAccess
             var userDTO = Mapper.Map<UserDTO>(userInputDTO);
             var userAgg = UserAggregate.CreateNewUser(userDTO);
 
-            var user = Mapper.Map<User>(userAgg.userDTO);
-            user.UserID = userAgg.Id;
+            _session.Add(userAgg);
+            _session.Commit();
 
-            var events = userAgg.GetUncommittedChanges();
-
-            _userRepository.SaveEvent(events);
-            _userRepository.CreateUser(user);
-
-        
             return Task.FromResult(userAgg.userDTO);
+
+
+
+            //var user = Mapper.Map<User>(userAgg.userDTO);
+            //user.UserID = userAgg.Id;
+
+            //var events = userAgg.GetUncommittedChanges();
+
+            //_userRepository.SaveEvent(events);
+            //_userRepository.CreateUser(user);
+
+
         }
 
-        public Task<UserDTO> UpdateUser(UserInputDTO userInputDTO)
+        public async Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO)
         {
             var userDTO = Mapper.Map<UserDTO>(userInputDTO);
-            var userAgg = UserAggregate.UpdateUser(userDTO);
-            var user = Mapper.Map<User>(userAgg.userDTO);
-            var events = userAgg.GetUncommittedChanges();
 
-            _userRepository.SaveEvent(events);
-            _userRepository.UpdateUser(user);
+            var userAgg = await _session.Get<UserAggregate>(id);
 
-            return Task.FromResult(userAgg.userDTO);
+            //userAgg.UpdateUser(userInputDTO);
+
+            //var user = Mapper.Map<User>(userAgg.userDTO);
+            //var events = userAgg.GetUncommittedChanges();
+
+            //_userRepository.SaveEvent(events);
+            //_userRepository.UpdateUser(user);
+
+            return userAgg.userDTO;
         }
     }
 }

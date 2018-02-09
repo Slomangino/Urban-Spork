@@ -22,21 +22,20 @@ namespace UrbanSpork.DataAccess.Migrations
 
             modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.EventStoreDataRow", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<Guid>("Id");
+
+                    b.Property<int>("Version");
 
                     b.Property<string>("EventData");
 
                     b.Property<string>("EventType");
 
-                    b.Property<int>("Version");
-
-                    b.HasKey("Id");
+                    b.HasKey("Id", "Version");
 
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("UrbanSpork.DataAccess.DataAccess.User", b =>
+            modelBuilder.Entity("UrbanSpork.DataAccess.Projections.UserDetailProjection", b =>
                 {
                     b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd();
@@ -66,7 +65,7 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserDetailProjection");
                 });
 #pragma warning restore 612, 618
         }

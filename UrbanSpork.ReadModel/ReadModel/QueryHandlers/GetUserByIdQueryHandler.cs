@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using CQRSLite.Queries.QueryHandler;
+using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces.ReadModel;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.ReadModel.QueryCommands;
 

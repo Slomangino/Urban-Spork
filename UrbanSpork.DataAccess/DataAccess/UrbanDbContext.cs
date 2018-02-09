@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UrbanSpork.CQRS.Interfaces.Events;
-using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.DataAccess.DataAccess
 {
@@ -15,7 +11,14 @@ namespace UrbanSpork.DataAccess.DataAccess
 
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserDetailProjection> UserDetailProjection {get; set;}
+        //public DbSet<User> Users { get; set; }
         public DbSet<EventStoreDataRow> Events { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EventStoreDataRow>()
+                .HasKey(a => new { a.Id, a.Version });
+        }
     }
 }

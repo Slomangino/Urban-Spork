@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\UrbanSpork.API\UrbanSpork.API.csproj" />
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
-    <ProjectReference Include="..\UrbanSpork.CQRS\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
     <ProjectReference Include="..\UrbanSpork.ReadModel\UrbanSpork.ReadModel.csproj" />
     <ProjectReference Include="..\UrbanSpork.WriteModel\UrbanSpork.WriteModel.csproj" />

@@ -17,6 +17,9 @@ using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.CommandHandlers;
 using UrbanSpork.WriteModel.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.CommandHandlers;
+using CQRSlite.Domain;
+using UrbanSpork.DataAccess.Projections;
+using UrbanSpork.DataAccess.Events;
 
 namespace UrbanSpork.API
 {
@@ -38,6 +41,8 @@ namespace UrbanSpork.API
                 cfg.CreateMap<UserDTO, User>();
                 cfg.CreateMap<UserDTO, UserInputDTO>();
                 cfg.CreateMap<UserInputDTO, UserDTO>();
+                cfg.CreateMap<UserDetailProjection, UserDTO>();
+                cfg.CreateMap<UserDTO, UserDetailProjection>();
                 // cfg.CreateMap<Bar, BarDto>();
             });
         }
@@ -52,7 +57,9 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")));
+            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>
+                (options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly
+                ("UrbanSpork.DataAccess")));
 
             services.AddMvc();
         }
@@ -72,10 +79,17 @@ namespace UrbanSpork.API
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<Session>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<Repository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            // Projections
+            builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
+
 
             //Commands
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
             builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CQRSLite.Queries;
+using CQRSLite.WriteModel;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces.ReadModel;
-using UrbanSpork.CQRS.Interfaces.WriteModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.Commands;
@@ -61,10 +61,10 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("update")]
-        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input)
+        [HttpPut("update/{id}")]
+        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input, Guid id)
         {
-            var message = new UpdateSingleUserCommand(input);
+            var message = new UpdateSingleUserCommand(id, input);
             var result = await _commandDispatcher.Execute(message);
             return result;
         }
