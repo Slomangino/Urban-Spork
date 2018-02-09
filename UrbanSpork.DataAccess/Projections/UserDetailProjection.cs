@@ -40,19 +40,19 @@ namespace UrbanSpork.DataAccess.Projections
         [Column(TypeName = "json")]
         public string Equipment { get; set; }
 
-        public void ListenForEvents(IEvent @event)
+        public async void ListenForEvents(IEvent @event)
         {
 
             switch (@event) { 
                 case UserCreatedEvent uc:
                     var info = Mapper.Map<UserDetailProjection>(uc.UserDTO);
-                    _context.UserDetailProjection.AddAsync(info);
+                    await _context.UserDetailProjection.AddAsync(info);
                     break;
                 case UserUpdatedEvent uu:
                     Console.WriteLine("User updated");
                     break;
             }
-
+            await _context.SaveChangesAsync();
         }
     }
 }

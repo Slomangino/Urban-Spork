@@ -34,10 +34,10 @@ namespace UrbanSpork.DataAccess.Events
             foreach (IEvent e in events)
             {
                 var serializedEvent = BuildEventRowFromEvent(e);
-                await _context.Events.AddAsync(serializedEvent);
+                await _context.Events.AddAsync(serializedEvent, cancellationToken);
                 await _publisher.Publish(e, cancellationToken);
             }
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         private IEnumerable<IEvent> DeserializeEventList(IEnumerable<EventStoreDataRow> rowList)

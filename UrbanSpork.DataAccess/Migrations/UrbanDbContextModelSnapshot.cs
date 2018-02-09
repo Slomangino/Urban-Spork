@@ -43,7 +43,7 @@ namespace UrbanSpork.DataAccess.Migrations
                     b.Property<string>("Access")
                         .HasColumnType("json");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("date");
 
                     b.Property<string>("Department");
