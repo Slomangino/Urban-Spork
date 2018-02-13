@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
-using Newtonsoft.Json;
-using CQRSlite.Events;
+using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess.Repositories
 {

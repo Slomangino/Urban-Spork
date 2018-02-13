@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.Common.DataTransferObjects;
-using CQRSlite.Events;
+using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess.Repositories
 {

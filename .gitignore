@@ -366,3 +366,7 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+
+#CQRSLite Project Files
+/bin
+/obj
