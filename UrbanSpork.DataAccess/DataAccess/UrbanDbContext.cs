@@ -5,6 +5,7 @@ namespace UrbanSpork.DataAccess.DataAccess
 {
     public class UrbanDbContext : DbContext
     {
+        public UrbanDbContext(){}
 
         public UrbanDbContext(DbContextOptions<UrbanDbContext> options) : base(options)
         {

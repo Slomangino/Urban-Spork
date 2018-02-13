@@ -23,7 +23,6 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         public async Task<UserDTO> Handle(CreateSingleUserCommand command)
         {
             var userDTO = await _userManager.CreateNewUser(command._input);
-            Console.WriteLine($"User created in handle! {userDTO.FirstName}");
             return userDTO;
         }
     }

@@ -6,14 +6,17 @@ namespace UrbanSpork.DataAccess.Events.Users
 {
     public class UserUpdatedEvent : IEvent
     {
-        public UserInputDTO userInputDTO { get; }
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public int Version { get; set; } = 0;
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
+        public UserDTO UserDTO { get; }
+        public Guid Id { get; set; }
+        public int Version { get; set; }
+        public DateTime TimeStamp { get; set; }
 
-        public UserUpdatedEvent(UserInputDTO userInputDTO)
+        public UserUpdatedEvent() { }
+
+        public UserUpdatedEvent(UserDTO UserDTO)
         {
-            this.userInputDTO = userInputDTO;
+            this.Id = UserDTO.UserID;
+            this.UserDTO = UserDTO;
         }
     }
 }

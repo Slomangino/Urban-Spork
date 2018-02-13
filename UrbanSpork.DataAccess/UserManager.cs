@@ -27,38 +27,23 @@ namespace UrbanSpork.DataAccess
         {
             var userDTO = Mapper.Map<UserDTO>(userInputDTO);
             var userAgg = UserAggregate.CreateNewUser(userDTO);
-
+            userDTO.DateCreated = userAgg.DateCreated; //date in db was not getting set correctly
             _session.Add(userAgg);
             _session.Commit();
 
             return Task.FromResult(userAgg.userDTO);
-
-
-
-            //var user = Mapper.Map<User>(userAgg.userDTO);
-            //user.UserID = userAgg.Id;
-
-            //var events = userAgg.GetUncommittedChanges();
-
-            //_userRepository.SaveEvent(events);
-            //_userRepository.CreateUser(user);
-
-
         }
 
         public async Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO)
         {
-            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
-
             var userAgg = await _session.Get<UserAggregate>(id);
+            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
+            userDTO.UserID = id;
+            userDTO.DateCreated = userAgg.DateCreated;
 
-            //userAgg.UpdateUser(userInputDTO);
+            userAgg.UpdateUserPersonalInfo(userDTO);
 
-            //var user = Mapper.Map<User>(userAgg.userDTO);
-            //var events = userAgg.GetUncommittedChanges();
-
-            //_userRepository.SaveEvent(events);
-            //_userRepository.UpdateUser(user);
+            await _session.Commit();
 
             return userAgg.userDTO;
         }

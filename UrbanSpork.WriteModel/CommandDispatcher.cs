@@ -19,6 +19,7 @@ namespace UrbanSpork.WriteModel
         }
 
         public Task<TResult> Execute<TResult>(ICommand<TResult> command)
+        //public async Task<TResult> Execute<TResult>(ICommand<TResult> command)
         {
             var tCommandType = command.GetType();
             var tResultType = typeof(TResult);
@@ -29,6 +30,7 @@ namespace UrbanSpork.WriteModel
             object result = generic.Invoke(this, new[] { command });
 
             return (Task<TResult>)result;
+            //return await (Task<TResult>)result;
         }
 
         public Task<TResult> ExecuteInternal<TCommand, TResult>(TCommand command)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess.Events
@@ -23,7 +24,7 @@ namespace UrbanSpork.DataAccess.Events
 
         public Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var rowList = _context.Events.ToList().Where(a => a.Id.Equals(aggregateId));
+            var rowList = _context.Events.ToList().Where(a => a.Id.Equals(aggregateId) && a.Version > fromVersion);
             var eventList = DeserializeEventList(rowList);
 
             return Task.FromResult(eventList);
@@ -31,13 +32,13 @@ namespace UrbanSpork.DataAccess.Events
 
         public async Task Save(IEnumerable<IEvent> events, CancellationToken cancellationToken = default(CancellationToken))
         {
-            foreach (IEvent e in events)
-            {
-                var serializedEvent = BuildEventRowFromEvent(e);
-                await _context.Events.AddAsync(serializedEvent, cancellationToken);
-                await _publisher.Publish(e, cancellationToken);
-            }
-            await _context.SaveChangesAsync(cancellationToken);
+                foreach (IEvent e in events)
+                {
+                    var serializedEvent = BuildEventRowFromEvent(e);
+                    await _context.Events.AddAsync(serializedEvent, cancellationToken);
+                    await _publisher.Publish(e, cancellationToken);
+                }
+                await _context.SaveChangesAsync(cancellationToken);
         }
 
         private IEnumerable<IEvent> DeserializeEventList(IEnumerable<EventStoreDataRow> rowList)
@@ -65,7 +66,7 @@ namespace UrbanSpork.DataAccess.Events
             return eventData;
         }
 
-        public string SerializeEvent(IEvent e)
+        private string SerializeEvent(IEvent e)
         {
             return JsonConvert.SerializeObject(e);
         }

@@ -6,31 +6,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.ReadModel.QueryCommands;
-using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
-
-//"Host = 127.0.0.1; Username=iceman371;Password=password;Database=democqrs"
-/*
- * implement some sort of payload to return data
- * 
- */
-
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        // private readonly UserRepository _userRepository;
         private readonly IQueryProcessor _queryProcessor;
 
         private readonly ICommandDispatcher _commandDispatcher;
 
-        //public UserController(UserRepository userRepository)
         public UserController(IQueryProcessor queryProcessor, ICommandDispatcher commandDispatcher)
         {
-            // _userRepository = new UserRepository(new Npgsql.NpgsqlConnection("Host=urbansporkdb.cj0fybtxusp9.us-east-1.rds.amazonaws.com;Port=5405;User Id=yamnel;Password=urbansporkpass;Database=urbansporkdb"));
             _queryProcessor = queryProcessor;
             _commandDispatcher = commandDispatcher;
         }
@@ -46,7 +35,6 @@ namespace UrbanSpork.API.Controllers
         [HttpGet]
         public async Task<List<UserDTO>> GetAllUsers()
         {
-            // var tableName = "users";
             var query = new GetAllUsersQuery();
             var result = _queryProcessor.Process(query);
             return  await result;

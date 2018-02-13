@@ -1,4 +1,5 @@
-﻿using CQRSlite.Domain;
+﻿using AutoMapper;
+using CQRSlite.Domain;
 using CQRSlite.Events;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ namespace UrbanSpork.DataAccess
 {
     public class UserAggregate : AggregateRoot
     {
-        public UserDTO userDTO { get; set; }
-        public DateTimeOffset DateCreated { get; set; }
+        public UserDTO userDTO { get; private set; }
+        public DateTime DateCreated { get; private set; }
 
         private UserAggregate() { }
 
@@ -21,14 +22,6 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserCreatedEvent(userDTO));
         }
 
-        //public UserAggregate(IEnumerable<IEvent> history)
-        //{
-        //    foreach (IEvent e in history)
-        //    {
-        //        ApplyEvent(e);
-        //    }
-        //}
-
         public static UserAggregate CreateNewUser(UserDTO userDTO)
         {
             var dto = userDTO;
@@ -37,27 +30,20 @@ namespace UrbanSpork.DataAccess
             return new UserAggregate(dto);
         }
 
-        //public static UserAggregate UpdateUser(UserDTO userDTO)
-        //{
-        //    var dto = userDTO;
-        //    //wrong, needs to be changed to session.get<UserAggregate>(UserID); in userManager, all the aggregate does is apply events
-        //    return new UserAggregate(dto);
-        //}
-
-        public void UpdateUser(UserInputDTO userInputDTO)
+        public void UpdateUserPersonalInfo(UserDTO userDTO)
         {
-            //wrong, needs to be changed to session.get<UserAggregate>(UserID); in userManager, all the aggregate does is apply events
-            ApplyChange(new UserUpdatedEvent(userInputDTO));
+            ApplyChange(new UserUpdatedEvent(userDTO));
         }
 
         private void Apply(UserCreatedEvent @event)
         {
+            DateCreated = @event.TimeStamp;
             userDTO = @event.UserDTO;
         }
 
         private void Apply(UserUpdatedEvent @event)
         {
-            userDTO =(UserDTO) @event.userInputDTO;
+            userDTO = @event.UserDTO;
         }
     }
 }
