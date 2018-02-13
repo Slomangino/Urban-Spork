@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.DataAccess", "Ur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.Tests", "UrbanSpork.Tests\UrbanSpork.Tests.csproj", "{15A32862-D745-4848-9626-5DC605515876}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRSlite", "CQRSLite\Framework\CQRSlite\CQRSlite.csproj", "{B7D04E29-4EF6-483D-BC36-5A9CE40F348E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRSlite", "CQRSLite\CQRSlite.csproj", "{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{15A32862-D745-4848-9626-5DC605515876}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15A32862-D745-4848-9626-5DC605515876}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15A32862-D745-4848-9626-5DC605515876}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7D04E29-4EF6-483D-BC36-5A9CE40F348E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7D04E29-4EF6-483D-BC36-5A9CE40F348E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7D04E29-4EF6-483D-BC36-5A9CE40F348E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7D04E29-4EF6-483D-BC36-5A9CE40F348E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
