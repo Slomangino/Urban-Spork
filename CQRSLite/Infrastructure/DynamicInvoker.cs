@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace CQRSlite.Infrastructure
+namespace UrbanSpork.CQRS.Infrastructure
 {
     internal static class DynamicInvoker
     {

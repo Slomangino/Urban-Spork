@@ -1,14 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using UrbanSpork.CQRS.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.Common.DataTransferObjects;
-using AutoMapper;
+using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.DataAccess.Repositories;
-using CQRSlite.Domain;
 
 namespace UrbanSpork.DataAccess
 {

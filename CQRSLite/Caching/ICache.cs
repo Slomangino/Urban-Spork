@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CQRSlite.Domain;
+using UrbanSpork.CQRS.Domain;
 
-namespace CQRSlite.Caching
+namespace UrbanSpork.CQRS.Caching
 {
     /// <summary>
     /// Defines a cache implementation

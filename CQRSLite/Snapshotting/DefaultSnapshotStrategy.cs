@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using CQRSlite.Domain;
+using UrbanSpork.CQRS.Domain;
 
-namespace CQRSlite.Snapshotting
+namespace UrbanSpork.CQRS.Snapshotting
 {
     /// <summary>
     /// Default implementaion of snapshot strategy interface/

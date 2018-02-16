@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CQRSlite.Commands;
-using CQRSlite.Events;
-using CQRSlite.Messages;
+using UrbanSpork.CQRS.Commands;
+using UrbanSpork.CQRS.Events;
+using UrbanSpork.CQRS.Messages;
 
-namespace CQRSlite.Routing
+namespace UrbanSpork.CQRS.Routing
 {
     /// <summary>
     /// Default router implementation for sending commands and publishing events.

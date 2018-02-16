@@ -25,3 +25,12 @@ F:\CQRSProject\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.Assembly
 F:\CQRSProject\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.AssemblyInfo.cs
 F:\CQRSProject\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.dll
 F:\CQRSProject\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.pdb
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\bin\Debug\netstandard2.0\CQRSlite.deps.json
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\bin\Debug\netstandard2.0\CQRSlite.dll
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\bin\Debug\netstandard2.0\CQRSlite.pdb
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.csprojResolveAssemblyReference.cache
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.csproj.CoreCompileInputs.cache
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.AssemblyInfoInputs.cache
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.AssemblyInfo.cs
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.dll
+C:\Users\TylerHall\Source\Repos\SLCQRSProject\CQRSLite\obj\Debug\netstandard2.0\CQRSlite.pdb

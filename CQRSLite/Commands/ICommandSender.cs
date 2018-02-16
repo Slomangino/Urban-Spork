@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace CQRSlite.Commands
+namespace UrbanSpork.CQRS.Commands
 {
     /// <summary>
     /// Defines a command sender.

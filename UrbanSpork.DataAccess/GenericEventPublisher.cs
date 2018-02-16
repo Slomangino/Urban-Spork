@@ -1,4 +1,4 @@
-﻿using CQRSlite.Events;
+﻿using UrbanSpork.CQRS.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;

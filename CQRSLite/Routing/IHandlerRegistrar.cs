@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CQRSlite.Messages;
+using UrbanSpork.CQRS.Messages;
 
-namespace CQRSlite.Routing
+namespace UrbanSpork.CQRS.Routing
 {
     /// <summary>
     /// Interface for handle registation.

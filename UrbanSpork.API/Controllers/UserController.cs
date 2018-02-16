@@ -1,5 +1,5 @@
-﻿using CQRSLite.Queries;
-using CQRSLite.WriteModel;
+﻿using UrbanSpork.CQRS.Queries;
+using UrbanSpork.CQRS.WriteModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

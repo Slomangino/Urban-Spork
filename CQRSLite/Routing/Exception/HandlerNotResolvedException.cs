@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CQRSlite.Routing.Exception
+namespace UrbanSpork.CQRS.Routing.Exception
 {
     public class HandlerNotResolvedException : ArgumentNullException
     {

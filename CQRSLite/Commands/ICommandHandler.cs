@@ -1,6 +1,6 @@
-using CQRSlite.Messages;
+using UrbanSpork.CQRS.Messages;
 
-namespace CQRSlite.Commands
+namespace UrbanSpork.CQRS.Commands
 {
     /// <summary>
     /// Defines a handler for a command.

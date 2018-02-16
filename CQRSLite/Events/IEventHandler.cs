@@ -1,6 +1,6 @@
-﻿using CQRSlite.Messages;
+﻿using UrbanSpork.CQRS.Messages;
 
-namespace CQRSlite.Events
+namespace UrbanSpork.CQRS.Events
 {
     /// <summary>
     /// Defines a handler for an event.

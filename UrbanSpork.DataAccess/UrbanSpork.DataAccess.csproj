@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CQRSLite\CQRSlite.csproj" />
+    <ProjectReference Include="..\CQRSLite\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
-﻿using CQRSlite.Messages;
-using System;
+﻿using System;
+using UrbanSpork.CQRS.Messages;
 
-namespace CQRSlite.Events
+namespace UrbanSpork.CQRS.Events
 {
     /// <summary>
     /// Defines an event with required fields.

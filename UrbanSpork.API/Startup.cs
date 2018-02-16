@@ -1,25 +1,24 @@
 ﻿using Autofac;
+using AutoMapper;
+using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UrbanSpork.DataAccess.DataAccess;
-using AutoMapper;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.WriteModel;
+using UrbanSpork.DataAccess;
+using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.Events;
+using UrbanSpork.DataAccess.Projections;
+using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.ReadModel;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.ReadModel.QueryHandlers;
-using UrbanSpork.ReadModel;
-using UrbanSpork.DataAccess;
-using UrbanSpork.DataAccess.Repositories;
-using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.CommandHandlers;
+using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
-using UrbanSpork.WriteModel.WriteModel.CommandHandlers;
-using CQRSlite.Domain;
-using UrbanSpork.DataAccess.Projections;
-using UrbanSpork.DataAccess.Events;
 
 namespace UrbanSpork.API
 {
@@ -34,7 +33,7 @@ namespace UrbanSpork.API
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                     .AddEnvironmentVariables();
             
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<User, UserDTO>();

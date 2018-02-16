@@ -1,13 +1,10 @@
-﻿using CQRSLite.WriteModel.CommandHandler;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.CQRS.WriteModel.CommandHandler;
 using UrbanSpork.WriteModel.WriteModel.Commands;
 
-namespace UrbanSpork.WriteModel.WriteModel.CommandHandlers
+namespace UrbanSpork.WriteModel.CommandHandlers
 {
     public class UpdateSingleUserCommandHandler : ICommandHandler<UpdateSingleUserCommand, UserDTO>
     {

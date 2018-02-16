@@ -1,7 +1,7 @@
-﻿using CQRSLite.Queries.Query;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using UrbanSpork.CQRS.Queries.Query;
 
-namespace CQRSLite.Queries.QueryHandler
+namespace UrbanSpork.CQRS.Queries.QueryHandler
 {
     public interface IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
     {

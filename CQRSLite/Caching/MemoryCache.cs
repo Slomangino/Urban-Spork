@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CQRSlite.Domain;
+using UrbanSpork.CQRS.Domain;
 #if NET452
 using System.Runtime.Caching;
 #else
 using Microsoft.Extensions.Caching.Memory;
 #endif
 
-namespace CQRSlite.Caching
+namespace UrbanSpork.CQRS.Caching
 {
     /// <summary>
     /// A cache implementation that has cache in memory and 15 minutes sliding expiration.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CQRSlite.Events
+namespace UrbanSpork.CQRS.Events
 {
     /// <summary>
     /// Defines the methods needed from the event store.

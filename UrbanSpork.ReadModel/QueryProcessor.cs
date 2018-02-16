@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Autofac;
 using System.Reflection;
 using System.Threading.Tasks;
-using Autofac;
-using CQRSLite.Queries;
-using CQRSLite.Queries.Query;
-using CQRSLite.Queries.QueryHandler;
+using UrbanSpork.CQRS.Queries;
+using UrbanSpork.CQRS.Queries.Query;
+using UrbanSpork.CQRS.Queries.QueryHandler;
 
 namespace UrbanSpork.ReadModel
 {
