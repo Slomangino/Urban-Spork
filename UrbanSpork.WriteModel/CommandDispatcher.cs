@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
-using CQRSLite.WriteModel;
-using CQRSLite.WriteModel.Command;
-using CQRSLite.WriteModel.CommandHandler;
+using UrbanSpork.CQRS.WriteModel;
+using UrbanSpork.CQRS.WriteModel.Command;
+using UrbanSpork.CQRS.WriteModel.CommandHandler;
 
 namespace UrbanSpork.WriteModel
 {

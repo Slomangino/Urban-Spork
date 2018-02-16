@@ -1,12 +1,12 @@
-﻿using CQRSlite.Domain;
-using CQRSlite.Events;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Domain;
+using UrbanSpork.CQRS.Events;
 
-namespace CQRSlite.Caching
+namespace UrbanSpork.CQRS.Caching
 {
     /// <summary>
     /// Thread safe repository decorator that can cache aggregates.
@@ -25,8 +25,8 @@ namespace CQRSlite.Caching
         /// <summary>
         /// Initialize a new instance of CacheRepository
         /// </summary>
-        /// <param name="repository">Reposiory that gets aggregate from event store</param>
-        /// <param name="eventStore">Eventstore where concurrency checking can be fetched from</param>
+        /// <param name="repository">Repository that gets aggregate from event store</param>
+        /// <param name="eventStore">EventStore where concurrency checking can be fetched from</param>
         /// <param name="cache">Implementation of the cache</param>
         public CacheRepository(IRepository repository, IEventStore eventStore, ICache cache)
         {

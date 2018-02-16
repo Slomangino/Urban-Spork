@@ -1,7 +1,7 @@
 using System;
-using CQRSlite.Domain;
+using UrbanSpork.CQRS.Domain;
 
-namespace CQRSlite.Snapshotting
+namespace UrbanSpork.CQRS.Snapshotting
 {
     /// <summary>
     /// Defines strategy for when to take snapshot.

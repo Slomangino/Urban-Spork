@@ -1,6 +1,6 @@
 using System;
 
-namespace CQRSlite.Domain.Exception
+namespace UrbanSpork.CQRS.Domain.Exception
 {
     public class AggregateOrEventMissingIdException : System.Exception
     {

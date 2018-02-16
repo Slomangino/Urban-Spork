@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CQRSlite.Messages
+namespace UrbanSpork.CQRS.Messages
 {
     /// <summary>
     /// Defines a handler for a message.

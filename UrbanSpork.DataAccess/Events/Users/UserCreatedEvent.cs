@@ -1,5 +1,5 @@
 
-using CQRSlite.Events;
+using UrbanSpork.CQRS.Events;
 using System;
 using UrbanSpork.Common.DataTransferObjects;
 

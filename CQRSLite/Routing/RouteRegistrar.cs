@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using CQRSlite.Infrastructure;
-using CQRSlite.Messages;
-using CQRSlite.Routing.Exception;
+using UrbanSpork.CQRS.Infrastructure;
+using UrbanSpork.CQRS.Messages;
+using UrbanSpork.CQRS.Routing.Exception;
 
-namespace CQRSlite.Routing
+namespace UrbanSpork.CQRS.Routing
 {
     /// <summary>
     /// Automatic registration of all handlers in assembly

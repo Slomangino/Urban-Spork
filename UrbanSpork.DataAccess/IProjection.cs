@@ -1,8 +1,4 @@
-﻿using CQRSlite.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess
 {

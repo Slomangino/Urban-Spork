@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UrbanSpork.Common.DataTransferObjects
+﻿namespace UrbanSpork.Common.DataTransferObjects
 {
     public class UserInputDTO
     {

@@ -1,7 +1,7 @@
-﻿using CQRSlite.Domain.Exception;
-using System;
+﻿using System;
+using UrbanSpork.CQRS.Domain.Exception;
 
-namespace CQRSlite.Domain.Factories
+namespace UrbanSpork.CQRS.Domain.Factories
 {
     internal static class AggregateFactory
     {

@@ -1,11 +1,11 @@
-﻿using CQRSlite.Domain.Exception;
-using CQRSlite.Events;
-using CQRSlite.Infrastructure;
+﻿using UrbanSpork.CQRS.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UrbanSpork.CQRS.Domain.Exception;
+using UrbanSpork.CQRS.Events;
 
-namespace CQRSlite.Domain
+namespace UrbanSpork.CQRS.Domain
 {
     /// <summary>
     /// Class to inherit all aggregates from

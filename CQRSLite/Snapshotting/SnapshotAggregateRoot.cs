@@ -1,6 +1,6 @@
-﻿using CQRSlite.Domain;
+﻿using UrbanSpork.CQRS.Domain;
 
-namespace CQRSlite.Snapshotting
+namespace UrbanSpork.CQRS.Snapshotting
 {
     /// <summary>
     /// Class to inherit aggregates that should be snapshotted from.

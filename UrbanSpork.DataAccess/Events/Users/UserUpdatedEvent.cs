@@ -1,4 +1,4 @@
-﻿using CQRSlite.Events;
+﻿using UrbanSpork.CQRS.Events;
 using System;
 using UrbanSpork.Common.DataTransferObjects;
 
@@ -15,7 +15,7 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserUpdatedEvent(UserDTO UserDTO)
         {
-            this.Id = UserDTO.UserID;
+            Id = UserDTO.UserID;
             this.UserDTO = UserDTO;
         }
     }

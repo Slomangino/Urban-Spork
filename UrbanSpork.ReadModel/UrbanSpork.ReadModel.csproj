@@ -14,4 +14,9 @@
     <ProjectReference Include="..\UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReadModel\QueryCommands\" />
+    <Folder Include="ReadModel\QueryHandlers\" />
+  </ItemGroup>
+
 </Project>

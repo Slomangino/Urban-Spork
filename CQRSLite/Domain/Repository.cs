@@ -1,12 +1,12 @@
-using CQRSlite.Domain.Exception;
-using CQRSlite.Domain.Factories;
-using CQRSlite.Events;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Domain.Exception;
+using UrbanSpork.CQRS.Domain.Factories;
+using UrbanSpork.CQRS.Events;
 
-namespace CQRSlite.Domain
+namespace UrbanSpork.CQRS.Domain
 {
     /// <summary>
     /// Repository gets and saves aggregates from event store.

@@ -1,7 +1,6 @@
-﻿using CQRSLite.Queries.Query;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Queries.Query;
 
 namespace UrbanSpork.ReadModel.QueryCommands
 {

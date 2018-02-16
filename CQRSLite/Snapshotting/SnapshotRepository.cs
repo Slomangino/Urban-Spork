@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CQRSlite.Domain;
-using CQRSlite.Domain.Factories;
-using CQRSlite.Events;
-using CQRSlite.Infrastructure;
+using UrbanSpork.CQRS.Infrastructure;
+using UrbanSpork.CQRS.Domain;
+using UrbanSpork.CQRS.Domain.Factories;
+using UrbanSpork.CQRS.Events;
 
-namespace CQRSlite.Snapshotting
+namespace UrbanSpork.CQRS.Snapshotting
 {
     /// <summary>
     /// Repository decorator that can snapshot aggregates.

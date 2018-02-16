@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CQRSlite.Snapshotting
+namespace UrbanSpork.CQRS.Snapshotting
 {
     /// <summary>
     /// A memento object of a aggregate in a version.

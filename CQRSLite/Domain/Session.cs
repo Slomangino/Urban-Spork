@@ -1,11 +1,11 @@
-﻿using CQRSlite.Domain.Exception;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Domain.Exception;
 
-namespace CQRSlite.Domain
+namespace UrbanSpork.CQRS.Domain
 {
     /// <summary>
     /// Implementation of unit of work for aggregates.

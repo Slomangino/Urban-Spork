@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using CQRSlite.Domain;
-using CQRSlite.Events;
+﻿using UrbanSpork.CQRS.Domain;
 using System;
-using System.Collections.Generic;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Events.Users;
 

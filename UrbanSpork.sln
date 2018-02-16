@@ -14,8 +14,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.DataAccess", "UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj", "{0A6522ED-30F9-4B83-AC50-93267D2F8C75}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.Tests", "UrbanSpork.Tests\UrbanSpork.Tests.csproj", "{15A32862-D745-4848-9626-5DC605515876}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB} = {9B2644FC-4FB1-4069-A13C-43E309D1A6AB}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRSlite", "CQRSLite\CQRSlite.csproj", "{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.CQRS", "CQRSLite\UrbanSpork.CQRS.csproj", "{9B2644FC-4FB1-4069-A13C-43E309D1A6AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

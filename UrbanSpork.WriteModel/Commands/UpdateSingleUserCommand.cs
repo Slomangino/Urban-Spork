@@ -1,7 +1,5 @@
-﻿using CQRSLite.WriteModel.Command;
+﻿using UrbanSpork.CQRS.WriteModel.Command;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UrbanSpork.Common.DataTransferObjects;
 
 namespace UrbanSpork.WriteModel.WriteModel.Commands

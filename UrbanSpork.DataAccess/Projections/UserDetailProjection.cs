@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using UrbanSpork.CQRS.Events;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using CQRSlite.Events;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
 

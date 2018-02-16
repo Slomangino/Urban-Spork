@@ -1,16 +1,15 @@
-﻿using CQRSLite.WriteModel.Command;
-using System;
-using UrbanSpork.Common.DataTransferObjects;
+﻿using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.WriteModel.Command;
 
 namespace UrbanSpork.WriteModel.Commands
 {
     public class CreateSingleUserCommand : ICommand<UserDTO>
     {
-        public UserInputDTO _input { get; set; }
+        public UserInputDTO Input { get; set; }
 
         public CreateSingleUserCommand(UserInputDTO input)
         {
-            _input = input;
+            Input = input;
         }
     }
 }

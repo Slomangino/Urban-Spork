@@ -7,14 +7,14 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "CQRSlite/1.0.0": {
+      "CQRSLite/1.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.1",
           "Microsoft.Extensions.Caching.Memory": "2.0.0",
           "NETStandard.Library": "2.0.1"
         },
         "runtime": {
-          "CQRSlite.dll": {}
+          "CQRSLite.dll": {}
         }
       },
       "Microsoft.CSharp/4.4.1": {
@@ -76,7 +76,7 @@
     }
   },
   "libraries": {
-    "CQRSlite/1.0.0": {
+    "CQRSLite/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -91,42 +91,42 @@
     "Microsoft.Extensions.Caching.Abstractions/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kGMEV53Od1ES0BDh7OOKbTW9Zu5dbbQ72yI936dvvbHlde3puuq/WRKAccFgcB2PuRjox1HFhA9+t53RYqfuEA==",
+      "sha512": "sha512-a/ULvjyJwtLU63V0SMOU1ibLUt+5qklVn9z1LAQPj+/r1uZo0ZGZFmy+d1KeCH6AltQ8TIGP7sxjAz1yXpi8zw==",
       "path": "microsoft.extensions.caching.abstractions/2.0.0",
       "hashPath": "microsoft.extensions.caching.abstractions.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Memory/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-NqvVdYLbX7N2J2Wz9y3zjhE66JRdROiZZsGhA2u4a9IcIq/jzINC/cLM96BHA+TSOZFPxVdWneqB6/yt9u846A==",
+      "sha512": "sha512-v9rRpjylD9pmtORxx/XTQs4MJitRGUF7vwiX0yooxk1yC6+Jz1QtIhbhM2FPePfLcy0WmYz3zPmku12V5LZaZQ==",
       "path": "microsoft.extensions.caching.memory/2.0.0",
       "hashPath": "microsoft.extensions.caching.memory.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-eUdJ0Q/GfVyUJc0Jal5L1QZLceL78pvEM9wEKcHeI24KorqMDoVX+gWsMGLulQMfOwsUaPtkpQM2pFERTzSfSg==",
+      "sha512": "sha512-+NGdsx+oeVG8csYZ4ycfbVHvKoyjIsYQqNevhgLdpaA6veK5qd9d3Aa/WLwVLiW2KmUQu/pBu5gDT1BF1CYWzA==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/2.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Options/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sAKBgjl2gWsECBLLR9K54T7/uZaP2n9GhMYHay/oOLfvpvX0+iNAlQ2NJgVE352C9Fs5CDV3VbNTK8T2aNKQFA==",
+      "sha512": "sha512-IM+8l/IbGXWGUas0b0SlHRBD/ngZqEMENb4optCXH2SuO5wQOzcYVlpxmGrZEv/BfMhILx2AXjL5LW+THlRUSA==",
       "path": "microsoft.extensions.options/2.0.0",
       "hashPath": "microsoft.extensions.options.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Primitives/2.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ukg53qNlqTrK38WA30b5qhw0GD7y3jdI9PHHASjdKyTcBHTevFM2o23tyk3pWCgAV27Bbkm+CPQ2zUe1ZOuYSA==",
+      "sha512": "sha512-CaJe+IxIMTA/B56bQ0cw9q8u+5U9Capd9eeaRBB0goxjDtxs7j6nztWUO5cXcuARkLyfeR93BzhHIvMW104Ufg==",
       "path": "microsoft.extensions.primitives/2.0.0",
       "hashPath": "microsoft.extensions.primitives.2.0.0.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "sha512-m1NLZVDG6X0ByaU6b8zJElAmJgq6xOVedIutJnYFhqDA7OBBWueY/dQIOxr795adJZD56Ik+uHWKt+qMUgtqdw==",
       "path": "microsoft.netcore.platforms/1.1.0",
       "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
@@ -140,7 +140,7 @@
     "System.Runtime.CompilerServices.Unsafe/4.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9dLLuBxr5GNmOfl2jSMcsHuteEg32BEfUotmmUkmZjpR3RpVHE8YQwt0ow3p6prwA1ME8WqDVZqrr8z6H8G+Kw==",
+      "sha512": "sha512-a1UdxFJLm/8lpFPGUB1P+Kb0fOrMvgQjwAyPuJizczAH41KyBKMEe8EczNMfpIZ7jHZyxpNsgc5eDY15r2z/Ng==",
       "path": "system.runtime.compilerservices.unsafe/4.4.0",
       "hashPath": "system.runtime.compilerservices.unsafe.4.4.0.nupkg.sha512"
     }

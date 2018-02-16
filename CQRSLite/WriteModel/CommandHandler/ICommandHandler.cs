@@ -1,7 +1,7 @@
-﻿using CQRSLite.WriteModel.Command;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using UrbanSpork.CQRS.WriteModel.Command;
 
-namespace CQRSLite.WriteModel.CommandHandler
+namespace UrbanSpork.CQRS.WriteModel.CommandHandler
 {
     public interface ICommandHandler<TCommand, TResult> where TCommand : ICommand<TResult>
     {
