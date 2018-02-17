@@ -100,10 +100,12 @@ namespace UrbanSpork.API
             //Query
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserCollectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         // Configure is where you add middleware. This is called after

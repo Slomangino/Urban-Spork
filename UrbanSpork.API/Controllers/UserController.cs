@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.FilterCriteria;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
@@ -40,8 +41,20 @@ namespace UrbanSpork.API.Controllers
             return  await result;
         }
 
-       
-        [HttpPost("create")]
+        [HttpGet("getusercollection")]
+        public async Task<List<UserDTO>> GetUserCollection([FromQuery] UserFilterCriteria filterCriteria)
+        {
+            var query = new GetUserCollectionQuery
+            {
+                FilterCriteria = filterCriteria,
+            };
+
+            var result = _queryProcessor.Process(query);
+            return await result;
+        }
+
+
+        [HttpPost("createuser")]
         public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
         {
             var message = new CreateSingleUserCommand(input);
