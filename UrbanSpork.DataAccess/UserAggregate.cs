@@ -36,6 +36,7 @@ namespace UrbanSpork.DataAccess
         {
             DateCreated = @event.TimeStamp;
             userDTO = @event.UserDTO;
+            userDTO.IsActive = true;
         }
 
         private void Apply(UserUpdatedEvent @event)
