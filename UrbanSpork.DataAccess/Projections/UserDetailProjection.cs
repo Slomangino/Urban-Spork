@@ -57,7 +57,7 @@ namespace UrbanSpork.DataAccess.Projections
                     break;
             }
 
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

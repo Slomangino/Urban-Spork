@@ -14,16 +14,14 @@ namespace UrbanSpork.DataAccess
 
         protected UserAggregate(UserDTO userDTO)
         {
-            Id = userDTO.UserID;
-            DateCreated = userDTO.DateCreated;
+            Id = Guid.NewGuid();
+            userDTO.UserID = Id;
             ApplyChange(new UserCreatedEvent(userDTO));
         }
 
         public static UserAggregate CreateNewUser(UserDTO userDTO)
         {
             var dto = userDTO;
-            dto.UserID = Guid.NewGuid();
-            dto.DateCreated = DateTime.Today;
             return new UserAggregate(dto);
         }
 
@@ -39,7 +37,7 @@ namespace UrbanSpork.DataAccess
 
         private void Apply(UserCreatedEvent @event)
         {
-            DateCreated = @event.TimeStamp;
+            DateCreated = @event.UserDTO.DateCreated;
             userDTO = @event.UserDTO;
             userDTO.IsActive = true;
         }
