@@ -1,9 +1,10 @@
-﻿using UrbanSpork.CQRS.Events;
+﻿using System.Threading.Tasks;
+using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess
 {
     public interface IProjection
     {
-        void ListenForEvents(IEvent @event);
+        Task ListenForEvents(IEvent @event);
     }
 }

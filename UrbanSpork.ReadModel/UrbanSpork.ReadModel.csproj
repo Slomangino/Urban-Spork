@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ReadModel\**" />
+    <EmbeddedResource Remove="ReadModel\**" />
+    <None Remove="ReadModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="System.Json" Version="4.4.0" />
   </ItemGroup>
@@ -12,11 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
     <ProjectReference Include="..\UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ReadModel\QueryCommands\" />
-    <Folder Include="ReadModel\QueryHandlers\" />
   </ItemGroup>
 
 </Project>

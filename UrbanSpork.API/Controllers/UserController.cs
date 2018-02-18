@@ -56,5 +56,13 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(message);
             return result;
         }
+
+        [HttpPut("disable/{id}")]
+        public async Task<UserDTO> DisableUser(Guid id)
+        {
+            var command = new DisableSingleUserCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
     }
 }

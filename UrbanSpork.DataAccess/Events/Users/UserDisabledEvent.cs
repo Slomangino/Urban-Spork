@@ -1,22 +1,25 @@
-﻿using UrbanSpork.CQRS.Events;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess.Events.Users
 {
-    public class UserUpdatedEvent : IEvent
+    public class UserDisabledEvent : IEvent
     {
         public UserDTO UserDTO { get; set; }
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public UserUpdatedEvent() { }
+        public UserDisabledEvent() { }
 
-        public UserUpdatedEvent(UserDTO UserDTO)
+        public UserDisabledEvent(UserDTO dto)
         {
-            Id = UserDTO.UserID;
-            this.UserDTO = UserDTO;
+            Id = dto.UserID;
+            UserDTO = dto;
         }
+
     }
 }
