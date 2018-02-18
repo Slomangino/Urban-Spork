@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
+using System.Threading.Tasks;
 
 namespace UrbanSpork.DataAccess.Projections
 {
@@ -38,7 +39,7 @@ namespace UrbanSpork.DataAccess.Projections
         [Column(TypeName = "json")]
         public string Equipment { get; set; }
 
-        public void ListenForEvents(IEvent @event)
+        public async Task ListenForEvents(IEvent @event)
         {
             UserDetailProjection info;
             switch (@event) { 
@@ -55,6 +56,8 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.UserDetailProjection.Update(info);
                     break;
             }
+
+            //await _context.SaveChangesAsync();
         }
     }
 }

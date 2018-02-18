@@ -12,12 +12,10 @@ namespace UrbanSpork.DataAccess.Events
     public class EventStore : IEventStore
     {
         private readonly UrbanDbContext _context;
-        private readonly IEventPublisher _publisher;
 
         public EventStore(UrbanDbContext context, IEventPublisher publisher)
         {
             _context = context;
-            _publisher = publisher;
         }
 
         public Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
@@ -34,7 +32,6 @@ namespace UrbanSpork.DataAccess.Events
                 {
                     var serializedEvent = BuildEventRowFromEvent(e);
                     await _context.Events.AddAsync(serializedEvent, cancellationToken);
-                    await _publisher.Publish(e, cancellationToken);
                 }
                 await _context.SaveChangesAsync(cancellationToken);
         }

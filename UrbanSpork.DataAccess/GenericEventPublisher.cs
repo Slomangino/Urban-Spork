@@ -18,12 +18,12 @@ namespace UrbanSpork.DataAccess
             _userDetailProjection = userDetailProjection;
         }
 
-        Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
+        async Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
         {
             //throw all events to each projection
-            _userDetailProjection.ListenForEvents(@event);
+            await _userDetailProjection.ListenForEvents(@event);
 
-            return Task.FromResult(0);
+            // return Task.FromResult(0);
         }
     }
 }

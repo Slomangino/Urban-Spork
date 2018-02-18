@@ -46,22 +46,16 @@ namespace UrbanSpork.DataAccess
 
         public async Task<UserDTO> DisableSingleUser(Guid id)
         {
-            try
+            var userAgg = await _session.Get<UserAggregate>(id);
+
+            if (userAgg.userDTO.IsActive) // if the user is already disabled, do not do anything
             {
-                var userAgg = await _session.Get<UserAggregate>(id);
                 var dto = userAgg.userDTO;
-
                 userAgg.DisableSingleUser(dto);
-
                 await _session.Commit();
+            }
 
-                return userAgg.userDTO;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
-            return new UserDTO();
+            return userAgg.userDTO;
         }
     }
 }
