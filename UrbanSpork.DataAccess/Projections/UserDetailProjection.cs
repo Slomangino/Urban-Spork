@@ -49,7 +49,10 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserUpdatedEvent uu:
                     info = Mapper.Map<UserDetailProjection>(uu.UserDTO);
                     _context.UserDetailProjection.Update(info);
-                    Console.WriteLine("User updated");
+                    break;
+                case UserDisabledEvent ud:
+                    info = Mapper.Map<UserDetailProjection>(ud.UserDTO);
+                    _context.UserDetailProjection.Update(info);
                     break;
             }
         }

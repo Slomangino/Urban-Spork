@@ -43,5 +43,25 @@ namespace UrbanSpork.DataAccess
 
             return userAgg.userDTO;
         }
+
+        public async Task<UserDTO> DisableSingleUser(Guid id)
+        {
+            try
+            {
+                var userAgg = await _session.Get<UserAggregate>(id);
+                var dto = userAgg.userDTO;
+
+                userAgg.DisableSingleUser(dto);
+
+                await _session.Commit();
+
+                return userAgg.userDTO;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+            return new UserDTO();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace UrbanSpork.CQRS.Interfaces
     {
         Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO);
         Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO);
+        Task<UserDTO> DisableSingleUser(Guid id);
     }
 }

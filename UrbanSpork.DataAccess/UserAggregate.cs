@@ -32,6 +32,11 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserUpdatedEvent(userDTO));
         }
 
+        public void DisableSingleUser(UserDTO dto)
+        {
+            ApplyChange(new UserDisabledEvent(dto));
+        }
+
         private void Apply(UserCreatedEvent @event)
         {
             DateCreated = @event.TimeStamp;
@@ -42,6 +47,11 @@ namespace UrbanSpork.DataAccess
         private void Apply(UserUpdatedEvent @event)
         {
             userDTO = @event.UserDTO;
+        }
+
+        private void Apply(UserDisabledEvent @event)
+        {
+            userDTO.IsActive = false;
         }
     }
 }
