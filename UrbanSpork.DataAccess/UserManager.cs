@@ -3,7 +3,6 @@ using UrbanSpork.CQRS.Domain;
 using System;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.DataAccess.Repositories;
 
 namespace UrbanSpork.DataAccess
@@ -53,6 +52,20 @@ namespace UrbanSpork.DataAccess
             {
                 var dto = userAgg.userDTO;
                 userAgg.DisableSingleUser(dto);
+                await _session.Commit();
+            }
+
+            return userAgg.userDTO;
+        }
+
+        public async Task<UserDTO> EnableSingleUser(Guid id)
+        {
+            var userAgg = await _session.Get<UserAggregate>(id);
+
+            if (!userAgg.userDTO.IsActive)
+            {
+                var dto = userAgg.userDTO;
+                userAgg.EnableSingleUser(dto);
                 await _session.Commit();
             }
 

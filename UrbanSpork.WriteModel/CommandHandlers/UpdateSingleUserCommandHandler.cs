@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.DataAccess;
 using UrbanSpork.CQRS.WriteModel.CommandHandler;
 using UrbanSpork.WriteModel.WriteModel.Commands;
 

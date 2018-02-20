@@ -55,6 +55,10 @@ namespace UrbanSpork.DataAccess.Projections
                     info = Mapper.Map<UserDetailProjection>(ud.UserDTO);
                     _context.UserDetailProjection.Update(info);
                     break;
+                case UserEnabledEvent ue:
+                    info = Mapper.Map<UserDetailProjection>(ue.UserDTO);
+                    _context.UserDetailProjection.Update(info);
+                    break;
             }
 
             await _context.SaveChangesAsync();

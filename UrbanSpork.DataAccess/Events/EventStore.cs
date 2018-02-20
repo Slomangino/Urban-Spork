@@ -13,7 +13,7 @@ namespace UrbanSpork.DataAccess.Events
     {
         private readonly UrbanDbContext _context;
 
-        public EventStore(UrbanDbContext context, IEventPublisher publisher)
+        public EventStore(UrbanDbContext context)
         {
             _context = context;
         }

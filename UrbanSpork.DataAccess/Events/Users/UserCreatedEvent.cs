@@ -16,7 +16,6 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserCreatedEvent(UserDTO userDTO)
         {
-            //TimeStamp = DateTime.UtcNow;
             Id = userDTO.UserID;
             UserDTO = userDTO;
             UserDTO.DateCreated = DateTime.Now;
