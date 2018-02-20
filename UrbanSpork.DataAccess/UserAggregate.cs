@@ -12,27 +12,31 @@ namespace UrbanSpork.DataAccess
 
         private UserAggregate() { }
 
-        protected UserAggregate(UserDTO userDTO)
+        protected UserAggregate(UserDTO dto)
         {
             Id = Guid.NewGuid();
-            userDTO.UserID = Id;
-            ApplyChange(new UserCreatedEvent(userDTO));
+            dto.UserID = Id;
+            ApplyChange(new UserCreatedEvent(dto));
         }
 
-        public static UserAggregate CreateNewUser(UserDTO userDTO)
+        public static UserAggregate CreateNewUser(UserDTO dto)
         {
-            var dto = userDTO;
             return new UserAggregate(dto);
         }
 
-        public void UpdateUserPersonalInfo(UserDTO userDTO)
+        public void UpdateUserPersonalInfo(UserDTO dto)
         {
-            ApplyChange(new UserUpdatedEvent(userDTO));
+            ApplyChange(new UserUpdatedEvent(dto));
         }
 
         public void DisableSingleUser(UserDTO dto)
         {
             ApplyChange(new UserDisabledEvent(dto));
+        }
+
+        public void EnableSingleUser(UserDTO dto)
+        {
+            ApplyChange(new UserEnabledEvent(dto));
         }
 
         private void Apply(UserCreatedEvent @event)
@@ -50,6 +54,11 @@ namespace UrbanSpork.DataAccess
         private void Apply(UserDisabledEvent @event)
         {
             userDTO.IsActive = false;
+        }
+
+        private void Apply(UserEnabledEvent @event)
+        {
+            userDTO.IsActive = true;
         }
     }
 }

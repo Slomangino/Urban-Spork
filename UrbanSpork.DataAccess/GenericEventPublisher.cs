@@ -22,8 +22,6 @@ namespace UrbanSpork.DataAccess
         {
             //throw all events to each projection
             await _userDetailProjection.ListenForEvents(@event);
-
-            // return Task.FromResult(0);
         }
     }
 }

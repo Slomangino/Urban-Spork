@@ -9,18 +9,18 @@ using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.WriteModel.CommandHandlers
 {
-    public class DisableSingleUserCommandHandler : ICommandHandler<DisableSingleUserCommand, UserDTO>
+    public class EnableSingleUserCommandHandler : ICommandHandler<EnableSingleUserCommand, UserDTO>
     {
         private readonly IUserManager _userManager;
 
-        public DisableSingleUserCommandHandler(IUserManager userManager)
+        public EnableSingleUserCommandHandler(IUserManager userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<UserDTO> Handle(DisableSingleUserCommand command)
+        public async Task<UserDTO> Handle(EnableSingleUserCommand command)
         {
-            var dto = await _userManager.DisableSingleUser(command.id);
+            var dto = await _userManager.EnableSingleUser(command.id);
             return dto;
         }
     }

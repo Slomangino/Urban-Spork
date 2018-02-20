@@ -15,7 +15,6 @@ namespace UrbanSpork.API.Controllers
     public class UserController : Controller
     {
         private readonly IQueryProcessor _queryProcessor;
-
         private readonly ICommandDispatcher _commandDispatcher;
 
         public UserController(IQueryProcessor queryProcessor, ICommandDispatcher commandDispatcher)
@@ -61,6 +60,14 @@ namespace UrbanSpork.API.Controllers
         public async Task<UserDTO> DisableUser(Guid id)
         {
             var command = new DisableSingleUserCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("enable/{id}")]
+        public async Task<UserDTO> EnableUser(Guid id)
+        {
+            var command = new EnableSingleUserCommand(id);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
