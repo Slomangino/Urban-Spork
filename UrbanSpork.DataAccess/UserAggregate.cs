@@ -1,5 +1,6 @@
 ﻿using UrbanSpork.CQRS.Domain;
 using System;
+using Newtonsoft.Json;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Events.Users;
 
@@ -39,6 +40,11 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserEnabledEvent(dto));
         }
 
+        public void UpdateSingleUserPermissions(UserPermissionsInputDTO dto)
+        {
+            ApplyChange(new UserPermissionsUpdatedEvent(dto));
+        }
+
         private void Apply(UserCreatedEvent @event)
         {
             DateCreated = @event.UserDTO.DateCreated;
@@ -59,6 +65,11 @@ namespace UrbanSpork.DataAccess
         private void Apply(UserEnabledEvent @event)
         {
             userDTO.IsActive = true;
+        }
+
+        private void Apply(UserPermissionsUpdatedEvent @event)
+        {
+            userDTO.Access = JsonConvert.SerializeObject(@event.Dto.PermissionList);
         }
     }
 }
