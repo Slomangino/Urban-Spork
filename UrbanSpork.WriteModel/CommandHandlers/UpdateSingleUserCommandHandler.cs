@@ -8,7 +8,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 {
     public class UpdateSingleUserCommandHandler : ICommandHandler<UpdateSingleUserCommand, UserDTO>
     {
-        private IUserManager _userManager;
+        private readonly IUserManager _userManager;
 
         public UpdateSingleUserCommandHandler(IUserManager userManager)
         {
@@ -18,8 +18,8 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         //fix return type
         public async Task<UserDTO> Handle(UpdateSingleUserCommand command)
         {
-            var userAgg = await _userManager.UpdateUser(command.id, command.userInputDTO);
-            return userAgg;
+            var dto = await _userManager.UpdateUser(command.id, command.userInputDTO);
+            return dto;
         }
     }
 }

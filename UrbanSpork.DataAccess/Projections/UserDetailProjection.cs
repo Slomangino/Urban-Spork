@@ -3,9 +3,12 @@ using UrbanSpork.CQRS.Events;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace UrbanSpork.DataAccess.Projections
 {
@@ -58,6 +61,12 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserEnabledEvent ue:
                     info = Mapper.Map<UserDetailProjection>(ue.UserDTO);
                     _context.UserDetailProjection.Update(info);
+                    break;
+                case UserPermissionsUpdatedEvent upu:
+                    var user = await _context.UserDetailProjection.SingleAsync(b => b.UserID == upu.Id);
+                    user.Access = JsonConvert.SerializeObject(upu.Dto.PermissionList);
+                    _context.UserDetailProjection.Attach(user);
+                    _context.Entry(user).Property(a => a.Access).IsModified = true;
                     break;
             }
 

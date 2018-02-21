@@ -10,5 +10,6 @@ namespace UrbanSpork.DataAccess
         Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO);
         Task<UserDTO> DisableSingleUser(Guid id);
         Task<UserDTO> EnableSingleUser(Guid id);
+        Task<UserDTO> UpdateSingleUserPermissions(UserPermissionsInputDTO dto);
     }
 }

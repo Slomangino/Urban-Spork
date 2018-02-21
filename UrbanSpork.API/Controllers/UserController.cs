@@ -56,6 +56,14 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        [HttpPut("UpdatePermissions")]
+        public async Task<UserDTO> UpdateUserPermissions([FromBody] UserPermissionsInputDTO input)
+        {
+            var message = new UpdateSingleUserPermissionsCommand(input);
+            var result = await _commandDispatcher.Execute(message);
+            return result;
+        }
+
         [HttpPut("disable/{id}")]
         public async Task<UserDTO> DisableUser(Guid id)
         {
