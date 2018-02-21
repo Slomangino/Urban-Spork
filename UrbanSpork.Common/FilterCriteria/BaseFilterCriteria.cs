@@ -7,12 +7,12 @@ namespace UrbanSpork.Common.FilterCriteria
 {
     public class BaseFilterCriteria
     {
-        public string SearchTerms = "";
+        public string SearchTerms { get; set; }
 
-        public string SortDirection = "ASC";
+        public string SortDirection { get; set; }
 
-        public string SortField = "";
+        public string SortField { get; set; }
 
-        public bool EnablePaging = true;
+        public bool EnablePaging { get; set; }
     }
 }

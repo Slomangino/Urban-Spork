@@ -16,7 +16,7 @@ namespace UrbanSpork.ReadModel.QueryHandlers
 {
     public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDTO>>
     {
-        private UrbanDbContext _context;
+        private readonly UrbanDbContext _context;
 
         public GetUserCollectionQueryHandler(UrbanDbContext context)
         {
@@ -34,33 +34,48 @@ namespace UrbanSpork.ReadModel.QueryHandlers
 
             //if (!query.FilterCriteria.SearchTerms.Equals(""))
             //{
-            //    queryable = queryable.Contains<UserDetailProjection>(query.FilterCriteria.SearchTerms));
+            //    queryable = queryable.Where(a => a.Department.Contains(query.FilterCriteria.SearchTerms));
+            //    queryable = queryable.Where(a => a.FirstName.Contains(query.FilterCriteria.SearchTerms));
+            //    queryable = queryable.Where(a => a.LastName.Contains(query.FilterCriteria.SearchTerms));
+            //    queryable = queryable.Where(a => a.Position.Contains(query.FilterCriteria.SearchTerms));
+            //    queryable = queryable.Where(a => a.Department.Contains(query.FilterCriteria.SearchTerms));
             //}
 
-            if (query.FilterCriteria.SortDirection.Equals("ASC"))
+            if (query.FilterCriteria.SortDirection.Equals("DESC"))
             {
                 switch (query.FilterCriteria.SortField)
                 {
                     case "Email":
-                        queryable.OrderBy(a => a.Email);
+                        queryable = queryable.OrderBy(a => a.Email);
+                        queryable = queryable.OrderBy(a => a.FirstName);
                         break;
                     case "LastName":
-                        queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.FirstName);
                         break;
                     case "IsAdmin":
-                        queryable.OrderBy(a => a.IsAdmin);
+                        queryable = queryable.OrderBy(a => a.IsAdmin);
+                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName);
                         break;
                     case "DateCreated":
-                        queryable.OrderBy(a => a.DateCreated);
+                        queryable = queryable.OrderBy(a => a.DateCreated);
+                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName);
                         break;
                     case "Position":
-                        queryable.OrderBy(a => a.Position);
+                        queryable = queryable.OrderBy(a => a.Position);
+                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName);
                         break;
                     case "Department":
-                        queryable.OrderBy(a => a.Department);
+                        queryable = queryable.OrderBy(a => a.Department);
+                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName);
                         break;
                     default:
-                        queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName);
                         break;
                 }
             }
@@ -69,25 +84,25 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                 switch (query.FilterCriteria.SortField)
                 {
                     case "Email":
-                        queryable.OrderByDescending(a => a.Email);
+                        queryable = queryable.OrderByDescending(a => a.Email);
                         break;
                     case "LastName":
-                        queryable.OrderByDescending(a => a.LastName);
+                        queryable = queryable.OrderByDescending(a => a.LastName);
                         break;
                     case "IsAdmin":
-                        queryable.OrderByDescending(a => a.IsAdmin);
+                        queryable = queryable.OrderByDescending(a => a.IsAdmin);
                         break;
                     case "DateCreated":
-                        queryable.OrderByDescending(a => a.DateCreated);
+                        queryable = queryable.OrderByDescending(a => a.DateCreated);
                         break;
                     case "Position":
-                        queryable.OrderByDescending(a => a.Position);
+                        queryable = queryable.OrderByDescending(a => a.Position);
                         break;
                     case "Department":
-                        queryable.OrderByDescending(a => a.Department);
+                        queryable = queryable.OrderByDescending(a => a.Department);
                         break;
                     default:
-                        queryable.OrderByDescending(a => a.FirstName);
+                        queryable = queryable.OrderByDescending(a => a.FirstName);
                         break;
                 }
             }

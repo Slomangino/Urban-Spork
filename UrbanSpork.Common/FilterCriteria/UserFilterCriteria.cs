@@ -6,8 +6,8 @@ namespace UrbanSpork.Common.FilterCriteria
 {
     public class UserFilterCriteria : BaseFilterCriteria
     {
-        public bool IncludeIsAdmin;
+        public bool IncludeIsAdmin { get; set; }
 
-        public bool IncludeInactive;
+        public bool IncludeInactive { get; set; }
     }
 }
