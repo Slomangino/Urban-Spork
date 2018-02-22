@@ -41,41 +41,47 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             //    queryable = queryable.Where(a => a.Department.Contains(query.FilterCriteria.SearchTerms));
             //}
 
-            if (query.FilterCriteria.SortDirection.Equals("DESC"))
+            if (query.FilterCriteria.SortDirection.Equals("ASC"))
             {
                 switch (query.FilterCriteria.SortField)
                 {
                     case "Email":
-                        queryable = queryable.OrderBy(a => a.Email);
-                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.Email)
+                            .ThenBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
                         break;
                     case "LastName":
-                        queryable = queryable.OrderBy(a => a.LastName);
-                        queryable = queryable.OrderBy(a => a.FirstName);
+                        queryable = queryable.OrderBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
+                        break;
+                    case "FirstName":
+                        queryable = queryable.OrderBy(a => a.FirstName)
+                            .ThenBy(a => a.LastName);
                         break;
                     case "IsAdmin":
-                        queryable = queryable.OrderBy(a => a.IsAdmin);
-                        queryable = queryable.OrderBy(a => a.FirstName);
-                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.IsAdmin)
+                            .ThenBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
                         break;
                     case "DateCreated":
-                        queryable = queryable.OrderBy(a => a.DateCreated);
-                        queryable = queryable.OrderBy(a => a.FirstName);
-                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.DateCreated)
+                            .ThenBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
                         break;
                     case "Position":
-                        queryable = queryable.OrderBy(a => a.Position);
-                        queryable = queryable.OrderBy(a => a.FirstName);
-                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.Position)
+                            .ThenBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
                         break;
                     case "Department":
-                        queryable = queryable.OrderBy(a => a.Department);
-                        queryable = queryable.OrderBy(a => a.FirstName);
-                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.Department)
+                            .ThenBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
+                            
                         break;
                     default:
-                        queryable = queryable.OrderBy(a => a.FirstName);
-                        queryable = queryable.OrderBy(a => a.LastName);
+                        queryable = queryable.OrderBy(a => a.LastName)
+                            .ThenBy(a => a.FirstName);
                         break;
                 }
             }
@@ -84,30 +90,47 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                 switch (query.FilterCriteria.SortField)
                 {
                     case "Email":
-                        queryable = queryable.OrderByDescending(a => a.Email);
+                        queryable = queryable.OrderByDescending(a => a.Email)
+                            .ThenByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                     case "LastName":
-                        queryable = queryable.OrderByDescending(a => a.LastName);
+                        queryable = queryable.OrderByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
+                        break;
+                    case "FirstName":
+                        queryable = queryable.OrderByDescending(a => a.FirstName)
+                            .ThenByDescending(a => a.LastName);
                         break;
                     case "IsAdmin":
-                        queryable = queryable.OrderByDescending(a => a.IsAdmin);
+                        queryable = queryable.OrderByDescending(a => a.IsAdmin)
+                            .ThenByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                     case "DateCreated":
-                        queryable = queryable.OrderByDescending(a => a.DateCreated);
+                        queryable = queryable.OrderByDescending(a => a.DateCreated)
+                            .ThenByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                     case "Position":
-                        queryable = queryable.OrderByDescending(a => a.Position);
+                        queryable = queryable.OrderByDescending(a => a.Position)
+                            .ThenByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                     case "Department":
-                        queryable = queryable.OrderByDescending(a => a.Department);
+                        queryable = queryable.OrderByDescending(a => a.Department)
+                            .ThenByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                     default:
-                        queryable = queryable.OrderByDescending(a => a.FirstName);
+                        queryable = queryable.OrderByDescending(a => a.LastName)
+                            .ThenByDescending(a => a.FirstName);
                         break;
                 }
             }
 
             var result = queryable.ToList();
+
             var userDtoCollection = Mapper.Map(result, new List<UserDTO>());
 
             return Task.FromResult(userDtoCollection);
