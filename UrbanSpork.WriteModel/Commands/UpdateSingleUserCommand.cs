@@ -6,13 +6,13 @@ namespace UrbanSpork.WriteModel.WriteModel.Commands
 {
     public class UpdateSingleUserCommand : ICommand<UserDTO>
     {
-        public Guid id;
-        public UserInputDTO userInputDTO;
+        public Guid Id;
+        public UpdateUserInformationDTO Input;
 
-        public UpdateSingleUserCommand(Guid id, UserInputDTO User)
+        public UpdateSingleUserCommand(Guid id, UpdateUserInformationDTO input)
         {
-            this.id = id;
-            userInputDTO = User;
+            Id = id;
+            Input = input;
         }
     }
 }

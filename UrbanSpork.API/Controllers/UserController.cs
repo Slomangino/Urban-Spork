@@ -41,7 +41,7 @@ namespace UrbanSpork.API.Controllers
 
        
         [HttpPost("create")]
-        public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
+        public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
         {
             var message = new CreateSingleUserCommand(input);
             var result = await _commandDispatcher.Execute(message);
@@ -49,7 +49,7 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input, Guid id)
+        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input, Guid id)
         {
             var message = new UpdateSingleUserCommand(id, input);
             var result = await _commandDispatcher.Execute(message);
