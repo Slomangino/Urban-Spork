@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.WriteModel;
+using UrbanSpork.DataAccess.Projections;
+using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
@@ -20,6 +22,22 @@ namespace UrbanSpork.API.Controllers
         {
             _queryProcessor = queryProcessor;
             _commandDispatcher = commandDispatcher;
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<PermissionDTO> Get(Guid id)
+        {
+            var query = new GetPermissionByIdQuery(id);
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
+
+        [HttpGet]
+        public async Task<List<PermissionDTO>> GetAllPermissions()
+        {
+            var query = new GetAllPermissionsQuery();
+            var result = await _queryProcessor.Process(query);
+            return result;
         }
 
         [HttpPost("create")]

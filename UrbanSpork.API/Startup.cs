@@ -41,6 +41,9 @@ namespace UrbanSpork.API
                 cfg.CreateMap<UserDTO, UserAggregate>();
                 cfg.CreateMap<PermissionAggregate, PermissionDTO>();
                 cfg.CreateMap<PermissionDTO, PermissionAggregate>();
+                cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
+                cfg.CreateMap<PermissionDetailProjection, PermissionDTO>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PermissionId));
             });
         }
 
@@ -71,6 +74,7 @@ namespace UrbanSpork.API
         {
             //Utility
             builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -107,10 +111,15 @@ namespace UrbanSpork.API
             //Query
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPermissionByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
         }
 
         // Configure is where you add middleware. This is called after
