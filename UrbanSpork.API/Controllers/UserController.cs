@@ -23,7 +23,7 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<UserDTO> Get(Guid id)
         {
             var message = new GetUserByIdQuery(id);
@@ -41,22 +41,22 @@ namespace UrbanSpork.API.Controllers
 
        
         [HttpPost("create")]
-        public async Task<UserDTO> CreateUser([FromBody] UserInputDTO input)
+        public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
         {
             var message = new CreateSingleUserCommand(input);
             var result = await _commandDispatcher.Execute(message);
             return result;
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input, Guid id)
+        [HttpPut("update/{Id}")]
+        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input, Guid id)
         {
             var message = new UpdateSingleUserCommand(id, input);
             var result = await _commandDispatcher.Execute(message);
             return result;
         }
 
-        [HttpPut("disable/{id}")]
+        [HttpPut("disable/{Id}")]
         public async Task<UserDTO> DisableUser(Guid id)
         {
             var command = new DisableSingleUserCommand(id);
@@ -64,7 +64,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("enable/{id}")]
+        [HttpPut("enable/{Id}")]
         public async Task<UserDTO> EnableUser(Guid id)
         {
             var command = new EnableSingleUserCommand(id);

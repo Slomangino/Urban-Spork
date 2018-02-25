@@ -18,58 +18,57 @@ namespace UrbanSpork.DataAccess
             _session = session;
         }
 
-        public async Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO)
+        public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
         {
-            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
-            var userAgg = UserAggregate.CreateNewUser(userDTO);
+            var userAgg = UserAggregate.CreateNewUser(input);
             await _session.Add(userAgg);
             await _session.Commit();
+            var userDTO = Mapper.Map<UserDTO>(userAgg);
 
-            return userAgg.userDTO;
+            return userDTO;
         }
 
-        public async Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO)
+        public async Task<UserDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
-            var dto = Mapper.Map<UserDTO>(userInputDTO);
 
-            dto.UserID = id;
-            dto.DateCreated = userAgg.DateCreated;
-            dto.IsActive = userAgg.userDTO.IsActive;
+            //dto.UserID = id;
+            //dto.DateCreated = userAgg.DateCreated;
+            //dto.IsActive = userAgg.userDTO.IsActive;
 
-            userAgg.UpdateUserPersonalInfo(dto);
+            userAgg.UpdateUserInfo(dto);
 
             await _session.Commit();
 
-            return userAgg.userDTO;
+            var result = Mapper.Map<UserDTO>(userAgg);
+
+            return result;
         }
 
         public async Task<UserDTO> DisableSingleUser(Guid id)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
 
-            if (userAgg.userDTO.IsActive) // if the user is already disabled, do not do anything
+            if (userAgg.IsActive) 
             {
-                var dto = userAgg.userDTO;
-                userAgg.DisableSingleUser(dto);
+                userAgg.DisableSingleUser();
                 await _session.Commit();
             }
-
-            return userAgg.userDTO;
+            var result = Mapper.Map<UserDTO>(userAgg);
+            return result;
         }
 
         public async Task<UserDTO> EnableSingleUser(Guid id)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
 
-            if (!userAgg.userDTO.IsActive)
+            if (!userAgg.IsActive)
             {
-                var dto = userAgg.userDTO;
-                userAgg.EnableSingleUser(dto);
+                userAgg.EnableSingleUser();
                 await _session.Commit();
             }
-
-            return userAgg.userDTO;
+            var result = Mapper.Map<UserDTO>(userAgg);
+            return result;
         }
     }
 }

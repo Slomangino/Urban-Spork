@@ -1,6 +1,10 @@
-﻿namespace UrbanSpork.Common.DataTransferObjects
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace UrbanSpork.Common.DataTransferObjects
 {
-    public class UserInputDTO
+    public class UpdateUserInformationDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

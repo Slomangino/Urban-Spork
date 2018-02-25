@@ -6,6 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using UrbanSpork.Common;
 
 namespace UrbanSpork.DataAccess.Projections
 {
@@ -21,7 +26,7 @@ namespace UrbanSpork.DataAccess.Projections
         }
 
         [Key]
-        public Guid UserID { get; set; }
+        public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -30,34 +35,72 @@ namespace UrbanSpork.DataAccess.Projections
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
 
+        [Column(TypeName = "json")]
+        public string PermissionList { get; set; }
+
         [Column(TypeName = "timestamp")]
         public DateTime DateCreated { get; set; }
 
-        [Column(TypeName = "json")]
-        public string Access { get; set; }
+        //[Column(TypeName = "json")]
+        //public string Access { get; set; }
 
-        [Column(TypeName = "json")]
-        public string Equipment { get; set; }
+        //[Column(TypeName = "json")]
+        //public string Equipment { get; set; }
 
         public async Task ListenForEvents(IEvent @event)
         {
-            UserDetailProjection info;
+            UserDetailProjection user = new UserDetailProjection();
             switch (@event) { 
                 case UserCreatedEvent uc:
-                    info = Mapper.Map<UserDetailProjection>(uc.UserDTO);
-                    _context.UserDetailProjection.Add(info);
+                    user.UserId = uc.Id;
+                    user.FirstName = uc.FirstName;
+                    user.LastName = uc.LastName;
+                    user.Email = uc.Email;
+                    user.Position = uc.Position;
+                    user.Department = uc.Department;
+                    user.IsActive = uc.IsActive;
+                    user.IsAdmin = uc.IsAdmin;
+                    user.PermissionList = JsonConvert.SerializeObject(uc.PermissionList);
+                    user.DateCreated = uc.TimeStamp;
+
+                    _context.UserDetailProjection.Add(user);
                     break;
                 case UserUpdatedEvent uu:
-                    info = Mapper.Map<UserDetailProjection>(uu.UserDTO);
-                    _context.UserDetailProjection.Update(info);
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == uu.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.FirstName = uu.FirstName;
+                    user.LastName = uu.LastName;
+                    user.Email = uu.Email;
+                    user.Position = uu.Position;
+                    user.Department = uu.Department;
+                    user.IsAdmin = uu.IsAdmin;
+                    _context.Entry(user).Property(a => a.FirstName).IsModified = true;
+                    _context.Entry(user).Property(a => a.LastName).IsModified = true;
+                    _context.Entry(user).Property(a => a.Email).IsModified = true;
+                    _context.Entry(user).Property(a => a.Position).IsModified = true;
+                    _context.Entry(user).Property(a => a.Department).IsModified = true;
+                    _context.Entry(user).Property(a => a.IsAdmin).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
                     break;
                 case UserDisabledEvent ud:
-                    info = Mapper.Map<UserDetailProjection>(ud.UserDTO);
-                    _context.UserDetailProjection.Update(info);
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ud.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.IsActive = ud.IsActive;
+                    _context.Entry(user).Property(a => a.IsActive).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
                     break;
                 case UserEnabledEvent ue:
-                    info = Mapper.Map<UserDetailProjection>(ue.UserDTO);
-                    _context.UserDetailProjection.Update(info);
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ue.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.IsActive = ue.IsActive;
+                    _context.Entry(user).Property(a => a.IsActive).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
                     break;
             }
 

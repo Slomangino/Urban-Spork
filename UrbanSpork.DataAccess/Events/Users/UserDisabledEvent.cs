@@ -8,17 +8,15 @@ namespace UrbanSpork.DataAccess.Events.Users
 {
     public class UserDisabledEvent : IEvent
     {
-        public UserDTO UserDTO { get; set; }
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public UserDisabledEvent() { }
+        public bool IsActive { get; set; }
 
-        public UserDisabledEvent(UserDTO dto)
+        public UserDisabledEvent()
         {
-            Id = dto.UserID;
-            UserDTO = dto;
+            IsActive = false;
         }
 
     }

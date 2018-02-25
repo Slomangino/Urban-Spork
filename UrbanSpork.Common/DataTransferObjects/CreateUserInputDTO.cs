@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace UrbanSpork.Common.DataTransferObjects
 {
-    public class UserDTO
+    public class CreateUserInputDTO
     {
-        public Guid Id { get; set; }
-        public DateTime DateCreated { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
