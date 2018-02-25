@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
@@ -38,6 +39,8 @@ namespace UrbanSpork.API
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserAggregate, UserDTO>();
                 cfg.CreateMap<UserDTO, UserAggregate>();
+                cfg.CreateMap<PermissionAggregate, PermissionDTO>();
+                cfg.CreateMap<PermissionDTO, PermissionAggregate>();
             });
         }
 
@@ -73,6 +76,8 @@ namespace UrbanSpork.API
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Session>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Repository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -80,6 +85,7 @@ namespace UrbanSpork.API
 
             // Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();
 
 
             //Commands
@@ -87,13 +93,15 @@ namespace UrbanSpork.API
             builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+      
 
             //Command Handlers
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             //Query
