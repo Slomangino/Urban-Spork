@@ -13,6 +13,5 @@ namespace UrbanSpork.Common
         public DateTime RequestDate { get; set; }
         public Guid RequestedBy { get; set; }
         public Guid RequestedFor { get; set; }
-
     }
 }

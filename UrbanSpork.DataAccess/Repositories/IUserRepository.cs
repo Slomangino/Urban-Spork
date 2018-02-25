@@ -14,8 +14,8 @@ namespace UrbanSpork.DataAccess.Repositories
 
         Task<List<UserDTO>> GetAllUsers();
 
-        void CreateUser(User message);
-        void UpdateUser(User user);
+        //void CreateUser(User message);
+        //void UpdateUserInfo(User user);
         //void SaveEvent(IEvent[] events);
     }
 }

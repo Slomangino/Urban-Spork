@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UrbanSpork.Common.DataTransferObjects
 {
-    public class UserDTO : UserInputDTO
+    public class UserDTO
     {
-        public Guid UserID { get; set; }
-        public bool IsActive { get; set; }
+        public Guid Id { get; set; }
         public DateTime DateCreated { get; set; }
-        public string Access { get; set; }
-        public string Equipment { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Position { get; set; }
+        public string Department { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsActive { get; set; }
+        public Dictionary<Guid, PermissionRequest> PermissionList { get; set; }
     }
 }

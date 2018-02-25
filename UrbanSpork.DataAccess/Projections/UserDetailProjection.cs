@@ -7,6 +7,8 @@ using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
 
@@ -47,39 +49,59 @@ namespace UrbanSpork.DataAccess.Projections
 
         public async Task ListenForEvents(IEvent @event)
         {
-            UserDetailProjection info = new UserDetailProjection();
+            UserDetailProjection user = new UserDetailProjection();
             switch (@event) { 
                 case UserCreatedEvent uc:
-                    info.UserId = uc.Id;
-                    info.FirstName = uc.FirstName;
-                    info.LastName = uc.LastName;
-                    info.Email = uc.Email;
-                    info.Position = uc.Position;
-                    info.Department = uc.Department;
-                    info.IsActive = uc.IsActive;
-                    info.IsAdmin = uc.IsAdmin;
-                    info.PermissionList = JsonConvert.SerializeObject(uc.PermissionList);
-                    info.DateCreated = uc.TimeStamp;
+                    user.UserId = uc.Id;
+                    user.FirstName = uc.FirstName;
+                    user.LastName = uc.LastName;
+                    user.Email = uc.Email;
+                    user.Position = uc.Position;
+                    user.Department = uc.Department;
+                    user.IsActive = uc.IsActive;
+                    user.IsAdmin = uc.IsAdmin;
+                    user.PermissionList = JsonConvert.SerializeObject(uc.PermissionList);
+                    user.DateCreated = uc.TimeStamp;
 
-                    _context.UserDetailProjection.Add(info);
+                    _context.UserDetailProjection.Add(user);
                     break;
-                case UserUpdatedEvent uu: info the middle of stuufff/ /derp
-                    info.FirstName = uu.FirstName;
-                    info.LastName = uu.LastName;
-                    info.Email = uu.Email;
-                    info.Position = uu.Position;
-                    info.Department = uu.Department;
-                    info.IsAdmin = uu.IsAdmin;
-                    _context.UserDetailProjection.Update(info);
+                case UserUpdatedEvent uu:
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == uu.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.FirstName = uu.FirstName;
+                    user.LastName = uu.LastName;
+                    user.Email = uu.Email;
+                    user.Position = uu.Position;
+                    user.Department = uu.Department;
+                    user.IsAdmin = uu.IsAdmin;
+                    _context.Entry(user).Property(a => a.FirstName).IsModified = true;
+                    _context.Entry(user).Property(a => a.LastName).IsModified = true;
+                    _context.Entry(user).Property(a => a.Email).IsModified = true;
+                    _context.Entry(user).Property(a => a.Position).IsModified = true;
+                    _context.Entry(user).Property(a => a.Department).IsModified = true;
+                    _context.Entry(user).Property(a => a.IsAdmin).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
                     break;
-                    //case UserDisabledEvent ud:
-                    //    info = Mapper.Map<UserDetailProjection>(ud.UserDTO);
-                    //    _context.UserDetailProjection.Update(info);
-                    //    break;
-                    //case UserEnabledEvent ue:
-                    //    info = Mapper.Map<UserDetailProjection>(ue.UserDTO);
-                    //    _context.UserDetailProjection.Update(info);
-                    //    break;
+                case UserDisabledEvent ud:
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ud.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.IsActive = ud.IsActive;
+                    _context.Entry(user).Property(a => a.IsActive).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
+                    break;
+                case UserEnabledEvent ue:
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ue.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    user.IsActive = ue.IsActive;
+                    _context.Entry(user).Property(a => a.IsActive).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
+                    break;
             }
 
             await _context.SaveChangesAsync();

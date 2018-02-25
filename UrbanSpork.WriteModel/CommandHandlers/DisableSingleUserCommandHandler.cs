@@ -20,7 +20,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 
         public async Task<UserDTO> Handle(DisableSingleUserCommand command)
         {
-            var dto = await _userManager.DisableSingleUser(command.id);
+            var dto = await _userManager.DisableSingleUser(command.Id);
             return dto;
         }
     }

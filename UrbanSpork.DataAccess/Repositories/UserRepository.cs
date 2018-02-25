@@ -35,17 +35,17 @@ namespace UrbanSpork.DataAccess.Repositories
             return Task.FromResult(new List<UserDTO>());
         }
 
-        public void CreateUser(User user)
-        {
-            //_context.Users.Add(user);
-            //_context.SaveChanges();
-        }
+        //public void CreateUser(User user)
+        //{
+        //    //_context.Users.Add(user);
+        //    //_context.SaveChanges();
+        //}
 
-        public void UpdateUser(User user)
-        {
-            //_context.Users.Update(user);
-            //_context.SaveChanges();
-        }
+        //public void UpdateUserInfo(User user)
+        //{
+        //    //_context.Users.Update(user);
+        //    //_context.SaveChanges();
+        //}
 
         //public async void SaveEvent(IEvent[] events)
         //{

@@ -34,7 +34,7 @@ namespace UrbanSpork.DataAccess.Events.Users
             Position = dto.Position;
             Department = dto.Department;
             IsAdmin = dto.IsActive;
-            IsActive = true;
+            IsActive = dto.IsActive;
             PermissionList = dto.PermissionList;
         }
     }

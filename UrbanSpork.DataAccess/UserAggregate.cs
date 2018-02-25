@@ -9,7 +9,6 @@ namespace UrbanSpork.DataAccess
 {
     public class UserAggregate : AggregateRoot
     {
-        // public UserDTO userDTO { get; private set; }
         public DateTime DateCreated { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -25,7 +24,6 @@ namespace UrbanSpork.DataAccess
         protected UserAggregate(CreateUserInputDTO dto)
         {
             Id = Guid.NewGuid();
-            DateCreated = DateTime.UtcNow;
             ApplyChange(new UserCreatedEvent(dto));
         }
 
@@ -39,18 +37,19 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserUpdatedEvent(dto));
         }
 
-        public void DisableSingleUser(UserDTO dto)
+        public void DisableSingleUser()
         {
-            ApplyChange(new UserDisabledEvent(dto));
+            ApplyChange(new UserDisabledEvent());
         }
 
-        public void EnableSingleUser(UserDTO dto)
+        public void EnableSingleUser()
         {
-            ApplyChange(new UserEnabledEvent(dto));
+            ApplyChange(new UserEnabledEvent());
         }
 
         private void Apply(UserCreatedEvent @event)
         {
+            DateCreated = @event.TimeStamp;
             FirstName = @event.FirstName;
             LastName = @event.LastName;
             Email = @event.Email;
@@ -71,14 +70,14 @@ namespace UrbanSpork.DataAccess
             IsAdmin = @event.IsAdmin;
         }
 
-        //private void Apply(UserDisabledEvent @event)
-        //{
-        //    userDTO.IsActive = false;
-        //}
+        private void Apply(UserDisabledEvent @event)
+        {
+            IsActive = @event.IsActive;
+        }
 
-        //private void Apply(UserEnabledEvent @event)
-        //{
-        //    userDTO.IsActive = true;
-        //}
+        private void Apply(UserEnabledEvent @event)
+        {
+            IsActive = @event.IsActive;
+        }
     }
 }

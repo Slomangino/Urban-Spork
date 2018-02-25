@@ -18,7 +18,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         //fix return type
         public async Task<UserDTO> Handle(UpdateSingleUserCommand command)
         {
-            var userAgg = await _userManager.UpdateUser(command.Id, command.Input);
+            var userAgg = await _userManager.UpdateUserInfo(command.Id, command.Input);
             return userAgg;
         }
     }

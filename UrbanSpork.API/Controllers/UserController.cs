@@ -23,7 +23,7 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<UserDTO> Get(Guid id)
         {
             var message = new GetUserByIdQuery(id);
@@ -48,7 +48,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("update/{Id}")]
         public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input, Guid id)
         {
             var message = new UpdateSingleUserCommand(id, input);
@@ -56,7 +56,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("disable/{id}")]
+        [HttpPut("disable/{Id}")]
         public async Task<UserDTO> DisableUser(Guid id)
         {
             var command = new DisableSingleUserCommand(id);
@@ -64,7 +64,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("enable/{id}")]
+        [HttpPut("enable/{Id}")]
         public async Task<UserDTO> EnableUser(Guid id)
         {
             var command = new EnableSingleUserCommand(id);

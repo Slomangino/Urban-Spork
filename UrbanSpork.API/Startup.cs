@@ -36,13 +36,8 @@ namespace UrbanSpork.API
             Configuration = builder.Build();
 
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<User, UserDTO>();
-                cfg.CreateMap<UserDTO, User>();
-                cfg.CreateMap<UserDTO, UserInputDTO>();
-                cfg.CreateMap<UserInputDTO, UserDTO>();
-                cfg.CreateMap<UserDetailProjection, UserDTO>();
-                cfg.CreateMap<UserDTO, UserDetailProjection>();
-                // cfg.CreateMap<Bar, BarDto>();
+                cfg.CreateMap<UserAggregate, UserDTO>();
+                cfg.CreateMap<UserDTO, UserAggregate>();
             });
         }
 

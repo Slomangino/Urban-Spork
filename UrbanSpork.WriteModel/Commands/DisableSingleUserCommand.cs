@@ -8,11 +8,11 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class DisableSingleUserCommand : ICommand<UserDTO>
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         public DisableSingleUserCommand(Guid id)
         {
-            this.id = id;
+            this.Id = id;
         }
     }
 }
