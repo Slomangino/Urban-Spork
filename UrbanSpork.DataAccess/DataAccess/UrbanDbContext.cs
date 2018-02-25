@@ -15,6 +15,8 @@ namespace UrbanSpork.DataAccess.DataAccess
         public DbSet<UserDetailProjection> UserDetailProjection {get; set;}
         public DbSet<EventStoreDataRow> Events { get; set; }
 
+        public DbSet<PermissionDetailProjection> PermissionDetailProjection { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventStoreDataRow>()

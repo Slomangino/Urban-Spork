@@ -8,12 +8,10 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 {
     public class CreateSingleUserCommandHandler : ICommandHandler<CreateSingleUserCommand, UserDTO>
     {
-        
         private readonly IUserManager _userManager;
 
         public CreateSingleUserCommandHandler(IUserManager userManager)
         {
-           
             _userManager = userManager;
         }
 
