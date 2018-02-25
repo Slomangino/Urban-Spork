@@ -1,8 +1,10 @@
 ﻿using UrbanSpork.CQRS.Domain;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess
@@ -47,6 +49,13 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserEnabledEvent());
         }
 
+        public void UpdatePermissions(UpdateUserPermissionsDTO dto)
+        {
+            //business Logic here!
+            // check to see if ById is an admin?
+            ApplyChange(new UserPermissionsRequestedEvent(dto));
+        }
+
         private void Apply(UserCreatedEvent @event)
         {
             DateCreated = @event.TimeStamp;
@@ -78,6 +87,14 @@ namespace UrbanSpork.DataAccess
         private void Apply(UserEnabledEvent @event)
         {
             IsActive = @event.IsActive;
+        }
+
+        private void Apply(UserPermissionsRequestedEvent @event)
+        {
+            foreach (var request in @event.Requests)
+            {
+                PermissionList[request.Key] = request.Value; //add if not there, update if it is. Losing the DateCreated for some reason.
+            }
         }
     }
 }

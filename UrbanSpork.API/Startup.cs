@@ -98,7 +98,9 @@ namespace UrbanSpork.API
             builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-      
+            builder.RegisterType<UpdateUserPermissionsCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
 
             //Command Handlers
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -106,6 +108,7 @@ namespace UrbanSpork.API
             builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UpdateUserPermissionsCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             //Query
