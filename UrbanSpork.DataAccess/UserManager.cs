@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.Common.DataTransferObjects.Permission;
 
 namespace UrbanSpork.DataAccess
 {
@@ -69,6 +70,14 @@ namespace UrbanSpork.DataAccess
             }
             var result = Mapper.Map<UserDTO>(userAgg);
             return result;
+        }
+
+        public async Task<UserDTO> UpdateUserPermissions(UpdateUserPermissionsDTO input)
+        {
+            var userAgg = await _session.Get<UserAggregate>(input.ForId);
+            userAgg.UpdatePermissions(input);
+            await _session.Commit();
+            return Mapper.Map<UserDTO>(userAgg);
         }
     }
 }

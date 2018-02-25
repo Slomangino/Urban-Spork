@@ -41,12 +41,6 @@ namespace UrbanSpork.DataAccess.Projections
         [Column(TypeName = "timestamp")]
         public DateTime DateCreated { get; set; }
 
-        //[Column(TypeName = "json")]
-        //public string Access { get; set; }
-
-        //[Column(TypeName = "json")]
-        //public string Equipment { get; set; }
-
         public async Task ListenForEvents(IEvent @event)
         {
             UserDetailProjection user = new UserDetailProjection();
@@ -99,6 +93,23 @@ namespace UrbanSpork.DataAccess.Projections
 
                     user.IsActive = ue.IsActive;
                     _context.Entry(user).Property(a => a.IsActive).IsModified = true;
+
+                    _context.UserDetailProjection.Update(user);
+                    break;
+                case UserPermissionsRequestedEvent upr:
+                    user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == upr.Id);
+                    _context.UserDetailProjection.Attach(user);
+
+                    var permList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(user.PermissionList);
+                    foreach (var request in upr.Requests)
+                    {
+                        request.Value.RequestDate = upr.TimeStamp; // not a good fix, updates projection but not the aggregate
+                        permList[request.Key] = request.Value;
+                    }
+
+                    user.PermissionList = JsonConvert.SerializeObject(permList);
+
+                    _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
 
                     _context.UserDetailProjection.Update(user);
                     break;
