@@ -42,7 +42,7 @@ namespace UrbanSpork.DataAccess.Projections
                     perm.IsActive = pc.IsActive;
                     perm.DateCreated = pc.TimeStamp;
 
-                    _context.PermissionDetailProjection.Add(perm);
+                    await _context.PermissionDetailProjection.AddAsync(perm);
                     break;
             }
             

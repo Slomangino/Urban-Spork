@@ -23,7 +23,7 @@ namespace UrbanSpork.DataAccess.Events.Users
             {
                 var r = new PermissionRequest
                 {
-                    EventType = JsonConvert.SerializeObject(GetType()),
+                    EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = true,
                     ReasonForRequest = dto.Requests[request.Key].ReasonForRequest,
                     RequestDate = TimeStamp,

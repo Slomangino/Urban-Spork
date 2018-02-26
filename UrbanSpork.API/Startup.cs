@@ -90,6 +90,7 @@ namespace UrbanSpork.API
             // Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
 
 
             //Commands
