@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.CQRS.Events;
@@ -19,7 +20,7 @@ namespace UrbanSpork.API.Controllers
     {
         private UrbanDbContext _context;
         private IEventPublisher _publisher;
-        public static Assembly myAss;
+        public static Assembly myAss; //huehuehue
 
         public EventController(UrbanDbContext context, IEventPublisher publisher)
         {
@@ -27,29 +28,29 @@ namespace UrbanSpork.API.Controllers
             _publisher = publisher;
         }
 
+        //http://localhost:5000/api/event
         [HttpGet]
         public async Task Rebuild()
         {
+            //delete all data from projections while not affecting the Events table
+            await DropAllProjectionData();
+
             var eventStore = _context.Events;
 
             string assemblyThatINeed = "UrbanSpork.DataAccess";
             var assembly = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var t in assembly)
+            foreach (var ass in assembly)
             {
-                if (t.FullName.StartsWith(assemblyThatINeed))
+                if (ass.FullName.StartsWith(assemblyThatINeed))
                 {
-                    myAss = t;
+                    myAss = ass; //huehue
                 }
             }
 
+            //returns list of events, ordered by the timestamp
             var orderedEventList = DeserializeEventList(eventStore);
 
-            //foreach (var @event in orderedEventList)
-            //{
-            //    Console.WriteLine(@event.Id + " " + @event.Version + " " + @event.TimeStamp);
-            //}
-
-
+            //publish each event 
             foreach (var @event in orderedEventList)
             {
                 Console.WriteLine(@event.Id + "_" + @event.Version + "_" + @event.TimeStamp);
@@ -64,7 +65,7 @@ namespace UrbanSpork.API.Controllers
             }
             Console.WriteLine("Done, Press key yo.");
             Console.ReadLine();
-            Environment.Exit(0);
+            //Environment.Exit(0);
         }
 
         private IEvent DeserializeEvent(EventStoreDataRow row)
@@ -86,6 +87,21 @@ namespace UrbanSpork.API.Controllers
                 events.Add((IEvent)@event);
             }
             return events.OrderBy(a => a.TimeStamp);
+        }
+
+        private async Task DropAllProjectionData()
+        { 
+            /*
+             ***********************************************************************************************************************
+             * NEVER EVER EVER EVER ADD THE *EVENTS* TABLE TO THIS LIST, IT WILL DELETE ALL ROWS FROM ANY TABLE LISTED HERE!!!!!!! *
+             ***********************************************************************************************************************
+             * DO: add all projections to this list that need to be rebuilt when new events are added
+             */
+
+            //truncate all projections (Deletes all rows)
+            await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE UserDetailProjection");
+            await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE PermissionDetailProjection");
+            await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE PendingRequestsProjection");
         }
     }
 }
