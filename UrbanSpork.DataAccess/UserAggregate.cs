@@ -49,7 +49,7 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserEnabledEvent());
         }
 
-        public void UpdatePermissions(UpdateUserPermissionsDTO dto)
+        public void UserRequestedPermissions(UpdateUserPermissionsDTO dto)
         {
             //business Logic here!
             // check to see if ById is an admin?

@@ -60,7 +60,7 @@ namespace UrbanSpork.API.Controllers
         [HttpPut("updatePermissions/{Id}")]
         public async Task<UserDTO> UpdateUserPermissions([FromBody] UpdateUserPermissionsDTO input)
         {
-            var command = new UpdateUserPermissionsCommand(input);
+            var command = new UserPermissionsRequestedCommand(input);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }

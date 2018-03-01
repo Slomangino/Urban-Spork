@@ -72,10 +72,10 @@ namespace UrbanSpork.DataAccess
             return result;
         }
 
-        public async Task<UserDTO> UpdateUserPermissions(UpdateUserPermissionsDTO input)
+        public async Task<UserDTO> UserPermissionsRequested(UpdateUserPermissionsDTO input)
         {
             var userAgg = await _session.Get<UserAggregate>(input.ForId);
-            userAgg.UpdatePermissions(input);
+            userAgg.UserRequestedPermissions(input);
             await _session.Commit();
             return Mapper.Map<UserDTO>(userAgg);
         }
