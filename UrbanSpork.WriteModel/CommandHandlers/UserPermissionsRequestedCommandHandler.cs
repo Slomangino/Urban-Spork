@@ -10,18 +10,18 @@ using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.WriteModel.CommandHandlers
 {
-    public class UpdateUserPermissionsCommandHandler : ICommandHandler<UpdateUserPermissionsCommand, UserDTO>
+    public class UserPermissionsRequestedCommandHandler : ICommandHandler<UserPermissionsRequestedCommand, UserDTO>
     {
         private readonly IUserManager _userManager;
 
-        public UpdateUserPermissionsCommandHandler(IUserManager userManager)
+        public UserPermissionsRequestedCommandHandler(IUserManager userManager)
         {
             _userManager = userManager;
         }
 
-        public Task<UserDTO> Handle(UpdateUserPermissionsCommand command)
+        public Task<UserDTO> Handle(UserPermissionsRequestedCommand requestedCommand)
         {
-            return _userManager.UpdateUserPermissions(command.Input);
+            return _userManager.UserPermissionsRequested(requestedCommand.Input);
         }
     }
 }

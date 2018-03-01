@@ -7,11 +7,11 @@ using UrbanSpork.CQRS.WriteModel.Command;
 
 namespace UrbanSpork.WriteModel.Commands
 {
-    public class UpdateUserPermissionsCommand : ICommand<UserDTO>
+    public class UserPermissionsRequestedCommand : ICommand<UserDTO>
     {
         public UpdateUserPermissionsDTO Input { get; set; }
 
-        public UpdateUserPermissionsCommand(UpdateUserPermissionsDTO input)
+        public UserPermissionsRequestedCommand(UpdateUserPermissionsDTO input)
         {
             Input = input;
         }
