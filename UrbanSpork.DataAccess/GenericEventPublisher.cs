@@ -1,9 +1,6 @@
-﻿using UrbanSpork.CQRS.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.DataAccess

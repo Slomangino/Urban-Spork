@@ -47,5 +47,13 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+
+        [HttpPut("update")]
+        public async Task<PermissionDTO> UpdatePermission([FromBody] UpdatePermissionInfoDTO input)
+        {
+            var command = new UpdatePermissionInfoCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
     }
 }

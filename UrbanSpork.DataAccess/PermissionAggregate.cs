@@ -27,12 +27,23 @@ namespace UrbanSpork.DataAccess
             return new PermissionAggregate(dto);
         }
 
+        public void UpdatePermissionInfo(UpdatePermissionInfoDTO dto)
+        {
+            ApplyChange(new PermissionInfoUpdatedEvent(dto));
+        }
+
         private void Apply(PermissionCreatedEvent @event)
         {
             Name = @event.Name;
             Description = @event.Description;
             IsActive = @event.IsActive;
             DateCreated = @event.TimeStamp;
+        }
+
+        private void Apply(PermissionInfoUpdatedEvent @event)
+        {
+            Name = @event.Name;
+            Description = @event.Description;
         }
     }
 }

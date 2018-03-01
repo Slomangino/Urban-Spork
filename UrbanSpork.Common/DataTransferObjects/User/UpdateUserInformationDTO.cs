@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UrbanSpork.Common.DataTransferObjects
+namespace UrbanSpork.Common.DataTransferObjects.User
 {
-    public class CreateUserInputDTO
+    public class UpdateUserInformationDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,7 +12,5 @@ namespace UrbanSpork.Common.DataTransferObjects
         public string Position { get; set; }
         public string Department { get; set; }
         public bool IsAdmin { get; set; }
-        public bool IsActive { get; set; }
-        public Dictionary<Guid, PermissionRequest> PermissionList { get; set; }
     }
 }

@@ -4,23 +4,20 @@ using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess.Events
 {
-    public class PermissionCreatedEvent : IEvent
+    public class PermissionInfoUpdatedEvent : IEvent
     {
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
-
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool IsActive { get; set; }
 
-        public PermissionCreatedEvent() { }
+        public PermissionInfoUpdatedEvent() { }
 
-        public PermissionCreatedEvent(CreateNewPermissionDTO dto)
+        public PermissionInfoUpdatedEvent(UpdatePermissionInfoDTO dto)
         {
             Name = dto.Name;
             Description = dto.Description;
-            IsActive = dto.IsActive;
-        }
+        }  
     }
 }

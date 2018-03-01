@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
@@ -57,8 +58,8 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("updatePermissions/{Id}")]
-        public async Task<UserDTO> UpdateUserPermissions([FromBody] UpdateUserPermissionsDTO input)
+        [HttpPut("requestPermissions/{Id}")]
+        public async Task<UserDTO> RequestPermissions([FromBody] UpdateUserPermissionsDTO input)
         {
             var command = new UserPermissionsRequestedCommand(input);
             var result = await _commandDispatcher.Execute(command);

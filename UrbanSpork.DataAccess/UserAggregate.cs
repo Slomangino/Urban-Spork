@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
-using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess.Events.Users;
 
