@@ -1,16 +1,14 @@
-﻿using AutoMapper;
-using UrbanSpork.CQRS.Events;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
+using UrbanSpork.Common;
+using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events.Users;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using UrbanSpork.Common;
 
 namespace UrbanSpork.DataAccess.Projections
 {

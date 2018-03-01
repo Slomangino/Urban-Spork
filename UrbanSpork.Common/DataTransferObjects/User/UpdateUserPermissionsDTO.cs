@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UrbanSpork.Common.DataTransferObjects.Permission
+namespace UrbanSpork.Common.DataTransferObjects.User
 {
     public class UpdateUserPermissionsDTO
     {

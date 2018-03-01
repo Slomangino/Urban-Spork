@@ -1,9 +1,9 @@
 
-using UrbanSpork.CQRS.Events;
 using System;
-using UrbanSpork.Common.DataTransferObjects;
 using System.Collections.Generic;
 using UrbanSpork.Common;
+using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess.Events.Users
 {

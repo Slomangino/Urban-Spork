@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 using UrbanSpork.Common;
-using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess.Events.Users

@@ -1,4 +1,5 @@
 ﻿using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.WriteModel.Command;
 
 namespace UrbanSpork.WriteModel.Commands

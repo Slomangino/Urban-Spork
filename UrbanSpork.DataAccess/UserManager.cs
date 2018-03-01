@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 
 namespace UrbanSpork.DataAccess
 {

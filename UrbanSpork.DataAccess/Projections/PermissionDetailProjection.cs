@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Threading.Tasks;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
@@ -43,6 +42,17 @@ namespace UrbanSpork.DataAccess.Projections
                     perm.DateCreated = pc.TimeStamp;
 
                     await _context.PermissionDetailProjection.AddAsync(perm);
+                    break;
+                case PermissionInfoUpdatedEvent pu:
+                    perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pu.Id);
+                    _context.Attach(perm);
+
+                    perm.Name = pu.Name;
+                    perm.Description = pu.Description;
+                    _context.Entry(perm).Property(a => a.Name).IsModified = true;
+                    _context.Entry(perm).Property(a => a.Description).IsModified = true;
+
+                    _context.PermissionDetailProjection.Update(perm);
                     break;
             }
             
