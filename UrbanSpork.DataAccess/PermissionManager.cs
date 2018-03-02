@@ -32,5 +32,31 @@ namespace UrbanSpork.DataAccess
             await _session.Commit();
             return Mapper.Map<PermissionDTO>(permAgg);
         }
+
+        public async Task<PermissionDTO> DisablePermission(Guid id)
+        {
+            var permAgg = await _session.Get<PermissionAggregate>(id);
+
+            //only fire the event if the permission is already active, i dont think we want 
+            //to have a bunch of events disabling a disabled permission
+            if (permAgg.IsActive)
+            {
+                permAgg.DisablePermission();
+                await _session.Commit();
+            }
+            return Mapper.Map<PermissionDTO>(permAgg);
+        }
+
+        public async Task<PermissionDTO> EnablePermission(Guid id)
+        {
+            var permAgg = await _session.Get<PermissionAggregate>(id);
+
+            if (!permAgg.IsActive)
+            {
+                permAgg.EnablePermission();
+                await _session.Commit();
+            }
+            return Mapper.Map<PermissionDTO>(permAgg);
+        }
     }
 }

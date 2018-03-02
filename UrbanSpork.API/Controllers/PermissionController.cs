@@ -55,5 +55,21 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+
+        [HttpPut("disable/{id}")]
+        public async Task<PermissionDTO> DisablePermission(Guid id)
+        {
+            var command = new DisablePermissionCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("enable/{id}")]
+        public async Task<PermissionDTO> EnablePermission(Guid id)
+        {
+            var command = new EnablePermissionCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
     }
 }
