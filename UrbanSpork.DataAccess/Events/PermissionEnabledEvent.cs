@@ -12,12 +12,11 @@ namespace UrbanSpork.DataAccess.Events
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool IsActive { get; set; }
+        
 
-        public PermissionEnabledEvent() { }
-
-        public PermissionEnabledEvent(EnablePermissionDTO dto)
+        public PermissionEnabledEvent()
         {
-            IsActive = dto.IsActive;
+            IsActive = true;
         }
     }
 }

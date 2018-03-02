@@ -9,11 +9,11 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class EnablePermissionCommand : ICommand<PermissionDTO>
     {
-        public EnablePermissionDTO Input;
+        public Guid Id;
 
-        public EnablePermissionCommand(EnablePermissionDTO input)
+        public EnablePermissionCommand(Guid id)
         {
-            Input = input;
+            Id = id;
         }
     }
 }

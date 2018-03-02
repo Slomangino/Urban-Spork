@@ -13,11 +13,9 @@ namespace UrbanSpork.DataAccess.Events
         public DateTime TimeStamp { get; set; }
         public bool IsActive { get; set; }
 
-        public PermissionDiabledEvent() { }
-
-        public PermissionDiabledEvent(DisablePermissionDTO dto)
+        public PermissionDiabledEvent()
         {
-            IsActive = dto.IsActive;
+            IsActive = false;
         }
     }
 }

@@ -32,14 +32,14 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new PermissionInfoUpdatedEvent(dto));
         }
 
-        public void DisablePermission(DisablePermissionDTO dto)
+        public void DisablePermission()
         {
-            ApplyChange(new PermissionDiabledEvent(dto));
+            ApplyChange(new PermissionDiabledEvent());
         }
 
-        public void EnablePermission(EnablePermissionDTO dto)
+        public void EnablePermission()
         {
-            ApplyChange(new PermissionEnabledEvent(dto));
+            ApplyChange(new PermissionEnabledEvent());
         }
 
         private void Apply(PermissionCreatedEvent @event)

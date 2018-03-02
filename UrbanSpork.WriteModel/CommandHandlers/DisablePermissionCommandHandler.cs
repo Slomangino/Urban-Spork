@@ -20,7 +20,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 
         public async Task<PermissionDTO> Handle(DisablePermissionCommand command)
         {
-            var result = await _permissionManager.DisablePermission(command.Input);
+            var result = await _permissionManager.DisablePermission(command.Id);
             return result;
         }
     }

@@ -56,18 +56,18 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("disable")]
-        public async Task<PermissionDTO> DisablePermission([FromBody] DisablePermissionDTO input)
+        [HttpPut("disable/{id}")]
+        public async Task<PermissionDTO> DisablePermission(Guid id)
         {
-            var command = new DisablePermissionCommand(input);
+            var command = new DisablePermissionCommand(id);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
 
-        [HttpPut("enable")]
-        public async Task<PermissionDTO> EnablePermission([FromBody] EnablePermissionDTO input)
+        [HttpPut("enable/{id}")]
+        public async Task<PermissionDTO> EnablePermission(Guid id)
         {
-            var command = new EnablePermissionCommand(input);
+            var command = new EnablePermissionCommand(id);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
