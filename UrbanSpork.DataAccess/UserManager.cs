@@ -3,8 +3,9 @@ using UrbanSpork.CQRS.Domain;
 using System;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces;
 using UrbanSpork.DataAccess.Repositories;
+using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 
 namespace UrbanSpork.DataAccess
 {
@@ -19,29 +20,65 @@ namespace UrbanSpork.DataAccess
             _session = session;
         }
 
-        public Task<UserDTO> CreateNewUser(UserInputDTO userInputDTO)
+        public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
         {
-            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
-            var userAgg = UserAggregate.CreateNewUser(userDTO);
-            userDTO.DateCreated = userAgg.DateCreated; //date in db was not getting set correctly
-            _session.Add(userAgg);
-            _session.Commit();
+            var userAgg = UserAggregate.CreateNewUser(input);
+            await _session.Add(userAgg);
+            await _session.Commit();
+            var userDTO = Mapper.Map<UserDTO>(userAgg);
 
-            return Task.FromResult(userAgg.userDTO);
+            return userDTO;
         }
 
-        public async Task<UserDTO> UpdateUser(Guid id, UserInputDTO userInputDTO)
+        public async Task<UserDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
-            var userDTO = Mapper.Map<UserDTO>(userInputDTO);
-            userDTO.UserID = id;
-            userDTO.DateCreated = userAgg.DateCreated;
 
-            userAgg.UpdateUserPersonalInfo(userDTO);
+            //dto.UserID = id;
+            //dto.DateCreated = userAgg.DateCreated;
+            //dto.IsActive = userAgg.userDTO.IsActive;
+
+            userAgg.UpdateUserInfo(dto);
 
             await _session.Commit();
 
-            return userAgg.userDTO;
+            var result = Mapper.Map<UserDTO>(userAgg);
+
+            return result;
+        }
+
+        public async Task<UserDTO> DisableSingleUser(Guid id)
+        {
+            var userAgg = await _session.Get<UserAggregate>(id);
+
+            if (userAgg.IsActive) 
+            {
+                userAgg.DisableSingleUser();
+                await _session.Commit();
+            }
+            var result = Mapper.Map<UserDTO>(userAgg);
+            return result;
+        }
+
+        public async Task<UserDTO> EnableSingleUser(Guid id)
+        {
+            var userAgg = await _session.Get<UserAggregate>(id);
+
+            if (!userAgg.IsActive)
+            {
+                userAgg.EnableSingleUser();
+                await _session.Commit();
+            }
+            var result = Mapper.Map<UserDTO>(userAgg);
+            return result;
+        }
+
+        public async Task<UserDTO> UserPermissionsRequested(UpdateUserPermissionsDTO input)
+        {
+            var userAgg = await _session.Get<UserAggregate>(input.ForId);
+            userAgg.UserRequestedPermissions(input);
+            await _session.Commit();
+            return Mapper.Map<UserDTO>(userAgg);
         }
     }
 }

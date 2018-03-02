@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
@@ -16,7 +18,6 @@ namespace UrbanSpork.API.Controllers
     public class UserController : Controller
     {
         private readonly IQueryProcessor _queryProcessor;
-
         private readonly ICommandDispatcher _commandDispatcher;
 
         public UserController(IQueryProcessor queryProcessor, ICommandDispatcher commandDispatcher)
@@ -25,7 +26,7 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<UserDTO> Get(Guid id)
         {
             var message = new GetUserByIdQuery(id);
@@ -62,11 +63,35 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<UserDTO> UpdateUser([FromBody] UserInputDTO input, Guid id)
+        [HttpPut("update/{Id}")]
+        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input, Guid id)
         {
             var message = new UpdateSingleUserCommand(id, input);
             var result = await _commandDispatcher.Execute(message);
+            return result;
+        }
+
+        [HttpPut("requestPermissions")]
+        public async Task<UserDTO> RequestPermissions([FromBody] UpdateUserPermissionsDTO input)
+        {
+            var command = new UserPermissionsRequestedCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("disable/{Id}")]
+        public async Task<UserDTO> DisableUser(Guid id)
+        {
+            var command = new DisableSingleUserCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("enable/{Id}")]
+        public async Task<UserDTO> EnableUser(Guid id)
+        {
+            var command = new EnableSingleUserCommand(id);
+            var result = await _commandDispatcher.Execute(command);
             return result;
         }
     }

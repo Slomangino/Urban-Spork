@@ -1,9 +1,6 @@
-﻿using UrbanSpork.CQRS.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.DataAccess
@@ -11,19 +8,25 @@ namespace UrbanSpork.DataAccess
     public class GenericEventPublisher : IEventPublisher
     {
         //list of projection tables
-        private readonly UserDetailProjection _userDetailProjection;   
+        private readonly UserDetailProjection _userDetailProjection;
+        private readonly PermissionDetailProjection _permissionDetailProjection;
+        private readonly PendingRequestsProjection _pendingRequestsProjection;
 
-        public GenericEventPublisher(UserDetailProjection userDetailProjection)
+        public GenericEventPublisher(UserDetailProjection userDetailProjection, 
+            PermissionDetailProjection permissionDetailProjection,
+            PendingRequestsProjection pendingRequestsProjection)
         {
             _userDetailProjection = userDetailProjection;
+            _permissionDetailProjection = permissionDetailProjection;
+            _pendingRequestsProjection = pendingRequestsProjection;
         }
 
-        Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
+        async Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
         {
             //throw all events to each projection
-            _userDetailProjection.ListenForEvents(@event);
-
-            return Task.FromResult(0);
+            await _userDetailProjection.ListenForEvents(@event);
+            await _permissionDetailProjection.ListenForEvents(@event);
+            await _pendingRequestsProjection.ListenForEvents(@event);
         }
     }
 }

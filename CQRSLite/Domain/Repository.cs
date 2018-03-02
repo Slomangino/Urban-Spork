@@ -69,7 +69,6 @@ namespace UrbanSpork.CQRS.Domain
             {
                 throw new AggregateNotFoundException(typeof(T), id);
             }
-
             var aggregate = AggregateFactory.CreateAggregate<T>();
             aggregate.LoadFromHistory(events);
             return aggregate;

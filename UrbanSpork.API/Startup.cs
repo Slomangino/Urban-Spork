@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
@@ -36,13 +37,13 @@ namespace UrbanSpork.API
             Configuration = builder.Build();
 
             Mapper.Initialize(cfg => {
-                cfg.CreateMap<User, UserDTO>();
-                cfg.CreateMap<UserDTO, User>();
-                cfg.CreateMap<UserDTO, UserInputDTO>();
-                cfg.CreateMap<UserInputDTO, UserDTO>();
-                cfg.CreateMap<UserDetailProjection, UserDTO>();
-                cfg.CreateMap<UserDTO, UserDetailProjection>();
-                // cfg.CreateMap<Bar, BarDto>();
+                cfg.CreateMap<UserAggregate, UserDTO>();
+                cfg.CreateMap<UserDTO, UserAggregate>();
+                cfg.CreateMap<PermissionAggregate, PermissionDTO>();
+                cfg.CreateMap<PermissionDTO, PermissionAggregate>();
+                cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
+                cfg.CreateMap<PermissionDetailProjection, PermissionDTO>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PermissionId));
             });
         }
 
@@ -73,11 +74,14 @@ namespace UrbanSpork.API
         {
             //Utility
             builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Session>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Repository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -85,26 +89,52 @@ namespace UrbanSpork.API
 
             // Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
 
 
             //Commands
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EnableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserPermissionsRequestedCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UpdatePermissionInfoCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
 
 
             //Command Handlers
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EnableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UserPermissionsRequestedCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UpdatePermissionInfoCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
 
             //Query
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPermissionByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 

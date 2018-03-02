@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CQRSLite\UrbanSpork.CQRS.csproj" />
     <ProjectReference Include="..\UrbanSpork.Common\UrbanSpork.Common.csproj" />
     <ProjectReference Include="..\UrbanSpork.DataAccess\UrbanSpork.DataAccess.csproj" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.CQRS.Interfaces;
+using UrbanSpork.DataAccess;
 using UrbanSpork.CQRS.WriteModel.CommandHandler;
 using UrbanSpork.WriteModel.WriteModel.Commands;
 
@@ -18,7 +18,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         //fix return type
         public async Task<UserDTO> Handle(UpdateSingleUserCommand command)
         {
-            var userAgg = await _userManager.UpdateUser(command.id, command.userInputDTO);
+            var userAgg = await _userManager.UpdateUserInfo(command.Id, command.Input);
             return userAgg;
         }
     }

@@ -1,10 +1,10 @@
-﻿using UrbanSpork.CQRS.Events;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
 
 namespace UrbanSpork.DataAccess.Events
@@ -12,17 +12,15 @@ namespace UrbanSpork.DataAccess.Events
     public class EventStore : IEventStore
     {
         private readonly UrbanDbContext _context;
-        private readonly IEventPublisher _publisher;
 
-        public EventStore(UrbanDbContext context, IEventPublisher publisher)
+        public EventStore(UrbanDbContext context)
         {
             _context = context;
-            _publisher = publisher;
         }
 
         public Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var rowList = _context.Events.ToList().Where(a => a.Id.Equals(aggregateId) && a.Version > fromVersion);
+            var rowList = _context.Events.ToList().Where(a => a.Id.Equals(aggregateId) && a.Version > fromVersion).OrderBy(a => a.Version);
             var eventList = DeserializeEventList(rowList);
 
             return Task.FromResult(eventList);
@@ -34,7 +32,6 @@ namespace UrbanSpork.DataAccess.Events
                 {
                     var serializedEvent = BuildEventRowFromEvent(e);
                     await _context.Events.AddAsync(serializedEvent, cancellationToken);
-                    await _publisher.Publish(e, cancellationToken);
                 }
                 await _context.SaveChangesAsync(cancellationToken);
         }

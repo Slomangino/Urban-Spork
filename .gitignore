@@ -4,6 +4,9 @@
 #dont import DB Migrations
 UrbanSpork.DataAccess/Migrations/
 
+# dont sync memory caching locations for cqrslite
+CQRSLite/obj/project.assets.json
+
 # build
 [Oo]bj/
 [Bb]in/
@@ -370,3 +373,6 @@ ASALocalRun/
 #CQRSLite Project Files
 /bin
 /obj
+
+#Everyone should use their own appsettings.json
+appsettings.json
