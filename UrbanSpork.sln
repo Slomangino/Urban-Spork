@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.API", "UrbanSpork.API\UrbanSpork.API.csproj", "{E6137D90-DBED-4934-9B38-5E0437F9BFC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B2644FC-4FB1-4069-A13C-43E309D1A6AB} = {9B2644FC-4FB1-4069-A13C-43E309D1A6AB}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanSpork.ReadModel", "UrbanSpork.ReadModel\UrbanSpork.ReadModel.csproj", "{44BD986A-C1B7-482D-882A-787C13417A77}"
 EndProject
