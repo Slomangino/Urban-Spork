@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using UrbanSpork.Common;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess.Projections
@@ -50,6 +54,10 @@ namespace UrbanSpork.DataAccess.Projections
                             await _context.PendingRequestsProjection.AddAsync(row);
                         }
                     }
+                    break;
+                case PermissionDiabledEvent pd:
+                    var list = _context.PendingRequestsProjection.Where(a => a.PermissionId == pd.Id);
+                    _context.PendingRequestsProjection.RemoveRange(list);
                     break;
             }
 

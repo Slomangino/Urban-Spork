@@ -32,6 +32,16 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new PermissionInfoUpdatedEvent(dto));
         }
 
+        public void DisablePermission(DisablePermissionDTO dto)
+        {
+            ApplyChange(new PermissionDiabledEvent(dto));
+        }
+
+        public void EnablePermission(EnablePermissionDTO dto)
+        {
+            ApplyChange(new PermissionEnabledEvent(dto));
+        }
+
         private void Apply(PermissionCreatedEvent @event)
         {
             Name = @event.Name;
@@ -44,6 +54,16 @@ namespace UrbanSpork.DataAccess
         {
             Name = @event.Name;
             Description = @event.Description;
+        }
+
+        private void Apply(PermissionDiabledEvent @event)
+        {
+            IsActive = @event.IsActive;
+        }
+
+        private void Apply(PermissionEnabledEvent @event)
+        {
+            IsActive = @event.IsActive;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace UrbanSpork.DataAccess
         {
             //business Logic here!
             // check to see if ById is an admin?
+            //check to see if permission is active
             ApplyChange(new UserPermissionsRequestedEvent(dto));
         }
 

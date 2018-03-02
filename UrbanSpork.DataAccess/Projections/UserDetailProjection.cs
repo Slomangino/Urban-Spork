@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Threading.Tasks;
 using UrbanSpork.Common;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess.Projections
@@ -110,6 +112,27 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
 
                     _context.UserDetailProjection.Update(user);
+                    break;
+                case PermissionDiabledEvent pd:
+                    //when a premission is disabled, we want to get all users with that permission remove any status of request they might have had.
+                    var list = _context.UserDetailProjection.Where(a =>
+                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(a.PermissionList).ContainsKey(pd.Id));
+                        
+                    if (list.Any())
+                    {
+                        foreach (var u in list)
+                        {
+                            _context.UserDetailProjection.Attach(u);
+
+                            var permissionsDict =
+                                JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(u.PermissionList);
+                            permissionsDict.Remove(pd.Id);
+                            u.PermissionList = JsonConvert.SerializeObject(permissionsDict);
+
+                            _context.Entry(u).Property(a => a.PermissionList).IsModified = true;
+                            _context.UserDetailProjection.Update(u);
+                        }
+                    }
                     break;
             }
 

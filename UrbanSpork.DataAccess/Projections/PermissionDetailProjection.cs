@@ -54,7 +54,25 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.PermissionDetailProjection.Update(perm);
                     break;
-            }
+                case PermissionDiabledEvent pd:
+                    perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pd.Id);
+                    _context.Attach(perm);
+
+                    perm.IsActive = pd.IsActive;
+                    _context.Entry(perm).Property(a => a.IsActive).IsModified = true;
+
+                    _context.PermissionDetailProjection.Update(perm);
+                    break;
+                case PermissionEnabledEvent pe:
+                    perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pe.Id);
+                    _context.Attach(perm);
+
+                    perm.IsActive = pe.IsActive;
+                    _context.Entry(perm).Property(a => a.IsActive).IsModified = true;
+
+                    _context.PermissionDetailProjection.Update(perm);
+                    break;
+                }
             
             await _context.SaveChangesAsync();
         }
