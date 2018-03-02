@@ -59,6 +59,10 @@ namespace UrbanSpork.DataAccess.Projections
                     var list = _context.PendingRequestsProjection.Where(a => a.PermissionId == pd.Id);
                     _context.PendingRequestsProjection.RemoveRange(list);
                     break;
+                case UserPermissionRequestDeniedEvent pde:
+                    var pendingList = _context.PendingRequestsProjection.Where(a => a.PermissionId == pde.Id && a.ForId == pde.ForId);
+                    _context.PendingRequestsProjection.RemoveRange(pendingList);
+                    break;
             }
 
             await _context.SaveChangesAsync();
