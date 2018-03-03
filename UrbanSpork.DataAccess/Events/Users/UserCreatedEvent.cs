@@ -21,7 +21,7 @@ namespace UrbanSpork.DataAccess.Events.Users
         public string Department { get;  set; }
         public bool IsAdmin { get;  set; }
         public bool IsActive { get; set; }
-        public Dictionary<Guid, PermissionRequest> PermissionList { get;  set; }
+        public Dictionary<Guid, PermissionDetails> PermissionList { get;  set; }
 
 
         public UserCreatedEvent() { }

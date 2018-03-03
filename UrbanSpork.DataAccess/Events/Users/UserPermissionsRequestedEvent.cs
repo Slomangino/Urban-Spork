@@ -12,7 +12,7 @@ namespace UrbanSpork.DataAccess.Events.Users
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
-        public Dictionary<Guid, PermissionRequest> Requests { get; set; } = new Dictionary<Guid, PermissionRequest>();
+        public Dictionary<Guid, PermissionDetails> Requests { get; set; } = new Dictionary<Guid, PermissionDetails>();
 
         public UserPermissionsRequestedEvent() { }
 
@@ -20,11 +20,11 @@ namespace UrbanSpork.DataAccess.Events.Users
         {
             foreach (var request in dto.Requests)
             {
-                var r = new PermissionRequest
+                var r = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = true,
-                    ReasonForRequest = dto.Requests[request.Key].ReasonForRequest,
+                    Reason = dto.Requests[request.Key].Reason,
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
