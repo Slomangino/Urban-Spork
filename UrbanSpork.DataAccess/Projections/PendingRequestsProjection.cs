@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.CQRS.Events;
@@ -58,6 +59,10 @@ namespace UrbanSpork.DataAccess.Projections
                 case PermissionDiabledEvent pd:
                     var list = _context.PendingRequestsProjection.Where(a => a.PermissionId == pd.Id);
                     _context.PendingRequestsProjection.RemoveRange(list);
+                    break;
+                case UserPermissionRequestDeniedEvent pd:
+                    var pending = await _context.PendingRequestsProjection.SingleAsync(a => a.PermissionId == pd.PermissionId && a.ForId == pd.ForId);
+                    _context.PendingRequestsProjection.Remove(pending);
                     break;
             }
 

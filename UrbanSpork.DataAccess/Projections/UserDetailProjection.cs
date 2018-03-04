@@ -100,7 +100,7 @@ namespace UrbanSpork.DataAccess.Projections
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == upr.Id);
                     _context.UserDetailProjection.Attach(user);
 
-                    var permList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(user.PermissionList);
+                    var permList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
                     foreach (var request in upr.Requests)
                     {
                         request.Value.RequestDate = upr.TimeStamp; // not a good fix, updates projection but not the aggregate
@@ -116,7 +116,7 @@ namespace UrbanSpork.DataAccess.Projections
                 case PermissionDiabledEvent pd:
                     //when a premission is disabled, we want to get all users with that permission remove any status of request they might have had.
                     var list = _context.UserDetailProjection.Where(a =>
-                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(a.PermissionList).ContainsKey(pd.Id));
+                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList).ContainsKey(pd.Id));
                         
                     if (list.Any())
                     {
@@ -125,7 +125,7 @@ namespace UrbanSpork.DataAccess.Projections
                             _context.UserDetailProjection.Attach(u);
 
                             var permissionsDict =
-                                JsonConvert.DeserializeObject<Dictionary<Guid, PermissionRequest>>(u.PermissionList);
+                                JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(u.PermissionList);
                             permissionsDict.Remove(pd.Id);
                             u.PermissionList = JsonConvert.SerializeObject(permissionsDict);
 
@@ -133,6 +133,17 @@ namespace UrbanSpork.DataAccess.Projections
                             _context.UserDetailProjection.Update(u);
                         }
                     }
+                    break;
+                case UserPermissionRequestDeniedEvent pde:
+                    user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pde.ForId);
+                    _context.UserDetailProjection.Attach(user);
+                    var permissions =
+                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                    permissions.Remove(pde.PermissionId); //might fail here if key does not exist? not sure
+                    user.PermissionList = JsonConvert.SerializeObject(permissions);
+
+                    _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                    _context.UserDetailProjection.Update(user);
                     break;
             }
 

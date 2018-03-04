@@ -80,5 +80,13 @@ namespace UrbanSpork.DataAccess
             await _session.Commit();
             return Mapper.Map<UserDTO>(userAgg);
         }
+
+        public async Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input)
+        {
+            var userAgg = await _session.Get<UserAggregate>(input.ForId);
+            userAgg.DenyPermissionRequest(input);
+            await _session.Commit();
+            return Mapper.Map<UserDTO>(userAgg);
+        }
     }
 }

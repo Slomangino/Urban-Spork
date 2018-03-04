@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess
@@ -19,7 +20,7 @@ namespace UrbanSpork.DataAccess
         public string Department { get; private set; }
         public bool IsAdmin { get; private set; }
         public bool IsActive { get; private set; }
-        public Dictionary<Guid, PermissionRequest> PermissionList { get; private set; } = new Dictionary<Guid, PermissionRequest>();
+        public Dictionary<Guid, PermissionDetails> PermissionList { get; private set; } = new Dictionary<Guid, PermissionDetails>();
 
         private UserAggregate() { }
 
@@ -55,6 +56,11 @@ namespace UrbanSpork.DataAccess
             // check to see if ById is an admin?
             //check to see if permission is active
             ApplyChange(new UserPermissionsRequestedEvent(dto));
+        }
+
+        public void DenyPermissionRequest(DenyUserPermissionRequestDTO dto)
+        {
+            ApplyChange(new UserPermissionRequestDeniedEvent(dto));
         }
 
         private void Apply(UserCreatedEvent @event)
@@ -96,6 +102,19 @@ namespace UrbanSpork.DataAccess
             {
                 PermissionList[request.Key] = request.Value; //add if not there, update if it is. Losing the DateCreated for some reason.
             }
+        }
+
+        private void Apply(UserPermissionRequestDeniedEvent @event)
+        {
+            PermissionList[@event.PermissionId] = new PermissionDetails
+            {
+                EventType = @event.GetType().FullName,
+                IsPending = false,
+                Reason = @event.ReasonForDenial,
+                RequestDate = @event.TimeStamp,
+                RequestedBy = @event.ById,
+                RequestedFor = @event.ForId
+            };
         }
     }
 }
