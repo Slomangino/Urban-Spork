@@ -8,6 +8,7 @@ using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
+using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
@@ -43,7 +44,7 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpGet("getusercollection")]
-        public async Task<List<UserDTO>> GetUserCollection([FromQuery]UserFilterCriteria filterCriteria)
+        public async Task<List<UserDetailProjection>> GetUserCollection([FromQuery]UserFilterCriteria filterCriteria)
         {
             var query = new GetUserCollectionQuery
             {

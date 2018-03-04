@@ -39,6 +39,7 @@ namespace UrbanSpork.API
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserAggregate, UserDTO>();
                 cfg.CreateMap<UserDTO, UserAggregate>();
+                cfg.CreateMap<UserDetailProjection, UserDTO>();
                 cfg.CreateMap<PermissionAggregate, PermissionDTO>();
                 cfg.CreateMap<PermissionDTO, PermissionAggregate>();
                 cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();

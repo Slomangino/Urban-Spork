@@ -14,7 +14,7 @@ using UrbanSpork.ReadModel.QueryCommands;
 
 namespace UrbanSpork.ReadModel.QueryHandlers
 {
-    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDTO>>
+    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDetailProjection>>
     {
         private readonly UrbanDbContext _context;
 
@@ -23,7 +23,7 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             _context = context;
         }
 
-        public Task<List<UserDTO>> Handle(GetUserCollectionQuery query)
+        public async Task<List<UserDetailProjection>> Handle(GetUserCollectionQuery query)
         {
             IQueryable<UserDetailProjection> queryable = _context.UserDetailProjection;
 
@@ -31,6 +31,12 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             {
                 queryable = queryable.Where(a => a.IsActive);
             }
+
+            if (!query.FilterCriteria.IncludeIsAdmin)
+            {
+                queryable = queryable.Where(a => a.IsAdmin);
+            }
+
 
             //if (!query.FilterCriteria.SearchTerms.Equals(""))
             //{
@@ -40,6 +46,8 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             //    queryable = queryable.Where(a => a.Position.Contains(query.FilterCriteria.SearchTerms));
             //    queryable = queryable.Where(a => a.Department.Contains(query.FilterCriteria.SearchTerms));
             //}
+
+
 
             if (query.FilterCriteria.SortDirection.Equals("ASC"))
             {
@@ -129,11 +137,13 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                 }
             }
 
-            var result = queryable.ToList();
+            var result = await queryable.ToListAsync();
 
-            var userDtoCollection = Mapper.Map(result, new List<UserDTO>());
+            
+            //var map = Mapper.Map<List<UserDetailProjection>, List<UserDTO>>(result);
+            //return map;
 
-            return Task.FromResult(userDtoCollection);
+            return result;
 
             //throw new NotImplementedException();
         }

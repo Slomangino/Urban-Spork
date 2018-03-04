@@ -93,7 +93,7 @@ namespace UrbanSpork.API.Controllers
         { 
             /*
              ***********************************************************************************************************************
-             * NEVER EVER EVER EVER ADD THE *EVENTS* TABLE TO THIS LIST, IT WILL DELETE ALL ROWS FROM ANY TABLE LISTED HERE!!!!!!! *
+             * NEVER EVER EVER EVER ADD THE *EVENTS* TABLE TO THIS LIST, THIS METHOD DELETES ALL ROWS FROM ANY TABLE LISTED BELOW!!!!!!! *
              ***********************************************************************************************************************
              * DO: add all projections to this list that need to be rebuilt when new events are added
              */
