@@ -37,16 +37,19 @@ namespace UrbanSpork.DataAccess
 
         public void UpdateUserInfo(UpdateUserInformationDTO dto)
         {
+            //business Logic here!
             ApplyChange(new UserUpdatedEvent(dto));
         }
 
         public void DisableSingleUser()
         {
+            //business Logic here!
             ApplyChange(new UserDisabledEvent());
         }
 
         public void EnableSingleUser()
         {
+            //business Logic here!
             ApplyChange(new UserEnabledEvent());
         }
 
@@ -60,7 +63,14 @@ namespace UrbanSpork.DataAccess
 
         public void DenyPermissionRequest(DenyUserPermissionRequestDTO dto)
         {
+            //business Logic here!
             ApplyChange(new UserPermissionRequestDeniedEvent(dto));
+        }
+
+        public void GrantPermission(GrantUserPermissionDTO dto)
+        {
+            //business Logic here!
+            ApplyChange(new UserPermissionGrantedEvent(dto));
         }
 
         private void Apply(UserCreatedEvent @event)
@@ -115,6 +125,14 @@ namespace UrbanSpork.DataAccess
                 RequestedBy = @event.ById,
                 RequestedFor = @event.ForId
             };
+        }
+
+        private void Apply(UserPermissionGrantedEvent @event)
+        {
+            foreach (var request in @event.PermissionsToGrant)
+            {
+                PermissionList[request.Key] = request.Value; 
+            }
         }
     }
 }
