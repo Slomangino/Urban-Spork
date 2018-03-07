@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
 
@@ -18,22 +19,25 @@ namespace UrbanSpork.DataAccess.Events
             _context = context;
         }
 
-        public Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<IEvent>> Get(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var rowList = _context.Events.ToList().Where(a => a.Id.Equals(aggregateId) && a.Version > fromVersion).OrderBy(a => a.Version);
+            var rowList = await _context.Events.Where(a => a.Id.Equals(aggregateId) && a.Version > fromVersion).OrderBy(a => a.Version).ToListAsync();
+            //var rowList = await _context.Events.ToListAsync();
             var eventList = DeserializeEventList(rowList);
 
-            return Task.FromResult(eventList);
+            //return Task.FromResult(eventList);
+            return eventList;
+
         }
 
         public async Task Save(IEnumerable<IEvent> events, CancellationToken cancellationToken = default(CancellationToken))
         {
-                foreach (IEvent e in events)
-                {
+            foreach (IEvent e in events)
+            {
                     var serializedEvent = BuildEventRowFromEvent(e);
-                    await _context.Events.AddAsync(serializedEvent, cancellationToken);
-                }
-                await _context.SaveChangesAsync(cancellationToken);
+                    _context.Events.Add(serializedEvent);
+            }
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         private IEnumerable<IEvent> DeserializeEventList(IEnumerable<EventStoreDataRow> rowList)

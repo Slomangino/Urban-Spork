@@ -116,27 +116,6 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.UserDetailProjection.Update(user);
                     break;
-                case PermissionDiabledEvent pd:
-                    //when a premission is disabled, we want to get all users with that permission remove any status of request they might have had.
-                    var list = _context.UserDetailProjection.Where(a =>
-                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList).ContainsKey(pd.Id));
-                        
-                    if (list.Any())
-                    {
-                        foreach (var u in list)
-                        {
-                            _context.UserDetailProjection.Attach(u);
-
-                            permissionList =
-                                JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(u.PermissionList);
-                            permissionList.Remove(pd.Id);
-                            u.PermissionList = JsonConvert.SerializeObject(permissionList);
-
-                            _context.Entry(u).Property(a => a.PermissionList).IsModified = true;
-                            _context.UserDetailProjection.Update(u);
-                        }
-                    }
-                    break;
                 case UserPermissionRequestDeniedEvent pde:
                     if (pde.PermissionsToDeny.Any())
                     {
