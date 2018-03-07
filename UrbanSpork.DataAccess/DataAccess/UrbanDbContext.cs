@@ -28,6 +28,8 @@ namespace UrbanSpork.DataAccess.DataAccess
         public DbSet<UserDetailProjection> UserDetailProjection { get; set; }
         public DbSet<PermissionDetailProjection> PermissionDetailProjection { get; set; }
         public DbSet<PendingRequestsProjection> PendingRequestsProjection { get; set; }
+        public DbSet<SystemDropdownProjection> SystemDropDownProjection { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
