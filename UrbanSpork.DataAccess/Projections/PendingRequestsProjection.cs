@@ -64,6 +64,16 @@ namespace UrbanSpork.DataAccess.Projections
                     var pending = await _context.PendingRequestsProjection.SingleAsync(a => a.PermissionId == pd.PermissionId && a.ForId == pd.ForId);
                     _context.PendingRequestsProjection.Remove(pending);
                     break;
+                case UserPermissionGrantedEvent pg:
+                    var requests = _context.PendingRequestsProjection.Where(a => a.ForId == pg.ForId && pg.PermissionsToGrant.ContainsKey(a.PermissionId));
+                    if (requests.Any())
+                    {
+                        foreach (var r in requests)
+                        {
+                            _context.PendingRequestsProjection.Remove(r);
+                        }
+                    }
+                    break;
             }
 
             await _context.SaveChangesAsync();
