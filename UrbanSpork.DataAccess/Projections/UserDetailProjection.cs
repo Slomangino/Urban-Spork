@@ -105,6 +105,8 @@ namespace UrbanSpork.DataAccess.Projections
                     foreach (var request in upr.Requests)
                     {
                         request.Value.RequestDate = upr.TimeStamp; // not a good fix, updates projection but not the aggregate
+                        //It may be a good idea to add some logic here to convert event type to a string or enum type
+                        //This way, the client receives an usable status rather than a fully-qualified event type
                         permList[request.Key] = request.Value;
                     }
 

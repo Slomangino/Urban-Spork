@@ -33,7 +33,7 @@ namespace UrbanSpork.DataAccess.Events.Users
             Email = dto.Email;
             Position = dto.Position;
             Department = dto.Department;
-            IsAdmin = dto.IsActive;
+            IsAdmin = dto.IsAdmin;
             IsActive = dto.IsActive;
             PermissionList = dto.PermissionList;
         }
