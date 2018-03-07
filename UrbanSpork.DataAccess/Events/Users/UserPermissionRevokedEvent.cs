@@ -29,7 +29,7 @@ namespace UrbanSpork.DataAccess.Events.Users
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = "Revoked", //IDK?
+                    Reason = permission.Value.Reason, //IDK?
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
