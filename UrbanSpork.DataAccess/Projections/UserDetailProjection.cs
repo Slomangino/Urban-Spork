@@ -138,32 +138,57 @@ namespace UrbanSpork.DataAccess.Projections
                     }
                     break;
                 case UserPermissionRequestDeniedEvent pde:
-                    user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pde.ForId);
-                    _context.UserDetailProjection.Attach(user);
-                    permissionList =
-                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
-                    permissionList.Remove(pde.PermissionId); //might fail here if key does not exist? not sure
-                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
+                    if (pde.PermissionsToDeny.Any())
+                    {
+                        user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pde.ForId);
+                        _context.UserDetailProjection.Attach(user);
 
-                    _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
-                    _context.UserDetailProjection.Update(user);
+                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        foreach (var permission in pde.PermissionsToDeny)
+                        {
+                            permissionList[permission.Key] = permission.Value;
+                        }
+
+                        user.PermissionList = JsonConvert.SerializeObject(permissionList);
+
+                        _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                        _context.UserDetailProjection.Update(user);
+                    }
                     break;
                 case UserPermissionGrantedEvent pg:
-                    user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pg.Id);
-                    _context.UserDetailProjection.Attach(user);
                     if (pg.PermissionsToGrant.Any())
                     {
+                        user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pg.Id);
+                        _context.UserDetailProjection.Attach(user);
+
                         permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
                         foreach (var permission in pg.PermissionsToGrant)
                         {
                             permissionList[permission.Key] = permission.Value;
                         }
+                        user.PermissionList = JsonConvert.SerializeObject(permissionList);
+
+                        _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                        _context.UserDetailProjection.Update(user);
                     }
+                    break;
+                case UserPermissionRevokedEvent pr:
+                    if (pr.PermissionsToRevoke.Any())
+                    {
+                        user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pr.Id);
+                        _context.UserDetailProjection.Attach(user);
 
-                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
+                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        foreach (var permission in pr.PermissionsToRevoke)
+                        {
+                            permissionList[permission.Key] = permission.Value;
+                        }
 
-                    _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
-                    _context.UserDetailProjection.Update(user);
+                        user.PermissionList = JsonConvert.SerializeObject(permissionList);
+
+                        _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                        _context.UserDetailProjection.Update(user);
+                    }
                     break;
             }
 

@@ -15,5 +15,6 @@ namespace UrbanSpork.DataAccess
         Task<UserDTO> UserPermissionsRequested(UpdateUserPermissionsDTO input);
         Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input);
         Task<UserDTO> GrantUserPermission(GrantUserPermissionDTO input);
+        Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input);
     }
 }
