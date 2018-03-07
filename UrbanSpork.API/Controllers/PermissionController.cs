@@ -71,5 +71,13 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+
+        [HttpGet("getSystemDropdown")]
+        public async Task<List<SystemDropdownProjection>> GetSystemDropDownProjection()
+        {
+            var query = new GetSystemDropDownProjectionQuery();
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
     }
 }

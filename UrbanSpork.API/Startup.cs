@@ -111,9 +111,12 @@ namespace UrbanSpork.API
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<SystemDropdownProjection>().AsSelf().InstancePerLifetimeScope();
+
 
 
             //Commands
+            //users
             builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -121,16 +124,17 @@ namespace UrbanSpork.API
             builder.RegisterType<UserPermissionsRequestedCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DenyUserPermissionRequestCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GrantUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RevokeUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            //permissions
             builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdatePermissionInfoCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-
-
-
+            
             //Command Handlers
+            //users
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -138,8 +142,9 @@ namespace UrbanSpork.API
             builder.RegisterType<UserPermissionsRequestedCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DenyUserPermissionRequestCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GrantUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RevokeUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-
+            //permissions
             builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UpdatePermissionInfoCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -153,6 +158,8 @@ namespace UrbanSpork.API
             builder.RegisterType<GetUserCollectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemDropDownProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
             //Query Handlers
             builder.RegisterType<GetUserByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -161,6 +168,8 @@ namespace UrbanSpork.API
             builder.RegisterType<GetAllPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemDropDownProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
         }
 
         // Configure is where you add middleware. This is called after
