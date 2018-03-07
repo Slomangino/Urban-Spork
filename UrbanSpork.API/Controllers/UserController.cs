@@ -111,5 +111,13 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+
+        [HttpPut("revokePermission")]
+        public async Task<UserDTO> RevokePermission([FromBody] RevokeUserPermissionDTO input)
+        {
+            var command = new RevokeUserPermissionCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
     }
 }

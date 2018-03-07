@@ -6,38 +6,36 @@ using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Events;
 
-namespace UrbanSpork.DataAccess.Events
+namespace UrbanSpork.DataAccess.Events.Users
 {
-    public class UserPermissionRequestDeniedEvent : IEvent
+    public class UserPermissionRevokedEvent : IEvent
     {
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
-
         public Guid ForId { get; set; }
         public Guid ById { get; set; }
-        public Dictionary<Guid, PermissionDetails> PermissionsToDeny { get; set; } = new Dictionary<Guid, PermissionDetails>();
+        public Dictionary<Guid, PermissionDetails> PermissionsToRevoke { get; set; } = new Dictionary<Guid, PermissionDetails>();
 
-        public UserPermissionRequestDeniedEvent(){ }
+        public UserPermissionRevokedEvent() { }
 
-        public UserPermissionRequestDeniedEvent(DenyUserPermissionRequestDTO dto)
+        public UserPermissionRevokedEvent(RevokeUserPermissionDTO dto)
         {
             ForId = dto.ForId;
             ById = dto.ById;
-            foreach (var permission in dto.PermissionsToDeny)
+            foreach (var permission in dto.PermissionsToRevoke)
             {
                 var p = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = "Denied", //IDK?
+                    Reason = "Revoked", //IDK?
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
                 };
-                PermissionsToDeny[permission.Key] = p;
+                PermissionsToRevoke[permission.Key] = p;
             }
         }
-
     }
 }

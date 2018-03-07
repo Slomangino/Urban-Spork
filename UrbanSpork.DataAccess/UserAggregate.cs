@@ -73,6 +73,12 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserPermissionGrantedEvent(dto));
         }
 
+        public void RevokePermission(RevokeUserPermissionDTO dto)
+        {
+            //business Logic here!
+            ApplyChange(new UserPermissionRevokedEvent(dto));
+        }
+
         private void Apply(UserCreatedEvent @event)
         {
             DateCreated = @event.TimeStamp;
@@ -116,22 +122,25 @@ namespace UrbanSpork.DataAccess
 
         private void Apply(UserPermissionRequestDeniedEvent @event)
         {
-            PermissionList[@event.PermissionId] = new PermissionDetails
+            foreach (var permission in @event.PermissionsToDeny)
             {
-                EventType = @event.GetType().FullName,
-                IsPending = false,
-                Reason = @event.ReasonForDenial,
-                RequestDate = @event.TimeStamp,
-                RequestedBy = @event.ById,
-                RequestedFor = @event.ForId
-            };
+                PermissionList[permission.Key] = permission.Value;
+            }
         }
 
         private void Apply(UserPermissionGrantedEvent @event)
         {
-            foreach (var request in @event.PermissionsToGrant)
+            foreach (var permission in @event.PermissionsToGrant)
             {
-                PermissionList[request.Key] = request.Value; 
+                PermissionList[permission.Key] = permission.Value; 
+            }
+        }
+
+        private void Apply(UserPermissionRevokedEvent @event)
+        {
+            foreach (var permission in @event.PermissionsToRevoke)
+            {
+                PermissionList[permission.Key] = permission.Value;
             }
         }
     }
