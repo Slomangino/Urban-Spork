@@ -15,9 +15,8 @@ namespace UrbanSpork.DataAccess
         private readonly UserManagementProjection _userManagementProjection;
 
         public GenericEventPublisher(UserDetailProjection userDetailProjection, 
-            PermissionDetailProjection permissionDetailProjection,
-            PendingRequestsProjection pendingRequestsProjection, SystemDropdownProjection systemDropdownProjection)
-            PendingRequestsProjection pendingRequestsProjection, UserManagementProjection userManagementProjection)
+            PermissionDetailProjection permissionDetailProjection, PendingRequestsProjection pendingRequestsProjection,
+            SystemDropdownProjection systemDropdownProjection, UserManagementProjection userManagementProjection)
         {
             _userDetailProjection = userDetailProjection;
             _permissionDetailProjection = permissionDetailProjection;
