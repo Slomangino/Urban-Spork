@@ -104,6 +104,8 @@ namespace UrbanSpork.DataAccess.Projections
                     foreach (var request in upr.Requests)
                     {
                         request.Value.RequestDate = upr.TimeStamp; // not a good fix, updates projection but not the aggregate
+                        //It may be a good idea to add some logic here to convert event type to a string or enum type
+                        //This way, the client receives an usable status rather than a fully-qualified event type
                         permList[request.Key] = request.Value;
                     }
 
@@ -139,7 +141,11 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.UserDetailProjection.Attach(user);
                     var permissions =
                         JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
-                    permissions.Remove(pde.PermissionId); //might fail here if key does not exist? not sure
+                    //if (permissions.ContainsKey(pde.PermissionId))
+                    //{
+                        permissions.Remove(pde.PermissionId); //might fail here if key does not exist? not sure <--Needs to be tested with above if statement 
+                    //}
+                   
                     user.PermissionList = JsonConvert.SerializeObject(permissions);
 
                     _context.Entry(user).Property(a => a.PermissionList).IsModified = true;

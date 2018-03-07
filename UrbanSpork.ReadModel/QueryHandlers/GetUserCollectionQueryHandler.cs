@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using Newtonsoft.Json;
+using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.FilterCriteria;
 using UrbanSpork.CQRS.Queries.QueryHandler;
@@ -15,7 +17,7 @@ using UrbanSpork.ReadModel.QueryCommands;
 
 namespace UrbanSpork.ReadModel.QueryHandlers
 {
-    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDetailProjection>>
+    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDTO>>
     {
         private readonly UrbanDbContext _context;
         private string _searchTerm = "";
@@ -25,22 +27,15 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             _context = context;
         }
 
-        public async Task<List<UserDetailProjection>> Handle(GetUserCollectionQuery query)
+        public async Task<List<UserDTO>> Handle(GetUserCollectionQuery query)
         {
-            
-            var result = await Filter(query.FilterCriteria).ToListAsync();
-            
-            //var map = Mapper.Map<List<UserDetailProjection>, List<UserDTO>>(result);
-            //return map;
-
-            return result;
+            var mappedResult = Mapper.Map<List<UserDetailProjection>, List<UserDTO>>(await Filter(query.FilterCriteria).ToListAsync());
+            return mappedResult;
         }
 
         private IQueryable<UserDetailProjection> Filter(UserFilterCriteria filter)
         {
             IQueryable<UserDetailProjection> queryable = _context.UserDetailProjection;
-
-            _searchTerm = filter.SearchTerms.ToLower();
 
             if (!filter.IncludeInactive)
             {
@@ -52,8 +47,9 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                 queryable = queryable.Where(a => !a.IsAdmin);
             }
 
-            if (!String.IsNullOrWhiteSpace(_searchTerm))
+            if (!String.IsNullOrWhiteSpace(filter.SearchTerms))
             {
+                _searchTerm = filter.SearchTerms.ToLower();
                 queryable = queryable.Where(
                     a => a.Department.ToLower().Contains(_searchTerm) ||
                     a.FirstName.ToLower().Contains(_searchTerm) ||
@@ -61,6 +57,7 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                     a.Department.ToLower().Contains(_searchTerm) ||
                     a.Position.ToLower().Contains(_searchTerm) ||
                     a.Department.ToLower().Contains(_searchTerm)
+                    //JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList).GetObjectData()  (filter.SearchTerms)
                 );
             }
 
@@ -100,6 +97,9 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                         queryable = queryable.OrderBy(a => a.Department);
                         //.ThenBy(a => a.LastName)
                         //.ThenBy(a => a.FirstName);
+                        break;
+                    case "Permission":
+                        queryable = queryable.OrderBy(a => a.PermissionList);
                         break;
                     default:
                         queryable = queryable.OrderBy(a => a.LastName);

@@ -8,7 +8,7 @@ using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.ReadModel.QueryCommands
 {
-    public class GetUserCollectionQuery : IQuery<List<UserDetailProjection>>
+    public class GetUserCollectionQuery : IQuery<List<UserDTO>>
     {
         public UserFilterCriteria FilterCriteria; 
     }

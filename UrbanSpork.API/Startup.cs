@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using Autofac;
 using AutoMapper;
 using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess;
@@ -39,7 +43,11 @@ namespace UrbanSpork.API
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserAggregate, UserDTO>();
                 cfg.CreateMap<UserDTO, UserAggregate>();
-                cfg.CreateMap<UserDetailProjection, UserDTO>();
+                cfg.CreateMap<UserDetailProjection, UserDTO>()
+                    .ForMember(dest => dest.PermissionList,
+                        opt => opt.MapFrom(src => 
+                            JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(src.PermissionList)))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
                 cfg.CreateMap<PermissionAggregate, PermissionDTO>();
                 cfg.CreateMap<PermissionDTO, PermissionAggregate>();
                 cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
