@@ -5397,28 +5397,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sloma\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/yamnel/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "F:\\CQRSProject\\SLCQRSProject\\CQRSLite\\UrbanSpork.CQRS.csproj",
+      "projectUniqueName": "/Users/yamnel/Development/SeniorProject/urban-spork-api/CQRSLite/UrbanSpork.CQRS.csproj",
       "projectName": "UrbanSpork.CQRS",
-      "projectPath": "F:\\CQRSProject\\SLCQRSProject\\CQRSLite\\UrbanSpork.CQRS.csproj",
-      "packagesPath": "C:\\Users\\sloma\\.nuget\\packages\\",
-      "outputPath": "F:\\CQRSProject\\SLCQRSProject\\CQRSLite\\obj\\",
+      "projectPath": "/Users/yamnel/Development/SeniorProject/urban-spork-api/CQRSLite/UrbanSpork.CQRS.csproj",
+      "packagesPath": "/Users/yamnel/.nuget/packages/",
+      "outputPath": "/Users/yamnel/Development/SeniorProject/urban-spork-api/CQRSLite/obj/",
+
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\sloma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/yamnel/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net452",
@@ -5427,7 +5425,6 @@
         "netstandard2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5463,6 +5460,7 @@
             "version": "[1.0.2, )"
           },
           "NETStandard.Library": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[1.6.0, )",
             "autoReferenced": true
@@ -5484,6 +5482,7 @@
             "version": "[1.0.2, )"
           },
           "NETStandard.Library": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[1.6.0, )",
             "autoReferenced": true
