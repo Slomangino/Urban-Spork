@@ -22,5 +22,10 @@ namespace UrbanSpork.Common.FilterCriteria
         public DateTime? MinDate { get; set; } = null;
 
         public DateTime? MaxDate { get; set; } = null;
+
+        public string FilterField { get; set; } = "";
+
+        public string FilterFieldInput { get; set; } = "";
+
     }
 }

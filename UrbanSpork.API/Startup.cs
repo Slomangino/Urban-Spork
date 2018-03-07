@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
@@ -53,6 +54,10 @@ namespace UrbanSpork.API
                 cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
                 cfg.CreateMap<PermissionDetailProjection, PermissionDTO>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PermissionId));
+                cfg.CreateMap<UserManagementProjection, UserManagementDTO>()
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+                    .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Position))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
             });
         }
 
@@ -141,6 +146,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetAllUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserManagementProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
@@ -149,7 +155,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetAllUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPermissionByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<GetUserManagementProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
