@@ -103,6 +103,7 @@ namespace UrbanSpork.API.Controllers
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE PermissionDetailProjection");
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE PendingRequestsProjection");
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE SystemDropdownProjection");
+            await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE UserManagementProjection");
         }
     }
 }

@@ -55,6 +55,13 @@ namespace UrbanSpork.API.Controllers
             return await result;
         }
 
+        [HttpGet("getusermanagementprojection")]
+        public async Task<List<UserManagementDTO>> GetUserList([FromQuery]UserFilterCriteria filter)
+        {
+            var message = new GetUserManagementProjectionQuery(filter);
+            var result = await _queryProcessor.Process(message);
+            return result;
+        }
 
         [HttpPost("createuser")]
         public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
