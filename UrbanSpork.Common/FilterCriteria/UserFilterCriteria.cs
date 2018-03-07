@@ -9,18 +9,18 @@ namespace UrbanSpork.Common.FilterCriteria
     {
         public string SearchTerms { get; set; }
 
-        public string SortDirection { get; set; }
+        public string SortDirection { get; set; } = "ASC";
 
-        public string SortField { get; set; }
+        public string SortField { get; set; } = "FirstName";
 
-        public bool EnablePaging { get; set; }
+        public bool EnablePaging { get; set; } = false;
 
-        public bool IncludeIsAdmin { get; set; }
+        public bool IncludeIsAdmin { get; set; } = true;
 
-        public bool IncludeInactive { get; set; }
+        public bool IncludeInactive { get; set; } = false;
 
-        public DateTime? MinDate { get; set; }
+        public DateTime? MinDate { get; set; } = null;
 
-        public DateTime? MaxDate { get; set; }
+        public DateTime? MaxDate { get; set; } = null;
     }
 }
