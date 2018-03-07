@@ -44,6 +44,7 @@ namespace UrbanSpork.DataAccess.Projections
         public async Task ListenForEvents(IEvent @event)
         {
             UserDetailProjection user = new UserDetailProjection();
+            Dictionary<Guid, PermissionDetails> permissionList = new Dictionary<Guid, PermissionDetails>();
             switch (@event) { 
                 case UserCreatedEvent uc:
                     user.UserId = uc.Id;
@@ -126,10 +127,10 @@ namespace UrbanSpork.DataAccess.Projections
                         {
                             _context.UserDetailProjection.Attach(u);
 
-                            var permissionsDict =
+                            permissionList =
                                 JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(u.PermissionList);
-                            permissionsDict.Remove(pd.Id);
-                            u.PermissionList = JsonConvert.SerializeObject(permissionsDict);
+                            permissionList.Remove(pd.Id);
+                            u.PermissionList = JsonConvert.SerializeObject(permissionList);
 
                             _context.Entry(u).Property(a => a.PermissionList).IsModified = true;
                             _context.UserDetailProjection.Update(u);
@@ -139,14 +140,27 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionRequestDeniedEvent pde:
                     user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pde.ForId);
                     _context.UserDetailProjection.Attach(user);
-                    var permissions =
+                    permissionList =
                         JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
-                    //if (permissions.ContainsKey(pde.PermissionId))
-                    //{
-                        permissions.Remove(pde.PermissionId); //might fail here if key does not exist? not sure <--Needs to be tested with above if statement 
-                    //}
-                   
-                    user.PermissionList = JsonConvert.SerializeObject(permissions);
+                    permissionList.Remove(pde.PermissionId); //might fail here if key does not exist? not sure
+                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
+
+                    _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                    _context.UserDetailProjection.Update(user);
+                    break;
+                case UserPermissionGrantedEvent pg:
+                    user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pg.Id);
+                    _context.UserDetailProjection.Attach(user);
+                    if (pg.PermissionsToGrant.Any())
+                    {
+                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        foreach (var permission in pg.PermissionsToGrant)
+                        {
+                            permissionList[permission.Key] = permission.Value;
+                        }
+                    }
+
+                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
 
                     _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
                     _context.UserDetailProjection.Update(user);
