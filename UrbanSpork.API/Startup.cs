@@ -69,8 +69,19 @@ namespace UrbanSpork.API
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>
                 (options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly
                 ("UrbanSpork.DataAccess")));
+            
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials() );
+            });
 
             services.AddMvc();
+
         }
 
         // ConfigureContainer is where you can register things directly
@@ -161,6 +172,9 @@ namespace UrbanSpork.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors("CorsPolicy");
+            
             app.UseMvc();
         }
     }
