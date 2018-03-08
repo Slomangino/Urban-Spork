@@ -27,6 +27,12 @@ namespace UrbanSpork.DataAccess.Projections
         public Guid PermissionId { get; set; }
         public Guid ForId { get; set; }
         public Guid ById { get; set; }
+        public string ForFirstName { get; set; }
+        public string ForLastName { get; set; }
+        public string ForFullName { get; set; }
+        public string ByFirstName { get; set; }
+        public string ByLastName { get; set; }
+        public string ByFullName { get; set; }
         public string RequestType { get; set; }
 
         [Column(TypeName = "timestamp")]
@@ -43,10 +49,18 @@ namespace UrbanSpork.DataAccess.Projections
                         {
                             PermissionId = r.Key,
                             ForId = r.Value.RequestedFor,
-                            ById = r.Value.RequestedBy,
-                            RequestType = r.Value.EventType,
+                            ById = r.Value.RequestedBy,               
+                            RequestType = "Requested Permission",
                             DateOfRequest = r.Value.RequestDate
                         };
+
+                        row.ByFirstName = await _context.UserDetailProjection.Where(a => a.UserId == row.ById).Select(p => p.FirstName).SingleOrDefaultAsync();
+                        row.ByLastName = await _context.UserDetailProjection.Where(a => a.UserId == row.ById).Select(p => p.LastName).SingleOrDefaultAsync();
+                        row.ByFullName = row.ByFirstName + " " + row.ByLastName;
+                        row.ForFirstName = await _context.UserDetailProjection.Where(a => a.UserId == row.ForId).Select(p => p.FirstName).SingleOrDefaultAsync();
+                        row.ForLastName = await _context.UserDetailProjection.Where(a => a.UserId == row.ForId).Select(p => p.LastName).SingleOrDefaultAsync();
+                        row.ForFullName = row.ForFirstName + " " + row.ForLastName;
+
 
                         //if a request of that type does not already exist for that user and permission add it to the list
                         if (!_context.PendingRequestsProjection.Any(a =>
