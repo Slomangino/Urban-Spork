@@ -15,7 +15,7 @@ namespace UrbanSpork.DataAccess.Projections
 {
     public class PendingRequestsProjection : IProjection
     {
-        public readonly UrbanDbContext _context;
+        private readonly UrbanDbContext _context;
 
         public PendingRequestsProjection() { }
 
@@ -63,7 +63,7 @@ namespace UrbanSpork.DataAccess.Projections
 
 
                         //if a request of that type does not already exist for that user and permission add it to the list
-                        if (!_context.PendingRequestsProjection.Any(a =>
+                        if (!await _context.PendingRequestsProjection.AnyAsync(a =>
                             a.PermissionId == row.PermissionId && a.ForId == row.ForId && a.RequestType == row.RequestType))
                         {
                             await _context.PendingRequestsProjection.AddAsync(row);

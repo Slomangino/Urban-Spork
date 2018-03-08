@@ -67,7 +67,13 @@ namespace UrbanSpork.CQRS.Domain
 
         public async Task Commit(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Task.WhenAll(_trackedAggregates.Values.Select(x => _repository.Save(x.Aggregate, x.Version, cancellationToken)));
+            //await Task.WhenAll(_trackedAggregates.Values.Select(x => _repository.Save(x.Aggregate, x.Version, cancellationToken)));
+
+            //fix from: http://blog.davidjs.com/2015/11/csharp-async-loops/
+            foreach (var agg in _trackedAggregates)
+            {
+                await _repository.Save(agg.Value.Aggregate, agg.Value.Version, cancellationToken);
+            }
             _trackedAggregates.Clear();
         }
 

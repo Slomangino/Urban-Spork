@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using UrbanSpork.CQRS.Domain;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
@@ -73,10 +74,17 @@ namespace UrbanSpork.DataAccess
             return result;
         }
 
-        public async Task<UserDTO> UserPermissionsRequested(UpdateUserPermissionsDTO input)
+        public async Task<UserDTO> UserPermissionsRequested(RequestUserPermissionsDTO input)
         {
             var userAgg = await _session.Get<UserAggregate>(input.ForId);
-            userAgg.UserRequestedPermissions(input);
+            var permissionList = new List<PermissionAggregate>();
+            foreach (var permission in input.Requests)
+            {
+                permissionList.Add(await _session.Get<PermissionAggregate>(permission.Key));
+            }
+            
+
+            userAgg.UserRequestedPermissions(permissionList, input);
             await _session.Commit();
             return Mapper.Map<UserDTO>(userAgg);
         }

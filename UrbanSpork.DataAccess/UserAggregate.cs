@@ -53,11 +53,18 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserEnabledEvent());
         }
 
-        public void UserRequestedPermissions(UpdateUserPermissionsDTO dto)
+        public void UserRequestedPermissions(List<PermissionAggregate> permissions, RequestUserPermissionsDTO dto)
         {
             //business Logic here!
-            // check to see if ById is an admin?
+
             //check to see if permission is active
+            foreach (var permission in permissions)
+            {
+                if (!permission.IsActive) dto.Requests.Remove(permission.Id);
+                //might need to add here some way to signal the UI to show that there was an inactive permission in their request.
+                //for now, let us just remove it from the list of requests.
+            }
+
             ApplyChange(new UserPermissionsRequestedEvent(dto));
         }
 

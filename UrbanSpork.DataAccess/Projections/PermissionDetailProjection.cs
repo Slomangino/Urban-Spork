@@ -11,7 +11,7 @@ namespace UrbanSpork.DataAccess.Projections
 {
     public class PermissionDetailProjection : IProjection
     {
-        public readonly UrbanDbContext _context;
+        private readonly UrbanDbContext _context;
 
         public PermissionDetailProjection() { }
 

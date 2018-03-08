@@ -29,15 +29,23 @@ namespace UrbanSpork.DataAccess.Events
             return eventList;
 
         }
-
+        
         public async Task Save(IEnumerable<IEvent> events, CancellationToken cancellationToken = default(CancellationToken))
         {
             foreach (IEvent e in events)
             {
                     var serializedEvent = BuildEventRowFromEvent(e);
-                    _context.Events.Add(serializedEvent);
+                    await _context.Events.AddAsync(serializedEvent, cancellationToken);
             }
+
+            //try
+            //{
             await _context.SaveChangesAsync(cancellationToken);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.StackTrace);
+            //}
         }
 
         private IEnumerable<IEvent> DeserializeEventList(IEnumerable<EventStoreDataRow> rowList)

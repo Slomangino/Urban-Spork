@@ -16,7 +16,7 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserPermissionsRequestedEvent() { }
 
-        public UserPermissionsRequestedEvent(UpdateUserPermissionsDTO dto)
+        public UserPermissionsRequestedEvent(RequestUserPermissionsDTO dto)
         {
             foreach (var request in dto.Requests)
             {
