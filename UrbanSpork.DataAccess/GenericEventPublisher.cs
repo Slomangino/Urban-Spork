@@ -13,16 +13,23 @@ namespace UrbanSpork.DataAccess
         private readonly PendingRequestsProjection _pendingRequestsProjection;
         private readonly SystemDropdownProjection _systemDropdownProjection;
         private readonly UserManagementProjection _userManagementProjection;
+        private readonly SystemActivityProjection _systemActivityProjection;
 
-        public GenericEventPublisher(UserDetailProjection userDetailProjection, 
-            PermissionDetailProjection permissionDetailProjection, PendingRequestsProjection pendingRequestsProjection,
-            SystemDropdownProjection systemDropdownProjection, UserManagementProjection userManagementProjection)
+        public GenericEventPublisher(
+            UserDetailProjection userDetailProjection, 
+            PermissionDetailProjection permissionDetailProjection, 
+            PendingRequestsProjection pendingRequestsProjection,
+            SystemDropdownProjection systemDropdownProjection, 
+            UserManagementProjection userManagementProjection,
+            SystemActivityProjection systemActivityProjection
+            )
         {
             _userDetailProjection = userDetailProjection;
             _permissionDetailProjection = permissionDetailProjection;
             _pendingRequestsProjection = pendingRequestsProjection;
             _userManagementProjection = userManagementProjection;
             _systemDropdownProjection = systemDropdownProjection;
+            _systemActivityProjection = systemActivityProjection;
         }
 
         async Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
@@ -33,6 +40,7 @@ namespace UrbanSpork.DataAccess
             await _pendingRequestsProjection.ListenForEvents(@event);
             await _systemDropdownProjection.ListenForEvents(@event);
             await _userManagementProjection.ListenForEvents(@event);
+            await _systemActivityProjection.ListenForEvents(@event);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace UrbanSpork.Common.FilterCriteria
 {
     public class UserFilterCriteria : IFilterCriteria
     {
-        public string SearchTerms { get; set; }
+        public string SearchTerms { get; set; } = "";
 
         public string SortDirection { get; set; } = "ASC";
 
