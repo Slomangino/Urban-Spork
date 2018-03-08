@@ -79,5 +79,14 @@ namespace UrbanSpork.API.Controllers
             var result = await _queryProcessor.Process(query);
             return result;
         }
+
+        [HttpGet("getPendingRequests")]
+        public async Task<List<PendingRequestsProjection>> GetPendingRequests()
+        {
+            var query = new GetPendingRequestsProjectionQuery();
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
+
     }
 }
