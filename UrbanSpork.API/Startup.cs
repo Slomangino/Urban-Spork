@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
@@ -59,6 +60,7 @@ namespace UrbanSpork.API
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
                     .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Position))
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
+                cfg.CreateMap<SystemActivityProjection, SystemActivityDTO>();
             });
         }
 
@@ -119,6 +121,7 @@ namespace UrbanSpork.API
             builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserManagementProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SystemDropdownProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<SystemActivityProjection>().AsSelf().InstancePerLifetimeScope();
 
 
 
@@ -168,6 +171,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPendingRequestsProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemActivityReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
 
@@ -180,6 +184,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPendingRequestsProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemActivityReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
 

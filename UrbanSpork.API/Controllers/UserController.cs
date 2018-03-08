@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
 using UrbanSpork.DataAccess.Projections;
@@ -60,6 +61,14 @@ namespace UrbanSpork.API.Controllers
         {
             var message = new GetUserManagementProjectionQuery(filter);
             var result = await _queryProcessor.Process(message);
+            return result;
+        }
+
+        [HttpGet("getSystemActivityProjection")]
+        public async Task<List<SystemActivityDTO>> GetSystemActivity([FromQuery] SystemActivityReportFilterCriteria filter)
+        {
+            var command = new GetSystemActivityReportQuery(filter);
+            var result = await _queryProcessor.Process(command);
             return result;
         }
 

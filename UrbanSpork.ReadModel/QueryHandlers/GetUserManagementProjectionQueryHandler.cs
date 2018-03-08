@@ -102,26 +102,26 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             }
 
 
-                switch (filter.FilterField)
-                {
-                    case "Email":
-                        queryable = queryable.Where(a => a.Email.ToLower().Equals(filter.FilterFieldInput.ToLower()));
-                        break;
-                    case "LastName":
-                        queryable = queryable.Where(a => a.LastName.ToLower().Equals(filter.FilterFieldInput.ToLower()));
+            switch (filter.FilterField)
+            {
+                case "Email":
+                    queryable = queryable.Where(a => a.Email.ToLower().Equals(filter.FilterFieldInput.ToLower()));
                     break;
-                    case "FirstName":
-                        queryable = queryable.Where(a => a.FirstName.ToLower().Equals(filter.FilterFieldInput.ToLower()));
-                    break;
-                    case "Position":
-                        queryable = queryable.Where(a => a.Position.ToLower().Equals(filter.FilterFieldInput.ToLower()));
-                    break;
-                    case "Department":
-                        queryable = queryable.Where(a => a.Department.ToLower().Equals(filter.FilterFieldInput.ToLower()));
-                    break;
-                    default:
-                    break;
-                }
+                case "LastName":
+                    queryable = queryable.Where(a => a.LastName.ToLower().Equals(filter.FilterFieldInput.ToLower()));
+                break;
+                case "FirstName":
+                    queryable = queryable.Where(a => a.FirstName.ToLower().Equals(filter.FilterFieldInput.ToLower()));
+                break;
+                case "Position":
+                    queryable = queryable.Where(a => a.Position.ToLower().Equals(filter.FilterFieldInput.ToLower()));
+                break;
+                case "Department":
+                    queryable = queryable.Where(a => a.Department.ToLower().Equals(filter.FilterFieldInput.ToLower()));
+                break;
+                default:
+                break;
+            }
 
             return queryable;
         }
