@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
@@ -71,11 +72,10 @@ namespace UrbanSpork.API
             // any IServiceProvider or the ConfigureContainer method
             // won't get called.
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>
-                (options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly
-                ("UrbanSpork.DataAccess")));
             
-            
+            services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(
+                options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")), ServiceLifetime.Transient);
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -84,9 +84,7 @@ namespace UrbanSpork.API
                         .AllowAnyHeader()
                         .AllowCredentials() );
             });
-
             services.AddMvc();
-
         }
 
         // ConfigureContainer is where you can register things directly
@@ -111,6 +109,9 @@ namespace UrbanSpork.API
             builder.RegisterType<Repository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<UrbanDbContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
 
             // Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UrbanSpork.Common.DataTransferObjects.User
 {
-    public class UpdateUserPermissionsDTO
+    public class RequestUserPermissionsDTO
     {
         public Guid ForId { get; set; }
         public Guid ById { get; set; }

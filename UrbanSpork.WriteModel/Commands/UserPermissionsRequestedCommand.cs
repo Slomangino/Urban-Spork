@@ -10,9 +10,9 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class UserPermissionsRequestedCommand : ICommand<UserDTO>
     {
-        public UpdateUserPermissionsDTO Input { get; set; }
+        public RequestUserPermissionsDTO Input { get; set; }
 
-        public UserPermissionsRequestedCommand(UpdateUserPermissionsDTO input)
+        public UserPermissionsRequestedCommand(RequestUserPermissionsDTO input)
         {
             Input = input;
         }

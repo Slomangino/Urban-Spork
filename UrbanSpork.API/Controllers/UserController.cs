@@ -80,7 +80,7 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpPut("requestPermissions")]
-        public async Task<UserDTO> RequestPermissions([FromBody] UpdateUserPermissionsDTO input)
+        public async Task<UserDTO> RequestPermissions([FromBody] RequestUserPermissionsDTO input)
         {
             var command = new UserPermissionsRequestedCommand(input);
             var result = await _commandDispatcher.Execute(command);
