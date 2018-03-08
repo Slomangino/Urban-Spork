@@ -12,4 +12,8 @@
     <ProjectReference Include="..\CQRSLite\UrbanSpork.CQRS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\" />
+  </ItemGroup>
+
 </Project>

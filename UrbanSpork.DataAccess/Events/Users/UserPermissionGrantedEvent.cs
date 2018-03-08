@@ -26,11 +26,13 @@ namespace UrbanSpork.DataAccess.Events.Users
             ById = dto.ById;
             foreach (var permission in dto.PermissionsToGrant)
             {
+                var reason = String.IsNullOrWhiteSpace(permission.Value.Reason) ? "Reason Not Specified" : permission.Value.Reason;
+
                 var p = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = "Granted", //IDK?
+                    Reason = reason,
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
