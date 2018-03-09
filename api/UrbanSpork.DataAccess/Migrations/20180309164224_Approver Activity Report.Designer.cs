@@ -11,9 +11,10 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    partial class UrbanDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180309164224_Approver Activity Report")]
+    partial class ApproverActivityReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

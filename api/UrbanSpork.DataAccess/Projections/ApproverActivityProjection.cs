@@ -39,8 +39,6 @@ namespace UrbanSpork.DataAccess.Projections
 
         public async Task ListenForEvents(IEvent @event)
         {
-                       
-            List<CondensedPermissionDetail> permissionList = new List<CondensedPermissionDetail>();
             switch (@event)
             {
            
@@ -93,7 +91,7 @@ namespace UrbanSpork.DataAccess.Projections
                             ForId = permissionRevoked.Id,
                             TimeStamp = permissionRevoked.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
-                            TruncatedEventType = "Revoked Permission"
+                            TruncatedEventType = "Revoked Permission",
 
                         };
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionRevoked.ForId).Select(r => r.FirstName + " " + r.LastName).SingleOrDefaultAsync();

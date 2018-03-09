@@ -16,17 +16,14 @@ namespace UrbanSpork.DataAccess
         private readonly ApproverActivityProjection _approverActivityProjection;
         private readonly SystemActivityProjection _systemActivityProjection;
 
-        public GenericEventPublisher(UserDetailProjection userDetailProjection, 
-            PermissionDetailProjection permissionDetailProjection, PendingRequestsProjection pendingRequestsProjection,
-            SystemDropdownProjection systemDropdownProjection, UserManagementProjection userManagementProjection, 
-            ApproverActivityProjection approverActivityProjection)
         public GenericEventPublisher(
             UserDetailProjection userDetailProjection, 
             PermissionDetailProjection permissionDetailProjection, 
             PendingRequestsProjection pendingRequestsProjection,
             SystemDropdownProjection systemDropdownProjection, 
             UserManagementProjection userManagementProjection,
-            SystemActivityProjection systemActivityProjection
+            SystemActivityProjection systemActivityProjection,
+            ApproverActivityProjection approverActivityProjection
             )
         {
             _userDetailProjection = userDetailProjection;
