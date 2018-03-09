@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Extensions.Internal;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
 using UrbanSpork.CQRS.Queries.QueryHandler;
 using UrbanSpork.DataAccess.DataAccess;
@@ -17,7 +18,7 @@ using UrbanSpork.ReadModel.QueryCommands;
 
 namespace UrbanSpork.ReadModel.QueryHandlers
 {
-    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDTO>>
+    public class GetUserCollectionQueryHandler : IQueryHandler<GetUserCollectionQuery, List<UserDetailProjectionDTO>>
     {
         private readonly UrbanDbContext _context;
         private string _searchTerm = "";
@@ -27,9 +28,9 @@ namespace UrbanSpork.ReadModel.QueryHandlers
             _context = context;
         }
 
-        public async Task<List<UserDTO>> Handle(GetUserCollectionQuery query)
+        public async Task<List<UserDetailProjectionDTO>> Handle(GetUserCollectionQuery query)
         {
-            var mappedResult = Mapper.Map<List<UserDetailProjection>, List<UserDTO>>(await Filter(query.FilterCriteria).ToListAsync());
+            var mappedResult = Mapper.Map<List<UserDetailProjection>, List<UserDetailProjectionDTO>>(await Filter(query.FilterCriteria).ToListAsync());
             return mappedResult;
         }
 
@@ -57,7 +58,6 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                     a.Department.ToLower().Contains(_searchTerm) ||
                     a.Position.ToLower().Contains(_searchTerm) ||
                     a.Department.ToLower().Contains(_searchTerm)
-                    //JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList).GetObjectData()  (filter.SearchTerms)
                 );
             }
 
