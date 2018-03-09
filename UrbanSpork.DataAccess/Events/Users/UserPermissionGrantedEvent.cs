@@ -35,8 +35,7 @@ namespace UrbanSpork.DataAccess.Events.Users
                     Reason = reason,
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
-                    RequestedFor = dto.ForId,
-                    PermissionID = permission.Value.PermissionID
+                    RequestedFor = dto.ForId
                 };
                 PermissionsToGrant[permission.Key] = p;
             }

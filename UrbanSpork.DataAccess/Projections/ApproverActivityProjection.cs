@@ -87,7 +87,7 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionGrantedEvent permissionGranted:
                     foreach(var permission in permissionGranted.PermissionsToGrant)
                     {
-                        var PermissionID = permission.Value.PermissionID;
+                        var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
 
@@ -108,7 +108,7 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionRevokedEvent permissionRevoked:
                    foreach(var permission in permissionRevoked.PermissionsToRevoke)
                     {
-                        var PermissionID = permission.Value.PermissionID;
+                        var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
 
@@ -128,7 +128,7 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionRequestDeniedEvent permissionDenied:
                     foreach (var permission in permissionDenied.PermissionsToDeny)
                     {
-                        var PermissionID = permission.Value.PermissionID;
+                        var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
 
