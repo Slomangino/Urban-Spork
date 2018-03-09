@@ -34,6 +34,7 @@ namespace UrbanSpork.DataAccess.Projections
         public string ByLastName { get; set; }
         public string ByFullName { get; set; }
         public string RequestType { get; set; }
+        public string PermissionName { get; set; }
 
         [Column(TypeName = "timestamp")]
         public DateTime DateOfRequest { get; set; }
@@ -60,7 +61,7 @@ namespace UrbanSpork.DataAccess.Projections
                         row.ForFirstName = await _context.UserDetailProjection.Where(a => a.UserId == row.ForId).Select(p => p.FirstName).SingleOrDefaultAsync();
                         row.ForLastName = await _context.UserDetailProjection.Where(a => a.UserId == row.ForId).Select(p => p.LastName).SingleOrDefaultAsync();
                         row.ForFullName = row.ForFirstName + " " + row.ForLastName;
-
+                        row.PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == row.PermissionId).Select(p => p.Name).SingleOrDefaultAsync();
 
                         //if a request of that type does not already exist for that user and permission add it to the list
                         if (!await _context.PendingRequestsProjection.AnyAsync(a =>
