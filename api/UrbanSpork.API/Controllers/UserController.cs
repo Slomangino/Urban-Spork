@@ -28,20 +28,12 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("{Id}")]
-        public async Task<UserDTO> Get(Guid id)
+        [HttpGet("id/{Id}")]
+        public async Task<UserDetailProjectionDTO> Get(Guid id)
         {
-            var message = new GetUserByIdQuery(id);
+            var message = new GetUserDetailByIdQuery(id);
             var result = await _queryProcessor.Process(message);
             return result;
-        }
-
-        [HttpGet]
-        public async Task<List<UserDTO>> GetAllUsers()
-        {
-            var query = new GetAllUsersQuery();
-            var result = _queryProcessor.Process(query);
-            return  await result;
         }
 
         [HttpGet("getusercollection")]

@@ -1,14 +1,15 @@
 ﻿using System;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Queries.Query;
 
 namespace UrbanSpork.ReadModel.QueryCommands
 {
-    public class GetUserByIdQuery : IQuery<UserDTO>
+    public class GetUserDetailByIdQuery : IQuery<UserDetailProjectionDTO>
     {
         internal Guid Id;
 
-        public GetUserByIdQuery(Guid id)
+        public GetUserDetailByIdQuery(Guid id)
         {
             Id = id;
         }
