@@ -92,14 +92,6 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("requestPermissions")]
-        public async Task<UserDTO> RequestPermissions([FromBody] RequestUserPermissionsDTO input)
-        {
-            var command = new UserPermissionsRequestedCommand(input);
-            var result = await _commandDispatcher.Execute(command);
-            return result;
-        }
-
         [HttpPut("disable/{Id}")]
         public async Task<UserDTO> DisableUser(Guid id)
         {
@@ -116,7 +108,15 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("denyPermission")]
+        [HttpPut("requestPermissions")]
+        public async Task<UserDTO> RequestPermissions([FromBody] RequestUserPermissionsDTO input)
+        {
+            var command = new UserPermissionsRequestedCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("denyPermissions")]
         public async Task<UserDTO> DenyPermission([FromBody] DenyUserPermissionRequestDTO input)
         {
             var command = new DenyUserPermissionRequestCommand(input);
@@ -124,7 +124,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("grantPermission")]
+        [HttpPut("grantPermissions")]
         public async Task<UserDTO> GrantPermission([FromBody] GrantUserPermissionDTO input)
         {
             var command = new GrantUserPermissionCommand(input);
@@ -132,7 +132,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("revokePermission")]
+        [HttpPut("revokePermissions")]
         public async Task<UserDTO> RevokePermission([FromBody] RevokeUserPermissionDTO input)
         {
             var command = new RevokeUserPermissionCommand(input);
