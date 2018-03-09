@@ -11,6 +11,7 @@ namespace UrbanSpork.DataAccess.Events
         public DateTime TimeStamp { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public Guid UpdatedById { get; set; }
 
         public PermissionInfoUpdatedEvent() { }
 
@@ -18,6 +19,7 @@ namespace UrbanSpork.DataAccess.Events
         {
             Name = dto.Name;
             Description = dto.Description;
+            UpdatedById = dto.UpdatedById;
         }  
     }
 }
