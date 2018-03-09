@@ -45,7 +45,7 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpGet("getusercollection")]
-        public async Task<List<UserDTO>> GetUserCollection([FromQuery]UserFilterCriteria filterCriteria)
+        public async Task<List<UserDetailProjectionDTO>> GetUserCollection([FromQuery]UserFilterCriteria filterCriteria)
         {
             var query = new GetUserCollectionQuery
             {

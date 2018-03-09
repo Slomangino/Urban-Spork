@@ -18,15 +18,16 @@ namespace UrbanSpork.DataAccess.Projections
     {
         private readonly UrbanDbContext _context;
 
-        public UserDetailProjection() { }
+        public UserDetailProjection()
+        {
+        }
 
         public UserDetailProjection(UrbanDbContext context)
         {
             _context = context;
         }
 
-        [Key]
-        public Guid UserId { get; set; }
+        [Key] public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -34,18 +35,16 @@ namespace UrbanSpork.DataAccess.Projections
         public string Department { get; set; }
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
-
-        [Column(TypeName = "json")]
-        public string PermissionList { get; set; }
-
-        [Column(TypeName = "timestamp")]
-        public DateTime DateCreated { get; set; }
+        [Column(TypeName = "json")] public string PermissionList { get; set; }
+        [Column(TypeName = "timestamp")] public DateTime DateCreated { get; set; }
 
         public async Task ListenForEvents(IEvent @event)
         {
             UserDetailProjection user = new UserDetailProjection();
-            Dictionary<Guid, PermissionDetails> permissionList = new Dictionary<Guid, PermissionDetails>();
-            switch (@event) { 
+            Dictionary<Guid, DetailedUserPermissionInfo> permissionList =
+                new Dictionary<Guid, DetailedUserPermissionInfo>();
+            switch (@event)
+            {
                 case UserCreatedEvent uc:
                     user.UserId = uc.Id;
                     user.FirstName = uc.FirstName;
@@ -55,15 +54,37 @@ namespace UrbanSpork.DataAccess.Projections
                     user.Department = uc.Department;
                     user.IsActive = uc.IsActive;
                     user.IsAdmin = uc.IsAdmin;
-                    user.PermissionList = JsonConvert.SerializeObject(uc.PermissionList);
-                    user.DateCreated = uc.TimeStamp;
+                    if (uc.PermissionList != null)
+                    {
+                        foreach (var permission in uc.PermissionList)
+                        {
+                            permissionList.Add(permission.Key,
+                                new DetailedUserPermissionInfo
+                                {
+                                    PermissionName =
+                                        await _context.PermissionDetailProjection
+                                            .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
+                                            .SingleAsync(),
+                                    ApproverFirstName =
+                                        await _context.UserDetailProjection
+                                            .Where(a => a.UserId == permission.Value.RequestedBy)
+                                            .Select(p => p.FirstName).SingleAsync(),
+                                    ApproverLastName =
+                                        await _context.UserDetailProjection
+                                            .Where(a => a.UserId == permission.Value.RequestedBy)
+                                            .Select(p => p.LastName).SingleAsync(),
+                                    PermissionStatus = "Granted",
+                                });
+                        }
+                    }
 
+                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
+                    user.DateCreated = uc.TimeStamp;
                     _context.UserDetailProjection.Add(user);
                     break;
                 case UserUpdatedEvent uu:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == uu.Id);
                     _context.UserDetailProjection.Attach(user);
-
                     user.FirstName = uu.FirstName;
                     user.LastName = uu.LastName;
                     user.Email = uu.Email;
@@ -76,44 +97,60 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.Position).IsModified = true;
                     _context.Entry(user).Property(a => a.Department).IsModified = true;
                     _context.Entry(user).Property(a => a.IsAdmin).IsModified = true;
-
                     _context.UserDetailProjection.Update(user);
                     break;
                 case UserDisabledEvent ud:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ud.Id);
                     _context.UserDetailProjection.Attach(user);
-
                     user.IsActive = ud.IsActive;
                     _context.Entry(user).Property(a => a.IsActive).IsModified = true;
-
                     _context.UserDetailProjection.Update(user);
                     break;
                 case UserEnabledEvent ue:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ue.Id);
                     _context.UserDetailProjection.Attach(user);
-
                     user.IsActive = ue.IsActive;
                     _context.Entry(user).Property(a => a.IsActive).IsModified = true;
-
                     _context.UserDetailProjection.Update(user);
                     break;
                 case UserPermissionsRequestedEvent upr:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == upr.Id);
                     _context.UserDetailProjection.Attach(user);
-
-                    var permList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
-                    foreach (var request in upr.Requests)
+                    permissionList =
+                        JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                            user.PermissionList);
+                    foreach (var permission in upr.Requests)
                     {
-                        request.Value.RequestDate = upr.TimeStamp; // not a good fix, updates projection but not the aggregate
-                        //It may be a good idea to add some logic here to convert event type to a string or enum type
-                        //This way, the client receives an usable status rather than a fully-qualified event type
-                        permList[request.Key] = request.Value;
+                        if (!permissionList.ContainsKey(permission.Key))
+                        {
+                            permissionList.Add(permission.Key,
+                                new DetailedUserPermissionInfo
+                                {
+                                    PermissionName =
+                                        await _context.PermissionDetailProjection
+                                            .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
+                                            .SingleAsync(),
+                                    ApproverFirstName =
+                                        await _context.UserDetailProjection
+                                            .Where(a => a.UserId == permission.Value.RequestedBy)
+                                            .Select(p => p.FirstName).SingleAsync(),
+                                    ApproverLastName =
+                                        await _context.UserDetailProjection
+                                            .Where(a => a.UserId == permission.Value.RequestedBy)
+                                            .Select(p => p.LastName).SingleAsync(),
+                                    PermissionStatus = "Requested",
+                                    TimeStamp = upr.TimeStamp,
+                                });
+                        }
+                        else
+                        {
+                            permissionList[permission.Key].PermissionStatus = "Requested";
+                            permissionList[permission.Key].TimeStamp = upr.TimeStamp;
+                        }
                     }
 
-                    user.PermissionList = JsonConvert.SerializeObject(permList);
-
+                    user.PermissionList = JsonConvert.SerializeObject(permissionList);
                     _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
-
                     _context.UserDetailProjection.Update(user);
                     break;
                 case UserPermissionRequestDeniedEvent pde:
@@ -121,15 +158,20 @@ namespace UrbanSpork.DataAccess.Projections
                     {
                         user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pde.ForId);
                         _context.UserDetailProjection.Attach(user);
-
-                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        permissionList =
+                            JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                                user.PermissionList);
                         foreach (var permission in pde.PermissionsToDeny)
                         {
-                            permissionList[permission.Key] = permission.Value;
+                            //Cannot Deny a permission that has not been Requested or has already been Granted
+                            if (permissionList.ContainsKey(permission.Key))
+                            {
+                                permissionList[permission.Key].PermissionStatus = "Denied";
+                                permissionList[permission.Key].TimeStamp = pde.TimeStamp;
+                            }
                         }
 
                         user.PermissionList = JsonConvert.SerializeObject(permissionList);
-
                         _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
                         _context.UserDetailProjection.Update(user);
                     }
@@ -139,14 +181,39 @@ namespace UrbanSpork.DataAccess.Projections
                     {
                         user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pg.Id);
                         _context.UserDetailProjection.Attach(user);
-
-                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        permissionList =
+                            JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                                user.PermissionList);
                         foreach (var permission in pg.PermissionsToGrant)
                         {
-                            permissionList[permission.Key] = permission.Value;
+                            if (permissionList.ContainsKey(permission.Key))
+                            {
+                                permissionList[permission.Key].PermissionStatus = "Granted";
+                                permissionList[permission.Key].TimeStamp = pg.TimeStamp;
+                            }
+                            else
+                            {
+                                permissionList.Add(permission.Key,
+                                    new DetailedUserPermissionInfo
+                                    {
+                                        PermissionName =
+                                            await _context.PermissionDetailProjection
+                                                .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
+                                                .SingleAsync(),
+                                        ApproverFirstName =
+                                            await _context.UserDetailProjection
+                                                .Where(a => a.UserId == permission.Value.RequestedBy)
+                                                .Select(p => p.FirstName).SingleAsync(),
+                                        ApproverLastName =
+                                            await _context.UserDetailProjection
+                                                .Where(a => a.UserId == permission.Value.RequestedBy)
+                                                .Select(p => p.LastName).SingleAsync(),
+                                        PermissionStatus = "Granted",
+                                        TimeStamp = pg.TimeStamp,
+                                    });
+                            }
                         }
                         user.PermissionList = JsonConvert.SerializeObject(permissionList);
-
                         _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
                         _context.UserDetailProjection.Update(user);
                     }
@@ -156,21 +223,47 @@ namespace UrbanSpork.DataAccess.Projections
                     {
                         user = await _context.UserDetailProjection.SingleAsync(a => a.UserId == pr.Id);
                         _context.UserDetailProjection.Attach(user);
-
-                        permissionList = JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(user.PermissionList);
+                        permissionList =
+                            JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                                user.PermissionList);
                         foreach (var permission in pr.PermissionsToRevoke)
                         {
-                            permissionList[permission.Key] = permission.Value;
+                            //Cannot Deny a permission that has not been Granted
+                            if (permissionList.ContainsKey(permission.Key))
+                            {
+                                permissionList[permission.Key].PermissionStatus = "Revoked";
+                                permissionList[permission.Key].TimeStamp = pr.TimeStamp;
+                            }
                         }
 
                         user.PermissionList = JsonConvert.SerializeObject(permissionList);
-
                         _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
                         _context.UserDetailProjection.Update(user);
                     }
                     break;
-            }
+                case PermissionInfoUpdatedEvent pInfoUpdatedEvent:
+                    if (pInfoUpdatedEvent.Name.Any())
+                    {
+                        var aAlist = _context.UserDetailProjection.Where(p =>
+                            JsonConvert
+                                .DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(p.PermissionList)
+                                .ContainsKey(pInfoUpdatedEvent.Id)).ToList();
+                        var iDToCheck = pInfoUpdatedEvent.Id;
+                        var newName = pInfoUpdatedEvent.Name;
+                        foreach (var aActivity in aAlist)
+                        {
+                            //_context.Entry(aActivity).State = EntityState.Modified;
+                            permissionList =
+                                JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                                    aActivity.PermissionList);
+                            permissionList[iDToCheck].PermissionName = newName;
+                            aActivity.PermissionList = JsonConvert.SerializeObject(permissionList);
 
+                            _context.UserDetailProjection.Update(aActivity);
+                        }
+                    }
+                    break;
+            }
             await _context.SaveChangesAsync();
         }
     }
