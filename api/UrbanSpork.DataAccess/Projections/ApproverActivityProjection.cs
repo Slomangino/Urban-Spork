@@ -34,7 +34,9 @@ namespace UrbanSpork.DataAccess.Projections
         public DateTime TimeStamp { get; set; }
         public string ForFullName { get; set; }
         public string PermissionName { get; set; }
+        public string Reason { get; set; }
         public string TruncatedEventType { get; set; }
+      
         
 
         public async Task ListenForEvents(IEvent @event)
@@ -50,7 +52,8 @@ namespace UrbanSpork.DataAccess.Projections
                             ApproverId = permissionInfoUpdated.UpdatedById,
                             TimeStamp = permissionInfoUpdated.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == permissionInfoUpdated.Id).Select(n => n.Name).SingleOrDefaultAsync(),
-                            TruncatedEventType = "Updated Permission"
+                            TruncatedEventType = "Updated Permission",
+                            
 
                         };
 
@@ -70,7 +73,8 @@ namespace UrbanSpork.DataAccess.Projections
                             ForId = permissionGranted.Id,
                             TimeStamp = permissionGranted.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
-                            TruncatedEventType = "Granted Permission"
+                            TruncatedEventType = "Granted Permission",
+                            Reason = permission.Value.Reason,
 
                         };
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionGranted.ForId).Select(r => r.FirstName +" " + r.LastName).SingleOrDefaultAsync();
@@ -92,7 +96,7 @@ namespace UrbanSpork.DataAccess.Projections
                             TimeStamp = permissionRevoked.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
                             TruncatedEventType = "Revoked Permission",
-
+                            Reason = permission.Value.Reason,
                         };
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionRevoked.ForId).Select(r => r.FirstName + " " + r.LastName).SingleOrDefaultAsync();
 
@@ -111,7 +115,8 @@ namespace UrbanSpork.DataAccess.Projections
                             ForId = permissionDenied.Id,
                             TimeStamp = permissionDenied.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
-                            TruncatedEventType = "Denied Permission"
+                            TruncatedEventType = "Denied Permission",
+                            Reason = permission.Value.Reason,
 
                         };
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionDenied.ForId).Select(r => r.FirstName + " " + r.LastName).SingleOrDefaultAsync();
