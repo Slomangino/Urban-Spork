@@ -165,6 +165,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetApproverActicityProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             //Query Handlers
@@ -175,7 +176,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetUserManagementProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<GetApproverActivityProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         // Configure is where you add middleware. This is called after

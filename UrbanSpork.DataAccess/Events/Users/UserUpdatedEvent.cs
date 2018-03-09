@@ -7,7 +7,6 @@ namespace UrbanSpork.DataAccess.Events.Users
     public class UserUpdatedEvent : IEvent
     {
         public Guid Id { get; set; }
-        public Guid ApproverID { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
 
@@ -28,7 +27,7 @@ namespace UrbanSpork.DataAccess.Events.Users
             Position = dto.Position;
             Department = dto.Department;
             IsAdmin = dto.IsAdmin;
-            ApproverID = dto.ApproverID;
+            
         }
     }
 }

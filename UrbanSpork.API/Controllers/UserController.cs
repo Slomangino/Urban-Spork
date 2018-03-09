@@ -55,6 +55,18 @@ namespace UrbanSpork.API.Controllers
             return await result;
         }
 
+        [HttpGet("getapproveractivity")]
+        public async Task<List<ApproverActivityProjection>> GetApproverAtivityProjection([FromQuery]ApproverActivityFilterCriteria filterCriteria)
+        {
+            var query = new GetApproverActicityProjectionQuery
+            {
+                FilterCriteria = filterCriteria,
+            };
+
+            var result = _queryProcessor.Process(query);
+            return await result;
+        }
+
         [HttpGet("getusermanagementprojection")]
         public async Task<List<UserManagementDTO>> GetUserList([FromQuery]UserFilterCriteria filter)
         {
