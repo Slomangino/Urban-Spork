@@ -105,6 +105,7 @@ namespace UrbanSpork.API.Controllers
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE SystemDropdownProjection");
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE UserManagementProjection");
             await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE ApproverActivityProjection");
+            await _context.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE SystemActivityProjection");
         }
     }
 }
