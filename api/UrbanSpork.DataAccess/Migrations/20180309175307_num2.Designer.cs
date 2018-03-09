@@ -11,8 +11,8 @@ using UrbanSpork.DataAccess.DataAccess;
 namespace UrbanSpork.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDbContext))]
-    [Migration("20180308182020_master")]
-    partial class master
+    [Migration("20180309175307_num2")]
+    partial class num2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,28 @@ namespace UrbanSpork.DataAccess.Migrations
                     b.HasKey("Id", "Version");
 
                     b.ToTable("events");
+                });
+
+            modelBuilder.Entity("UrbanSpork.DataAccess.Projections.ApproverActivityProjection", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ApproverId");
+
+                    b.Property<string>("ForFullName");
+
+                    b.Property<Guid>("ForId");
+
+                    b.Property<string>("PermissionName");
+
+                    b.Property<DateTime>("TimeStamp");
+
+                    b.Property<string>("TruncatedEventType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("approveractivityprojection");
                 });
 
             modelBuilder.Entity("UrbanSpork.DataAccess.Projections.PendingRequestsProjection", b =>
@@ -61,6 +83,8 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("ForLastName");
 
+                    b.Property<string>("PermissionName");
+
                     b.HasKey("PermissionId", "ForId", "RequestType");
 
                     b.ToTable("pendingrequestsprojection");
@@ -83,6 +107,33 @@ namespace UrbanSpork.DataAccess.Migrations
                     b.HasKey("PermissionId");
 
                     b.ToTable("permissiondetailprojection");
+                });
+
+            modelBuilder.Entity("UrbanSpork.DataAccess.Projections.SystemActivityProjection", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ByFullName");
+
+                    b.Property<Guid>("ById");
+
+                    b.Property<string>("EventType");
+
+                    b.Property<string>("ForFullName");
+
+                    b.Property<Guid>("ForId");
+
+                    b.Property<Guid>("PermissionId");
+
+                    b.Property<string>("PermissionName");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("systemactivityprojection");
                 });
 
             modelBuilder.Entity("UrbanSpork.DataAccess.Projections.SystemDropdownProjection", b =>
