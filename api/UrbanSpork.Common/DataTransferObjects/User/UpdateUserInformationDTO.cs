@@ -6,7 +6,6 @@ namespace UrbanSpork.Common.DataTransferObjects.User
 {
     public class UpdateUserInformationDTO
     {
-        
         public  Guid ForID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

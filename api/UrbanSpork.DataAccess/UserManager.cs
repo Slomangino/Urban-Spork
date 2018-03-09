@@ -35,7 +35,7 @@ namespace UrbanSpork.DataAccess
             return userDTO;
         }
 
-        public async Task<UserDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
+        public async Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
 
@@ -47,7 +47,7 @@ namespace UrbanSpork.DataAccess
 
             await _session.Commit();
 
-            var result = Mapper.Map<UserDTO>(userAgg);
+            var result = Mapper.Map<UpdateUserInformationDTO>(userAgg);
 
             return result;
         }

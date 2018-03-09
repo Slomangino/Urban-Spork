@@ -85,7 +85,7 @@ namespace UrbanSpork.API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input)
+        public async Task<UpdateUserInformationDTO> UpdateUser([FromBody] UpdateUserInformationDTO input)
         {
             var message = new UpdateSingleUserCommand(input.ForID, input);
             var result = await _commandDispatcher.Execute(message);

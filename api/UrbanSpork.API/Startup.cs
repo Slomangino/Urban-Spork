@@ -52,6 +52,8 @@ namespace UrbanSpork.API
                             JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
                                 src.PermissionList)))
                     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+                cfg.CreateMap<UserAggregate, UpdateUserInformationDTO>()
+                    .ForMember(dest => dest.ForID, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<PermissionAggregate, PermissionDTO>();
                 cfg.CreateMap<PermissionDTO, PermissionAggregate>();
                 cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
@@ -85,7 +87,8 @@ namespace UrbanSpork.API
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials() );
+                        .AllowCredentials()
+                      );
             });
             services.AddMvc();
         }
