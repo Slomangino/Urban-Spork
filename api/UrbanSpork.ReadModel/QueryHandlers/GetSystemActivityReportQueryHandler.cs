@@ -42,24 +42,36 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                                       || a.PermissionName.ToLower().Contains(criteria.SearchTerms));
             }
 
-            if (criteria.SortDirection == "ASC")
-            {
-                if (criteria.SortField == "ForFullName") query = query.OrderBy(a => a.ForFullName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "ByFullName") query = query.OrderBy(a => a.ByFullName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "PermissionName") query = query.OrderBy(a => a.PermissionName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "Timestamp") query = query.OrderBy(a => a.Timestamp);
-            }
-            else if (criteria.SortDirection == "DSC")
+            if (criteria.SortDirection == "DSC")
             {
                 if (criteria.SortField == "ForFullName") query = query.OrderByDescending(a => a.ForFullName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "ByFullName") query = query.OrderByDescending(a => a.ByFullName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "PermissionName") query = query.OrderByDescending(a => a.PermissionName).ThenBy(a => a.Timestamp);
-                if (criteria.SortField == "Timestamp") query = query.OrderByDescending(a => a.Timestamp);
+                else if (criteria.SortField == "ByFullName") query = query.OrderByDescending(a => a.ByFullName).ThenBy(a => a.Timestamp);
+                else if (criteria.SortField == "PermissionName") query = query.OrderByDescending(a => a.PermissionName).ThenBy(a => a.Timestamp);
+                else if (criteria.SortField == "Timestamp") query = query.OrderByDescending(a => a.Timestamp);
+                else query = query.OrderByDescending(a => a.Timestamp);
+            }
+            else if(criteria.SortDirection == "ASC")
+            {
+                if (criteria.SortField == "ForFullName") query = query.OrderBy(a => a.ForFullName).ThenBy(a => a.Timestamp);
+                else if (criteria.SortField == "ByFullName") query = query.OrderBy(a => a.ByFullName).ThenBy(a => a.Timestamp);
+                else if (criteria.SortField == "PermissionName") query = query.OrderBy(a => a.PermissionName).ThenBy(a => a.Timestamp);
+                else if (criteria.SortField == "Timestamp") query = query.OrderBy(a => a.Timestamp);
+                else query = query.OrderBy(a => a.Timestamp);
             }
             else
             {
                 query = query.OrderByDescending(a => a.Timestamp);
             }
+
+            //return all actions within a range, default is time 0 and returns all events
+            query = query.Where(a => a.Timestamp.ToLocalTime() >= criteria.StartDate);
+           
+            //when querying, enter a local time, this will take care of conversion from utc to local
+            if (criteria.EndDate != null)
+            {
+                query = query.Where(a => a.Timestamp.ToLocalTime() <= criteria.EndDate);
+            }
+            
 
             return query;
         }

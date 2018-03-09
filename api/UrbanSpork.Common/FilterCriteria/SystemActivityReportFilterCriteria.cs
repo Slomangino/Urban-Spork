@@ -14,5 +14,9 @@ namespace UrbanSpork.Common.FilterCriteria
         public string SortField { get; set; } = "timestamp";
 
         public bool EnablePaging { get; set; } = false;
+
+        public DateTime StartDate { get; set; } = new DateTime();
+
+        public DateTime? EndDate { get; set; } = null;
     }
 }
