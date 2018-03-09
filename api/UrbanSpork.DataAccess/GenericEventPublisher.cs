@@ -13,6 +13,7 @@ namespace UrbanSpork.DataAccess
         private readonly PendingRequestsProjection _pendingRequestsProjection;
         private readonly SystemDropdownProjection _systemDropdownProjection;
         private readonly UserManagementProjection _userManagementProjection;
+        private readonly ApproverActivityProjection _approverActivityProjection;
         private readonly SystemActivityProjection _systemActivityProjection;
 
         public GenericEventPublisher(
@@ -21,7 +22,8 @@ namespace UrbanSpork.DataAccess
             PendingRequestsProjection pendingRequestsProjection,
             SystemDropdownProjection systemDropdownProjection, 
             UserManagementProjection userManagementProjection,
-            SystemActivityProjection systemActivityProjection
+            SystemActivityProjection systemActivityProjection,
+            ApproverActivityProjection approverActivityProjection
             )
         {
             _userDetailProjection = userDetailProjection;
@@ -29,6 +31,7 @@ namespace UrbanSpork.DataAccess
             _pendingRequestsProjection = pendingRequestsProjection;
             _userManagementProjection = userManagementProjection;
             _systemDropdownProjection = systemDropdownProjection;
+            _approverActivityProjection = approverActivityProjection;
             _systemActivityProjection = systemActivityProjection;
         }
 
@@ -40,6 +43,7 @@ namespace UrbanSpork.DataAccess
             await _pendingRequestsProjection.ListenForEvents(@event);
             await _systemDropdownProjection.ListenForEvents(@event);
             await _userManagementProjection.ListenForEvents(@event);
+            await _approverActivityProjection.ListenForEvents(@event);
             await _systemActivityProjection.ListenForEvents(@event);
         }
     }

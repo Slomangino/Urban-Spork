@@ -94,7 +94,7 @@ namespace UrbanSpork.API
         // here will override registrations made in ConfigureServices.
         // Don't build the container; that gets done for you. If you
         // need a reference to the container, you need to use the
-        // "Without ConfigureContainer" mechanism shown later.
+        // "Without ConfigureContainer" mechanism.
         public void ConfigureContainer(ContainerBuilder builder)
         {
             //Utility
@@ -121,8 +121,8 @@ namespace UrbanSpork.API
             builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserManagementProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SystemDropdownProjection>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ApproverActivityProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SystemActivityProjection>().AsSelf().InstancePerLifetimeScope();
-
 
 
             //Commands
@@ -170,6 +170,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPermissionByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetApproverActicityProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPendingRequestsProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemActivityReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
@@ -183,6 +184,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetUserManagementProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDropDownProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetApproverActivityProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPendingRequestsProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemActivityReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 

@@ -56,6 +56,18 @@ namespace UrbanSpork.API.Controllers
             return await result;
         }
 
+        [HttpGet("getapproveractivity")]
+        public async Task<List<ApproverActivityProjection>> GetApproverAtivityProjection([FromQuery]ApproverActivityFilterCriteria filterCriteria)
+        {
+            var query = new GetApproverActicityProjectionQuery
+            {
+                FilterCriteria = filterCriteria,
+            };
+
+            var result = _queryProcessor.Process(query);
+            return await result;
+        }
+
         [HttpGet("getusermanagementprojection")]
         public async Task<List<UserManagementDTO>> GetUserList([FromQuery]UserFilterCriteria filter)
         {
@@ -80,10 +92,10 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("update/{Id}")]
-        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input, Guid id)
+        [HttpPut("update")]
+        public async Task<UserDTO> UpdateUser([FromBody] UpdateUserInformationDTO input)
         {
-            var message = new UpdateSingleUserCommand(id, input);
+            var message = new UpdateSingleUserCommand(input.ForID, input);
             var result = await _commandDispatcher.Execute(message);
             return result;
         }

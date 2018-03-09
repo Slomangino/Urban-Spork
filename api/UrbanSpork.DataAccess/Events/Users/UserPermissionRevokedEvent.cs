@@ -21,15 +21,18 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserPermissionRevokedEvent(RevokeUserPermissionDTO dto)
         {
+            
             ForId = dto.ForId;
             ById = dto.ById;
             foreach (var permission in dto.PermissionsToRevoke)
             {
+                var reason = String.IsNullOrWhiteSpace(permission.Value.Reason) ?  "Reason Not Specified":  permission.Value.Reason;
+
                 var p = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = permission.Value.Reason, //IDK?
+                    Reason = reason, //IDK?
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId

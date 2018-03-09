@@ -27,6 +27,7 @@ namespace UrbanSpork.DataAccess.Events.Users
             Position = dto.Position;
             Department = dto.Department;
             IsAdmin = dto.IsAdmin;
+            
         }
     }
 }

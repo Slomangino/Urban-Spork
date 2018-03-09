@@ -20,11 +20,15 @@ namespace UrbanSpork.DataAccess.Events.Users
         {
             foreach (var request in dto.Requests)
             {
+                var reason = String.IsNullOrWhiteSpace(dto.Requests[request.Key].Reason)
+                    ? "Reason Not Specified"
+                    : dto.Requests[request.Key].Reason;
+
                 var r = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = true,
-                    Reason = dto.Requests[request.Key].Reason,
+                    Reason = reason,
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
