@@ -2,10 +2,10 @@
 *~
 
 #dont import DB Migrations
-UrbanSpork.DataAccess/Migrations/
+api/UrbanSpork.DataAccess/Migrations/
 
 # dont sync memory caching locations for cqrslite
-CQRSLite/obj/project.assets.json
+api/CQRSLite/obj/project.assets.json
 
 # build
 [Oo]bj/
