@@ -82,6 +82,8 @@ namespace UrbanSpork.DataAccess.Migrations
 
                     b.Property<string>("ForLastName");
 
+                    b.Property<string>("PermissionName");
+
                     b.HasKey("PermissionId", "ForId", "RequestType");
 
                     b.ToTable("pendingrequestsprojection");
