@@ -48,6 +48,14 @@ namespace UrbanSpork.API.Controllers
             return await result;
         }
 
+        [HttpGet("offboard")]
+        public async Task<OffBoardUserDTO> GetOffBoardingPermissionsById(Guid id)
+        {
+            var query = new GetOffboardUserPermissionsQuery(id);
+            var result = _queryProcessor.Process(query);
+            return await result;
+        }
+
         [HttpGet("getapproveractivity")]
         public async Task<List<ApproverActivityProjection>> GetApproverAtivityProjection([FromQuery]ApproverActivityFilterCriteria filterCriteria)
         {
@@ -107,7 +115,7 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
-
+        #region User Permission Operations
         [HttpPut("requestPermissions")]
         public async Task<UserDTO> RequestPermissions([FromBody] RequestUserPermissionsDTO input)
         {
@@ -139,5 +147,6 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+        #endregion
     }
 }
