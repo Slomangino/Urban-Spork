@@ -35,6 +35,7 @@ namespace UrbanSpork.DataAccess.Projections
         public string ByFullName { get; set; }
         public string RequestType { get; set; }
         public string PermissionName { get; set; }
+        public string Reason { get; set; }
 
         [Column(TypeName = "timestamp")]
         public DateTime DateOfRequest { get; set; }
@@ -46,13 +47,15 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionsRequestedEvent upr:
                     foreach (var r in upr.Requests)
                     {
+                       
                         var row = new PendingRequestsProjection
                         {
                             PermissionId = r.Key,
                             ForId = r.Value.RequestedFor,
                             ById = r.Value.RequestedBy,               
                             RequestType = "Requested Permission",
-                            DateOfRequest = r.Value.RequestDate
+                            DateOfRequest = r.Value.RequestDate,
+                            Reason = r.Value.Reason,
                         };
 
                         row.ByFirstName = await _context.UserDetailProjection.Where(a => a.UserId == row.ById).Select(p => p.FirstName).SingleOrDefaultAsync();
