@@ -45,13 +45,19 @@ namespace UrbanSpork.API
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserAggregate, UserDTO>();
+
                 cfg.CreateMap<UserDTO, UserAggregate>();
+
                 cfg.CreateMap<UserDetailProjection, UserDetailProjectionDTO>()
                     .ForMember(dest => dest.PermissionList,
                         opt => opt.MapFrom(src =>
                             JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
                                 src.PermissionList)))
                     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+
+                cfg.CreateMap<UserDetailProjection, LoginUserDTO>()
+                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+
                 cfg.CreateMap<UserDetailProjection, OffBoardUserDTO>()
                     .ForMember(dest => dest.PermissionList,
                         opt => opt.MapFrom(src =>
@@ -182,6 +188,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPendingRequestsProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemActivityReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetOffboardUserPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetLoginUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             //Query Handlers
@@ -195,7 +202,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPendingRequestsProjectionQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemActivityReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetOffboardUserPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<GetLoginUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
         }
 
