@@ -127,7 +127,8 @@ namespace UrbanSpork.API
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UrbanDbContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
+            builder.RegisterType<DepartmentManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DepartmentAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             // Projections
@@ -157,7 +158,10 @@ namespace UrbanSpork.API
             builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            
+            //Departments
+            builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+
             //Command Handlers
             //users
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -175,7 +179,8 @@ namespace UrbanSpork.API
             builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-
+            //department
+            builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query
             builder.RegisterType<GetUserDetailByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
