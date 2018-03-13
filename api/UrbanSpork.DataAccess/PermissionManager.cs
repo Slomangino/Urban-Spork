@@ -66,10 +66,11 @@ namespace UrbanSpork.DataAccess
                         //get the aggregates for those entities
                         var userAgg = await _session.Get<UserAggregate>(user.UserId);
                         //revoke the permission through each aggregate, using a new dto
-                        userAgg.RevokePermission(new RevokeUserPermissionDTO
+                        //this will circumvent the usermanager and each aggregate will revoke its own access
+                        userAgg.RevokePermission(userAgg, new RevokeUserPermissionDTO
                         {
                             ForId = userAgg.Id,
-                            ById = Guid.Empty,
+                            ById = userAgg.Id,
                             PermissionsToRevoke = new Dictionary<Guid, PermissionDetails>
                             {
                                 { id, new PermissionDetails { Reason = "Permission was Disabled." } }

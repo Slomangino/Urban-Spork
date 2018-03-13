@@ -80,10 +80,13 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserPermissionGrantedEvent(dto));
         }
 
-        public void RevokePermission(RevokeUserPermissionDTO dto)
+        public void RevokePermission(UserAggregate byAgg, RevokeUserPermissionDTO dto)
         {
-            //business Logic here!
-            ApplyChange(new UserPermissionRevokedEvent(dto));
+            //Users are allowed to revoke their own permissions, this is because permissionDisabledEvent requires it.
+            if (byAgg.IsAdmin || this == byAgg)
+            {
+                ApplyChange(new UserPermissionRevokedEvent(dto));
+            }
         }
 
         private void Apply(UserCreatedEvent @event)
@@ -123,7 +126,7 @@ namespace UrbanSpork.DataAccess
         {
             foreach (var request in @event.Requests)
             {
-                PermissionList[request.Key] = request.Value; //add if not there, update if it is. Losing the DateCreated for some reason.
+                PermissionList[request.Key] = request.Value; 
             }
         }
 
