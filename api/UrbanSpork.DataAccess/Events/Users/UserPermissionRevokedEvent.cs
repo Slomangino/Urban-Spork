@@ -32,7 +32,7 @@ namespace UrbanSpork.DataAccess.Events.Users
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = reason, //IDK?
+                    Reason = reason, 
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId

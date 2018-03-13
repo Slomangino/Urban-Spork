@@ -10,6 +10,7 @@ using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.DataAccess.Repositories;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess
@@ -121,10 +122,27 @@ namespace UrbanSpork.DataAccess
 
         public async Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input)
         {
-            var userAgg = await _session.Get<UserAggregate>(input.ForId);
-            userAgg.RevokePermission(input);
-            await _session.Commit();
-            return Mapper.Map<UserDTO>(userAgg);
+            var forAgg = await _session.Get<UserAggregate>(input.ForId);
+            var byAgg = await _session.Get<UserAggregate>(input.ById);
+
+            input.PermissionsToRevoke = VerifyRequests(
+                forAgg,
+                byAgg,
+                input.PermissionsToRevoke,
+                new List<string> {
+                    typeof(UserPermissionsRequestedEvent).FullName,
+                    typeof(UserPermissionRevokedEvent).FullName,
+                    typeof(UserPermissionRequestDeniedEvent).FullName
+                });
+
+            if (input.PermissionsToRevoke.Any())
+            {
+                forAgg.RevokePermission(byAgg, input);
+                await _session.Commit();
+            }
+
+            
+            return Mapper.Map<UserDTO>(forAgg);
         }
 
         private Dictionary<Guid, PermissionDetails> VerifyRequests(UserAggregate forAgg, UserAggregate byAgg, Dictionary<Guid, PermissionDetails> requests, List<string> eventTypesToRemove)
@@ -134,8 +152,10 @@ namespace UrbanSpork.DataAccess
             foreach (var request in requests)
             {
                 result[request.Key] = request.Value;
+                //if forAgg's permission list contains a definition for that permission
                 if (forAgg.PermissionList.ContainsKey(request.Key))
                 {
+                    // if the definition of that permission is one of the eventTypes to remove, remove it from requests.
                     if (eventTypesToRemove.Contains(
                         JsonConvert.DeserializeObject<string>(forAgg.PermissionList[request.Key].EventType)))
                     {
@@ -143,10 +163,19 @@ namespace UrbanSpork.DataAccess
                     }
                     else
                     {
+                        //(admins can override eventTypes) Otherwise, if they are not an admin, remove it from requests
                         if (!byAgg.IsAdmin)
                         {
                             markedForRemoval.Add(request.Key);
                         }
+                    }
+                }
+                else //any user should only be able to request or grant permissions that are not already in the forAgg's permission list
+                {
+                    if (request.Value.EventType != typeof(UserPermissionsRequestedEvent).FullName &&
+                        request.Value.EventType != typeof(UserPermissionGrantedEvent).FullName)
+                    {
+                        markedForRemoval.Add(request.Key);
                     }
                 }
             }
