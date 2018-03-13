@@ -36,7 +36,6 @@ namespace UrbanSpork.DataAccess.Events.Users
             IsAdmin = dto.IsAdmin;
             IsActive = dto.IsActive;
             PermissionList = dto.PermissionList;
-            TimeStamp = DateTime.Now;
         }
     }
 }

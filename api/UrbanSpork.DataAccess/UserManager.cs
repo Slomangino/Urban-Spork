@@ -30,7 +30,7 @@ namespace UrbanSpork.DataAccess
             var userAgg = UserAggregate.CreateNewUser(input);
             await _session.Add(userAgg);
             await _session.Commit();
-            var userDTO = Mapper.Map<UserDTO>(userAgg);
+            var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
 
             return userDTO;
         }
