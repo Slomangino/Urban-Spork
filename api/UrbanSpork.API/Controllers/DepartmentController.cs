@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using UrbanSpork.Common.DataTransferObjects.Department;
 using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.WriteModel;
+using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
@@ -22,13 +23,6 @@ namespace UrbanSpork.API.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        //[HttpGet("{Id}")]
-        //public async Task<DepartmentDTO> Get(Guid id)
-        //{
-        //    var query = new GetDepartmentByIdQuery(id);
-        //    var result = await _queryProcessor.Process(query);
-        //    return result;
-        //}
 
         //[HttpGet]
         //public async Task<List<DepartmentDTO>> GetAllDepartments()
@@ -39,36 +33,24 @@ namespace UrbanSpork.API.Controllers
         //}
 
         [HttpPost("create")]
-        public async Task<DepartmentDTO> CreateDepartment([FromBody] CreateDepartmentDTO input)
+        public async Task<DepartmentProjection> CreateDepartment([FromBody] CreateDepartmentDTO input)
         {
             var command = new CreateDepartmentCommand(input);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
 
-        //[HttpPut("update")]
-        //public async Task<DepartmentDTO> UpdatePermission([FromBody] UpdateDepartmentDTO input)
+        //[HttpPut("remove")]
+        //public async Task<DepartmentProjection> RemoveDepartment(Guid input)
         //{
-        //    var command = new UpdatePermissionInfoCommand(input);
+        //    var command = new RemoveDepartmentCommand();
         //    var result = await _commandDispatcher.Execute(command);
         //    return result;
         //}
 
-        //[HttpPut("disable/{id}")]
-        //public async Task<DepartmentDTO> DisablePermission(Guid id)
-        //{
-        //    var command = new DisablePermissionCommand(id);
-        //    var result = await _commandDispatcher.Execute(command);
-        //    return result;
-        //}
+        
 
-        //[HttpPut("enable/{id}")]
-        //public async Task<DepartmentDTO> EnablePermission(Guid id)
-        //{
-        //    var command = new EnableDepartmentCommand(id);
-        //    var result = await _commandDispatcher.Execute(command);
-        //    return result;
-        //}
+      
 
     }
 }

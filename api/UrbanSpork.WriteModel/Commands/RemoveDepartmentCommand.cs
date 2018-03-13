@@ -7,13 +7,13 @@ using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.WriteModel.Commands
 {
-    public class CreateDepartmentCommand : ICommand<DepartmentProjection>
+    public class RemoveDepartmentCommand : ICommand<DepartmentProjection>
     {
-        public CreateDepartmentDTO Input { get; set; }
+        public Guid _id;
 
-        public CreateDepartmentCommand(CreateDepartmentDTO input)
+        public RemoveDepartmentCommand(Guid id)
         {
-            Input = input;
+            _id = id;
         }
     }
 }

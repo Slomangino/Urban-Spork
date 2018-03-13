@@ -7,6 +7,6 @@ namespace UrbanSpork.Common.DataTransferObjects.Department
     public class CreateDepartmentDTO
     {
         public string Name { get; set; }
-        public bool IsActive { get; set; }
+       
     }
 }

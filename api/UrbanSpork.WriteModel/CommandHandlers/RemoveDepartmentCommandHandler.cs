@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-
+using UrbanSpork.Common.DataTransferObjects.Department;
 using UrbanSpork.CQRS.WriteModel.CommandHandler;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
@@ -11,25 +11,27 @@ using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.WriteModel.CommandHandlers
 {
-    public class CreateDepartmentCommandHandler : ICommandHandler<CreateDepartmentCommand, DepartmentProjection>
+    public class RemoveDepartmentCommandHandler : ICommandHandler<RemoveDepartmentCommand, DepartmentProjection>
     {
         private readonly UrbanDbContext _context;
 
-        public CreateDepartmentCommandHandler(UrbanDbContext context)
+        public RemoveDepartmentCommandHandler(UrbanDbContext context)
         {
             _context = context;
         }
 
-        public async Task<DepartmentProjection> Handle(CreateDepartmentCommand command)
+        public async Task<DepartmentProjection> Handle(RemoveDepartmentCommand command)
         {
             var department = new DepartmentProjection
             {
-                Name = command.Input.Name,
+                Id = command._id,
             };
-
-            await _context.DepartmentProjection.AddAsync(department);
+            _context.DepartmentProjection.Attach(department);
+            _context.DepartmentProjection.Remove(department);
+            await _context.SaveChangesAsync();
 
             return department;
         }
     }
 }
+

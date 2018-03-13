@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace UrbanSpork.Common.DataTransferObjects.Department
+namespace UrbanSpork.DataAccess.Projections
 {
-    public class UpdateDepartmentDTO
+    public class DepartmentProjection
     {
+        [Key]
         public Guid Id { get; set; }
-        public Guid UpdatedById { get; set; }
         public string Name { get; set; }
+        
     }
 }
