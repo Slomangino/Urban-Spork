@@ -45,19 +45,15 @@ namespace UrbanSpork.API
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UserAggregate, UserDTO>();
-
                 cfg.CreateMap<UserDTO, UserAggregate>();
-
                 cfg.CreateMap<UserDetailProjection, UserDetailProjectionDTO>()
                     .ForMember(dest => dest.PermissionList,
                         opt => opt.MapFrom(src =>
                             JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
                                 src.PermissionList)))
                     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
-
                 cfg.CreateMap<UserDetailProjection, LoginUserDTO>()
                     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
-
                 cfg.CreateMap<UserDetailProjection, OffBoardUserDTO>()
                     .ForMember(dest => dest.PermissionList,
                         opt => opt.MapFrom(src =>
