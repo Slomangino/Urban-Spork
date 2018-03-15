@@ -26,9 +26,17 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             {
                 Id = command._id,
             };
-            _context.DepartmentProjection.Attach(department);
-            _context.DepartmentProjection.Remove(department);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                _context.DepartmentProjection.Remove(department);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+            }
+          
 
             return department;
         }

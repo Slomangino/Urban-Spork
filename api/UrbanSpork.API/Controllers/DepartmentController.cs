@@ -40,17 +40,17 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        //[HttpPut("remove")]
-        //public async Task<DepartmentProjection> RemoveDepartment(Guid input)
-        //{
-        //    var command = new RemoveDepartmentCommand();
-        //    var result = await _commandDispatcher.Execute(command);
-        //    return result;
-        //}
+        [HttpPut("remove")]
+        public async Task<DepartmentProjection> RemoveDepartment(Guid id)
+        {
+            var command = new RemoveDepartmentCommand(id);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
 
-        
 
-      
+
+
 
     }
 }

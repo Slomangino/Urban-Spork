@@ -26,8 +26,14 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             {
                 Name = command.Input.Name,
             };
-
-            await _context.DepartmentProjection.AddAsync(department);
+            try
+            {
+                await _context.DepartmentProjection.AddAsync(department);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException);
+            }
 
             return department;
         }
