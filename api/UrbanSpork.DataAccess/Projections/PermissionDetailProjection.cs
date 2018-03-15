@@ -54,7 +54,7 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.PermissionDetailProjection.Update(perm);
                     break;
-                case PermissionDiabledEvent pd:
+                case PermissionDisabledEvent pd:
                     perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pd.Id);
                     _context.Attach(perm);
 

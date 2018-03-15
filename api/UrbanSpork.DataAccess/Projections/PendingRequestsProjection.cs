@@ -74,7 +74,7 @@ namespace UrbanSpork.DataAccess.Projections
                         }
                     }
                     break;
-                case PermissionDiabledEvent pd:
+                case PermissionDisabledEvent pd:
                     var list = _context.PendingRequestsProjection.Where(a => a.PermissionId == pd.Id);
                     _context.PendingRequestsProjection.RemoveRange(list);
                     break;
