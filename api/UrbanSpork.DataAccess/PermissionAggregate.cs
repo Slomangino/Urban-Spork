@@ -34,7 +34,7 @@ namespace UrbanSpork.DataAccess
 
         public void DisablePermission()
         {
-            ApplyChange(new PermissionDiabledEvent());
+            ApplyChange(new PermissionDisabledEvent());
         }
 
         public void EnablePermission()
@@ -56,7 +56,7 @@ namespace UrbanSpork.DataAccess
             Description = @event.Description;
         }
 
-        private void Apply(PermissionDiabledEvent @event)
+        private void Apply(PermissionDisabledEvent @event)
         {
             IsActive = @event.IsActive;
         }

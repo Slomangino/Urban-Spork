@@ -6,14 +6,14 @@ using UrbanSpork.CQRS.Events;
 
 namespace UrbanSpork.DataAccess.Events
 {
-    public class PermissionDiabledEvent : IEvent
+    public class PermissionDisabledEvent : IEvent
     {
         public Guid Id { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool IsActive { get; set; }
 
-        public PermissionDiabledEvent()
+        public PermissionDisabledEvent()
         {
             IsActive = false;
         }
