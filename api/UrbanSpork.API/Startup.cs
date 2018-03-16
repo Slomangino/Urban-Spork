@@ -155,7 +155,11 @@ namespace UrbanSpork.API
             //Department
             builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            
+
+            //Position
+            builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
             //Command Handlers
             //users
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -176,7 +180,10 @@ namespace UrbanSpork.API
             //department
             builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-         
+
+            //Position
+            builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query
             builder.RegisterType<GetUserDetailByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -191,6 +198,9 @@ namespace UrbanSpork.API
             builder.RegisterType<GetOffboardUserPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetLoginUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetDepartmentsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPositionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPositionsByDepartmentNameQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
 
             //Query Handlers
@@ -206,6 +216,9 @@ namespace UrbanSpork.API
             builder.RegisterType<GetOffboardUserPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetLoginUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetDepartmentsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPositionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPositionsByDepartmentNameQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            
 
         }
 
