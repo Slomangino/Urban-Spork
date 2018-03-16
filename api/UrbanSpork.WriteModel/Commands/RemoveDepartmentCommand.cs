@@ -9,11 +9,11 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class RemoveDepartmentCommand : ICommand<DepartmentProjection>
     {
-        public Guid _id;
+        public Guid id;
 
-        public RemoveDepartmentCommand(Guid id)
+        public RemoveDepartmentCommand(Guid ID)
         {
-            _id = id;
+            id = ID;
         }
     }
 }

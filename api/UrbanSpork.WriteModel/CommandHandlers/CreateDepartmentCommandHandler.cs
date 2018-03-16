@@ -20,7 +20,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             _context = context;
         }
 
-        public async Task<DepartmentProjection> Handle(CreateDepartmentCommand command)
+        public Task<DepartmentProjection> Handle(CreateDepartmentCommand command)
         {
             var department = new DepartmentProjection
             {
@@ -28,14 +28,15 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             };
             try
             {
-                await _context.DepartmentProjection.AddAsync(department);
+                 _context.DepartmentProjection.Add(department);
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.InnerException);
             }
 
-            return department;
+            return  Task.FromResult(department);
         }
     }
 }

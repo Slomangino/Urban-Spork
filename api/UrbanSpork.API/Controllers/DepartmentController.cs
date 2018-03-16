@@ -7,6 +7,7 @@ using UrbanSpork.Common.DataTransferObjects.Department;
 using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.DataAccess.Projections;
+using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 
 namespace UrbanSpork.API.Controllers
@@ -24,13 +25,13 @@ namespace UrbanSpork.API.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<List<DepartmentDTO>> GetAllDepartments()
-        //{
-        //    var query = new GetAllDepartmentsQuery();
-        //    var result = await _queryProcessor.Process(query);
-        //    return result;
-        //}
+        [HttpGet]
+        public async Task<List<DepartmentProjection>> GetAllDepartments()
+        {
+            var query = new GetDepartmentsQuery();
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
 
         [HttpPost("create")]
         public async Task<DepartmentProjection> CreateDepartment([FromBody] CreateDepartmentDTO input)

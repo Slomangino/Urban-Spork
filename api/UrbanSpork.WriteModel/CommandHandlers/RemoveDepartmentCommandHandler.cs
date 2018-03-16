@@ -24,7 +24,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
         {
             var department = new DepartmentProjection
             {
-                Id = command._id,
+                Id = command.id,
             };
 
             try
