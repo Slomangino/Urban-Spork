@@ -68,10 +68,13 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserPermissionsRequestedEvent(dto));
         }
 
-        public void DenyPermissionRequest(DenyUserPermissionRequestDTO dto)
+        public void DenyPermissionRequest(UserAggregate byAgg, DenyUserPermissionRequestDTO dto)
         {
             //business Logic here!
-            ApplyChange(new UserPermissionRequestDeniedEvent(dto));
+            if (byAgg.IsAdmin) // cant deny permissions if the byAgg is not an admin
+            {
+                ApplyChange(new UserPermissionRequestDeniedEvent(dto));
+            }
         }
 
         public void GrantPermission(GrantUserPermissionDTO dto)
