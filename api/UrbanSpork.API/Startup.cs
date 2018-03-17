@@ -85,18 +85,18 @@ namespace UrbanSpork.API
             // won't get called.
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             
+            //EF config for npgsql
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(
                 options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")), ServiceLifetime.Transient);
 
-            services.AddCors(options =>
+            //Cors config
+            services.AddCors(o => o.AddPolicy("Policy", builder =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                      );
-            });
+                builder.AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod();
+            }));
+
             services.AddMvc();
         }
 
@@ -232,7 +232,8 @@ namespace UrbanSpork.API
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseCors("CorsPolicy");
+            //Cors policy
+            app.UseCors("Policy");
             
             app.UseMvc();
         }
