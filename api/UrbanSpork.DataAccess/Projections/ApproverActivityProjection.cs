@@ -43,7 +43,6 @@ namespace UrbanSpork.DataAccess.Projections
         {
             switch (@event)
             {
-           
                 case PermissionInfoUpdatedEvent permissionInfoUpdated:
                     if(!(permissionInfoUpdated.Id == Guid.Empty))
                     {
@@ -53,22 +52,18 @@ namespace UrbanSpork.DataAccess.Projections
                             TimeStamp = permissionInfoUpdated.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == permissionInfoUpdated.Id).Select(n => n.Name).SingleOrDefaultAsync(),
                             TruncatedEventType = "Updated Permission",
-                            
-
                         };
 
                         await _context.ApproverActivityProjection.AddAsync(approverActivity);
                     }
-
-
                     break;
+
                 case UserPermissionGrantedEvent permissionGranted:
                     foreach(var permission in permissionGranted.PermissionsToGrant)
                     {
                         var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
-
                             ApproverId = permissionGranted.ById,
                             ForId = permissionGranted.Id,
                             TimeStamp = permissionGranted.TimeStamp,
@@ -80,17 +75,15 @@ namespace UrbanSpork.DataAccess.Projections
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionGranted.ForId).Select(r => r.FirstName +" " + r.LastName).SingleOrDefaultAsync();
 
                         await _context.ApproverActivityProjection.AddAsync(approverActivity);
-                       
                     }
-                   
                     break;
+
                 case UserPermissionRevokedEvent permissionRevoked:
                    foreach(var permission in permissionRevoked.PermissionsToRevoke)
                     {
                         var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
-
                             ApproverId = permissionRevoked.ById,
                             ForId = permissionRevoked.Id,
                             TimeStamp = permissionRevoked.TimeStamp,
@@ -101,36 +94,29 @@ namespace UrbanSpork.DataAccess.Projections
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionRevoked.ForId).Select(r => r.FirstName + " " + r.LastName).SingleOrDefaultAsync();
 
                         await _context.ApproverActivityProjection.AddAsync(approverActivity);
-
                     }
                     break;
+
                 case UserPermissionRequestDeniedEvent permissionDenied:
                     foreach (var permission in permissionDenied.PermissionsToDeny)
                     {
                         var PermissionID = permission.Key;
                         var approverActivity = new ApproverActivityProjection
                         {
-
                             ApproverId = permissionDenied.ById,
                             ForId = permissionDenied.Id,
                             TimeStamp = permissionDenied.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
                             TruncatedEventType = "Denied Permission",
-                            Reason = permission.Value.Reason,
-
+                            Reason = permission.Value.Reason
                         };
                         approverActivity.ForFullName = await _context.UserDetailProjection.Where(udp => udp.UserId == permissionDenied.ForId).Select(r => r.FirstName + " " + r.LastName).SingleOrDefaultAsync();
 
                         await _context.ApproverActivityProjection.AddAsync(approverActivity);
-
                     }
                     break;
             }
 
-            
-
-
-          
             await _context.SaveChangesAsync();
         }
     }
