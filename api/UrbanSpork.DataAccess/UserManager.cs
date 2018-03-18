@@ -12,6 +12,7 @@ using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.DataAccess.Emails;
 
 namespace UrbanSpork.DataAccess
 {
@@ -19,11 +20,13 @@ namespace UrbanSpork.DataAccess
     {
         private readonly ISession _session;
         private readonly IUserRepository _userRepository;
-
+        private readonly Email _email = new Email();
+        
         public UserManager(IUserRepository userRepository, ISession session)
         {
             _userRepository = userRepository;
             _session = session;
+           
         }
 
         public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
@@ -33,6 +36,8 @@ namespace UrbanSpork.DataAccess
             await _session.Commit();
             var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
 
+
+            _email.SendUserCreatedMessage(userDTO);
             return userDTO;
         }
 
