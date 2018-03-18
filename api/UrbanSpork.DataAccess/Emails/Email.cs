@@ -20,8 +20,8 @@ namespace UrbanSpork.DataAccess.Emails
             _smtp.UseDefaultCredentials = false;
 
             //sender's address
-            _mail.From = new MailAddress("Thanse80@gmail.com");
-            _smtp.Credentials = new NetworkCredential(_mail.From.ToString(), "Thansen88");
+            _mail.From = new MailAddress("UrbanSporkTesting@gmail.com");
+            _smtp.Credentials = new NetworkCredential(_mail.From.ToString(), "Urban123");
             _smtp.Host = "smtp.gmail.com";
             
 
