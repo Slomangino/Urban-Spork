@@ -13,6 +13,7 @@ namespace UrbanSpork.DataAccess.Events
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public string Image { get; set; }
 
         public PermissionCreatedEvent() { }
 
@@ -21,6 +22,7 @@ namespace UrbanSpork.DataAccess.Events
             Name = dto.Name;
             Description = dto.Description;
             IsActive = dto.IsActive;
+            Image = dto.Image;
         }
     }
 }

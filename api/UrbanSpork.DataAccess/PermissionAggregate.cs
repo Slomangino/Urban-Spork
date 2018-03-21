@@ -13,6 +13,7 @@ namespace UrbanSpork.DataAccess
         public string Description { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime DateCreated { get; private set; }
+        public string Image { get; set; }
 
         private PermissionAggregate() { }
 
@@ -48,12 +49,14 @@ namespace UrbanSpork.DataAccess
             Description = @event.Description;
             IsActive = @event.IsActive;
             DateCreated = @event.TimeStamp;
+            Image = @event.Image;
         }
 
         private void Apply(PermissionInfoUpdatedEvent @event)
         {
             Name = @event.Name;
             Description = @event.Description;
+            Image = @event.Image;
         }
 
         private void Apply(PermissionDisabledEvent @event)
