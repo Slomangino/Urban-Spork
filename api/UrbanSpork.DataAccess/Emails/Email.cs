@@ -1,6 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Mail;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.DataTransferObjects.User;
 
 namespace UrbanSpork.DataAccess.Emails
 {
@@ -29,9 +32,8 @@ namespace UrbanSpork.DataAccess.Emails
 
         public void SendUserCreatedMessage(UserDTO user)
         {           
-           
             //recipient address
-            _mail.To.Add(new MailAddress("tjhansen4821@eagle.fgcu.edu"));
+            _mail.To.Add(new MailAddress(forAgg.Email));
             _mail.Subject = "*******Your New Account********";
             //Formatted mail body
             _mail.IsBodyHtml = true;
@@ -41,6 +43,85 @@ namespace UrbanSpork.DataAccess.Emails
             _smtp.Send(_mail);
         } 
 
-        
+        public void SendPermissionsRequestedMessage(UserAggregate forAgg, List<PermissionAggregate> permissions)
+        {
+            var requestedPermissionNames = new List<string>();
+            foreach (var permission in permissions)
+            {
+                requestedPermissionNames.Add(permission.Name);
+            }
+            
+            var requests = String.Join(", ", requestedPermissionNames.ToArray());
+
+            //recipient address
+            _mail.To.Add(new MailAddress(forAgg.Email));
+            _mail.Subject = "*******Request Submitted********";
+            //Formatted mail body
+            _mail.IsBodyHtml = true;
+            string message = "Hello " + forAgg.FirstName + " " + forAgg.LastName + ", the request(s) for your access to the following: "+ requests + ", was successfully submitted. ";
+            _mail.Body = message;
+            _smtp.Send(_mail);
+        }
+
+        public void SendRequestDeniedMessage(UserAggregate forAgg, List<PermissionAggregate> deniedPermissions)
+        {
+            var PermissionNames = new List<string>();
+            foreach (var permission in deniedPermissions)
+            {
+                PermissionNames.Add(permission.Name);
+            }
+
+            var requests = String.Join(", ", PermissionNames.ToArray());
+
+            //recipient address
+            _mail.To.Add(new MailAddress(forAgg.Email));
+            _mail.Subject = "*******Request Denied********";
+            //Formatted mail body
+            _mail.IsBodyHtml = true;
+            string message = "Hello " + forAgg.FirstName + " " + forAgg.LastName + ", the request(s) for your access to the following: " + requests + ", was denied. ";
+            _mail.Body = message;
+            _smtp.Send(_mail);
+        }
+
+        public void SendPermissionsGrantedMessage(UserAggregate forAgg, List<PermissionAggregate> grantedPermissions)
+        {
+            var PermissionNames = new List<string>();
+            foreach (var permission in grantedPermissions)
+            {
+                PermissionNames.Add(permission.Name);
+            }
+
+            var requests = String.Join(", ", PermissionNames.ToArray());
+
+            //recipient address
+            _mail.To.Add(new MailAddress(forAgg.Email));
+            _mail.Subject = "*******Request Granted********";
+            //Formatted mail body
+            _mail.IsBodyHtml = true;
+            string message = "Hello " + forAgg.FirstName + " " + forAgg.LastName + ", the request(s) for your access to the following: " + requests + ", was granted. ";
+            _mail.Body = message;
+            _smtp.Send(_mail);
+        }
+
+        public void SendPermissionsRevokedMessage(UserAggregate forAgg, List<PermissionAggregate> revokedPermissions)
+        {
+            var PermissionNames = new List<string>();
+            foreach (var permission in revokedPermissions)
+            {
+                PermissionNames.Add(permission.Name);
+            }
+
+            var permissions = String.Join(", ", PermissionNames.ToArray());
+
+            //recipient address
+            _mail.To.Add(new MailAddress(forAgg.Email));
+            _mail.Subject = "*******Request Revoked********";
+            //Formatted mail body
+            _mail.IsBodyHtml = true;
+            string message = "Hello " + forAgg.FirstName + " " + forAgg.LastName + ", the request(s) for your access to the following: " + permissions + ", was revoked. ";
+            _mail.Body = message;
+            _smtp.Send(_mail);
+        }
+
     }
 }

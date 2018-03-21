@@ -105,6 +105,7 @@ namespace UrbanSpork.DataAccess
 
                 forAgg.UserRequestedPermissions(permissionAggregates, input);
                 await _session.Commit();
+                _email.SendPermissionsRequestedMessage(forAgg, permissionAggregates);
             }
             return Mapper.Map<UserDTO>(forAgg);
         }
@@ -133,15 +134,23 @@ namespace UrbanSpork.DataAccess
                 }
                 forAgg.DenyPermissionRequest(byAgg, input);
                 await _session.Commit();
+                _email.SendRequestDeniedMessage(forAgg, permissionAggregates);
             }
             return Mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> GrantUserPermission(GrantUserPermissionDTO input)
         {
+            var permissionAggregates = new List<PermissionAggregate>();
+            foreach (var request in input.PermissionsToGrant)
+            {
+                permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
+            }
+
             var userAgg = await _session.Get<UserAggregate>(input.ForId);
             userAgg.GrantPermission(input);
             await _session.Commit();
+            _email.SendPermissionsGrantedMessage(userAgg, permissionAggregates);
             return Mapper.Map<UserDTO>(userAgg);
         }
 
@@ -162,8 +171,15 @@ namespace UrbanSpork.DataAccess
 
             if (input.PermissionsToRevoke.Any())
             {
+                var permissionAggregates = new List<PermissionAggregate>();
+                foreach (var request in input.PermissionsToRevoke)
+                {
+                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
+                }
+
                 forAgg.RevokePermission(byAgg, input);
                 await _session.Commit();
+                _email.SendPermissionsRevokedMessage(forAgg, permissionAggregates);
             }
 
             
