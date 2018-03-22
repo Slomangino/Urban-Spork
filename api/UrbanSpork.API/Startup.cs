@@ -31,6 +31,7 @@ using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.CommandHandlers;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.DataAccess.Emails;
 
 namespace UrbanSpork.API
 {
@@ -132,7 +133,9 @@ namespace UrbanSpork.API
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UrbanDbContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
-           
+
+            builder.RegisterType<Email>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
             // Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
