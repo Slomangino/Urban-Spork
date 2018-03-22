@@ -19,12 +19,12 @@ namespace UrbanSpork.DataAccess
     {
         private readonly ISession _session;
         private readonly IUserRepository _userRepository;
-        private readonly Email _email = new Email();
+        private readonly IEmail _email;
         
-        public UserManager(IUserRepository userRepository, ISession session)
+        public UserManager(IUserRepository userRepository, ISession session, IEmail email)
         {
             _session = session;
-           
+            _email = email; 
         }
 
         public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)

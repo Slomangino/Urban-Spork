@@ -7,7 +7,7 @@ using UrbanSpork.Common.DataTransferObjects.User;
 
 namespace UrbanSpork.DataAccess.Emails
 {
-    public class Email
+    public class Email : IEmail
     {
         private MailMessage _mail;
         private SmtpClient _smtp;
