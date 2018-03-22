@@ -93,6 +93,14 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        [HttpGet("getSystemReport")]
+        public async Task<List<SystemActivityDTO>> GetSystemReport([FromQuery] SystemReportFilterCriteria filter)
+        {
+            var command = new GetSystemReportQuery(filter);
+            var result = await _queryProcessor.Process(command);
+            return result;
+        }
+
         [HttpPost("createuser")]
         public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
         {
