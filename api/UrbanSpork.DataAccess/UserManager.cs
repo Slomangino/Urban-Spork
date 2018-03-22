@@ -18,10 +18,9 @@ namespace UrbanSpork.DataAccess
     public class UserManager : IUserManager
     {
         private readonly ISession _session;
-        private readonly IUserRepository _userRepository;
         private readonly IEmail _email;
         
-        public UserManager(IUserRepository userRepository, ISession session, IEmail email)
+        public UserManager(ISession session, IEmail email)
         {
             _session = session;
             _email = email; 

@@ -12,11 +12,15 @@ namespace UrbanSpork.DataAccess.Events
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool IsActive { get; set; }
-        
+        public Guid ById { get; set; }
 
-        public PermissionEnabledEvent()
+
+        public PermissionEnabledEvent() { }
+
+        public PermissionEnabledEvent(Guid byId)
         {
             IsActive = true;
+            ById = byId;
         }
     }
 }

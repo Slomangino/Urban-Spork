@@ -10,7 +10,7 @@ namespace UrbanSpork.DataAccess
     {
         Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input);
         Task<PermissionDTO> UpdatePermissionInfo(UpdatePermissionInfoDTO input);
-        Task<PermissionDTO> DisablePermission(Guid id);
-        Task<PermissionDTO> EnablePermission(Guid id);
+        Task<PermissionDTO> DisablePermission(DisablePermissionInputDTO input);
+        Task<PermissionDTO> EnablePermission(EnablePermissionInputDTO input);
     }
 }
