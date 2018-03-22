@@ -11,6 +11,7 @@ using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 using UrbanSpork.DataAccess.Emails;
+using UrbanSpork.DataAccess.Repositories;
 
 namespace UrbanSpork.DataAccess
 {
@@ -155,6 +156,7 @@ namespace UrbanSpork.DataAccess
                 }
                 forAgg.GrantPermission(byAgg, permissionAggregates, input);
                 await _session.Commit();
+                _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
             }
 
             return Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));

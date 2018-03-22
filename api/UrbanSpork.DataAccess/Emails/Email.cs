@@ -33,7 +33,7 @@ namespace UrbanSpork.DataAccess.Emails
         public void SendUserCreatedMessage(UserDTO user)
         {           
             //recipient address
-            _mail.To.Add(new MailAddress(forAgg.Email));
+            _mail.To.Add(new MailAddress(user.Email));
             _mail.Subject = "*******Your New Account********";
             //Formatted mail body
             _mail.IsBodyHtml = true;
