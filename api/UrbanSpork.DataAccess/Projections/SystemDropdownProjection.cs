@@ -35,6 +35,7 @@ namespace UrbanSpork.DataAccess.Projections
                     permission.PermissionName = pc.Name;
                     _context.SystemDropDownProjection.Add(permission);
                     break;
+
                 case PermissionInfoUpdatedEvent pu:
                     permission = await _context.SystemDropDownProjection.SingleAsync(p => p.PermissionID == pu.Id);
                     permission.PermissionID = pu.Id;

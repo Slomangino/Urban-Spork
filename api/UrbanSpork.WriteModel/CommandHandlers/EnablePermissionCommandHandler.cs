@@ -20,7 +20,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 
         public Task<PermissionDTO> Handle(EnablePermissionCommand command)
         {
-            var result = _permissionManager.EnablePermission(command.Id);
+            var result = _permissionManager.EnablePermission(command.Input);
             return result;
         }
     }

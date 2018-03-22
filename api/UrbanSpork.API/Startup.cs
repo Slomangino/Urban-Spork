@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +31,7 @@ using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.CommandHandlers;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.DataAccess.Emails;
 
 namespace UrbanSpork.API
 {
@@ -85,17 +90,22 @@ namespace UrbanSpork.API
             // won't get called.
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             
+            //EF config for npgsql
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(
                 options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")), ServiceLifetime.Transient);
 
+            //Cors config
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                options.AddPolicy("Policy",
+                    builder => builder
+                        .WithHeaders("accept", "content-type", "origin", "x-custom-header")
+                        .WithOrigins("http://localhost:8080")
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
                         .AllowCredentials()
-                      );
+                        .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                        .Build()
+                );
             });
             services.AddMvc();
         }
@@ -124,6 +134,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UrbanDbContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            builder.RegisterType<Email>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
             // Projections
@@ -153,7 +164,14 @@ namespace UrbanSpork.API
             builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            
+            //Department
+            builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            //Position
+            builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
             //Command Handlers
             //users
             builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -171,7 +189,13 @@ namespace UrbanSpork.API
             builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            //department
+            builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
+            //Position
+            builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<RemovePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Query
             builder.RegisterType<GetUserDetailByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -185,6 +209,11 @@ namespace UrbanSpork.API
             builder.RegisterType<GetSystemActivityReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetOffboardUserPermissionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetLoginUsersQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetDepartmentsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPositionsQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPositionsByDepartmentNameQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
 
             //Query Handlers
@@ -199,6 +228,11 @@ namespace UrbanSpork.API
             builder.RegisterType<GetSystemActivityReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetOffboardUserPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetLoginUsersQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetDepartmentsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetAllPositionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetPositionsByDepartmentNameQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetSystemReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
         }
 
@@ -212,8 +246,8 @@ namespace UrbanSpork.API
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseCors("CorsPolicy");
-            
+            app.UseCors("Policy");
+
             app.UseMvc();
         }
     }

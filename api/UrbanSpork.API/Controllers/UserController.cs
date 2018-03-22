@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
@@ -88,6 +89,14 @@ namespace UrbanSpork.API.Controllers
         public async Task<List<SystemActivityDTO>> GetSystemActivity([FromQuery] SystemActivityReportFilterCriteria filter)
         {
             var command = new GetSystemActivityReportQuery(filter);
+            var result = await _queryProcessor.Process(command);
+            return result;
+        }
+
+        [HttpGet("getSystemReport")]
+        public async Task<List<SystemActivityDTO>> GetSystemReport([FromQuery] SystemReportFilterCriteria filter)
+        {
+            var command = new GetSystemReportQuery(filter);
             var result = await _queryProcessor.Process(command);
             return result;
         }

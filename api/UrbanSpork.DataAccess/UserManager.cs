@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.DataAccess.Repositories;
-using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.DataAccess.Emails;
+using UrbanSpork.DataAccess.Repositories;
 
 namespace UrbanSpork.DataAccess
 {
     public class UserManager : IUserManager
     {
         private readonly ISession _session;
-        private readonly IUserRepository _userRepository;
-
-        public UserManager(IUserRepository userRepository, ISession session)
+        private readonly IEmail _email;
+        
+        public UserManager(ISession session, IEmail email)
         {
-            _userRepository = userRepository;
             _session = session;
+            _email = email; 
         }
 
         public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
@@ -33,16 +33,14 @@ namespace UrbanSpork.DataAccess
             await _session.Commit();
             var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
 
+
+            _email.SendUserCreatedMessage(userDTO);
             return userDTO;
         }
 
         public async Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
-
-            //dto.UserID = id;
-            //dto.DateCreated = userAgg.DateCreated;
-            //dto.IsActive = userAgg.userDTO.IsActive;
 
             userAgg.UpdateUserInfo(dto);
 
@@ -84,7 +82,7 @@ namespace UrbanSpork.DataAccess
             var forAgg = await _session.Get<UserAggregate>(input.ForId);
             var byAgg = await _session.Get<UserAggregate>(input.ById);
             
-            input.Requests = VerifyRequests(
+            input.Requests = VerifyActions(
                 forAgg, 
                 byAgg, 
                 input.Requests,
@@ -100,24 +98,67 @@ namespace UrbanSpork.DataAccess
 
                 forAgg.UserRequestedPermissions(permissionAggregates, input);
                 await _session.Commit();
+                _email.SendPermissionsRequestedMessage(forAgg, permissionAggregates);
             }
             return Mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input)
         {
-            var userAgg = await _session.Get<UserAggregate>(input.ForId);
-            userAgg.DenyPermissionRequest(input);
-            await _session.Commit();
-            return Mapper.Map<UserDTO>(userAgg);
+            var forAgg = await _session.Get<UserAggregate>(input.ForId);
+            var byAgg = await _session.Get<UserAggregate>(input.ById);
+
+            input.PermissionsToDeny = VerifyActions(
+                forAgg,
+                byAgg,
+                input.PermissionsToDeny,
+                new List<string>
+                {
+                    typeof(UserPermissionRevokedEvent).FullName,
+                    typeof(UserPermissionRequestDeniedEvent).FullName,
+                    typeof(UserPermissionGrantedEvent).FullName
+                });
+            if (input.PermissionsToDeny.Any())
+            {
+                var permissionAggregates = new List<PermissionAggregate>();
+                foreach (var request in input.PermissionsToDeny)
+                {
+                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
+                }
+                forAgg.DenyPermissionRequest(byAgg, permissionAggregates, input);
+                await _session.Commit();
+                _email.SendRequestDeniedMessage(forAgg, permissionAggregates);
+            }
+            return Mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> GrantUserPermission(GrantUserPermissionDTO input)
         {
-            var userAgg = await _session.Get<UserAggregate>(input.ForId);
-            userAgg.GrantPermission(input);
-            await _session.Commit();
-            return Mapper.Map<UserDTO>(userAgg);
+            var forAgg = await _session.Get<UserAggregate>(input.ForId);
+            var byAgg = await _session.Get<UserAggregate>(input.ById);
+
+            input.PermissionsToGrant = VerifyActions(
+                forAgg,
+                byAgg,
+                input.PermissionsToGrant,
+                new List<string>
+                {
+                    typeof(UserPermissionGrantedEvent).FullName
+                });
+
+            if (input.PermissionsToGrant.Any())
+            {
+                var permissionAggregates = new List<PermissionAggregate>();
+                foreach (var request in input.PermissionsToGrant)
+                {
+                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
+                }
+                forAgg.GrantPermission(byAgg, permissionAggregates, input);
+                await _session.Commit();
+                _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
+            }
+
+            return Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
         }
 
         public async Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input)
@@ -125,7 +166,7 @@ namespace UrbanSpork.DataAccess
             var forAgg = await _session.Get<UserAggregate>(input.ForId);
             var byAgg = await _session.Get<UserAggregate>(input.ById);
 
-            input.PermissionsToRevoke = VerifyRequests(
+            input.PermissionsToRevoke = VerifyActions(
                 forAgg,
                 byAgg,
                 input.PermissionsToRevoke,
@@ -137,15 +178,28 @@ namespace UrbanSpork.DataAccess
 
             if (input.PermissionsToRevoke.Any())
             {
+                var permissionAggregates = new List<PermissionAggregate>();
+                foreach (var request in input.PermissionsToRevoke)
+                {
+                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
+                }
+
                 forAgg.RevokePermission(byAgg, input);
                 await _session.Commit();
+                _email.SendPermissionsRevokedMessage(forAgg, permissionAggregates);
             }
 
             
             return Mapper.Map<UserDTO>(forAgg);
         }
 
-        private Dictionary<Guid, PermissionDetails> VerifyRequests(UserAggregate forAgg, UserAggregate byAgg, Dictionary<Guid, PermissionDetails> requests, List<string> eventTypesToRemove)
+        /**
+         * filters actions taken according to the forAgg's permissionList's event type, and the event types being passed in
+         *
+         * Ex: if a forAgg's permission list has VisualStudio permission's  eventType as "revoked", we do not want to be able to revoke it again, so we
+         * remove it from the list of actions.
+         */
+        private Dictionary<Guid, PermissionDetails> VerifyActions(UserAggregate forAgg, UserAggregate byAgg, Dictionary<Guid, PermissionDetails> requests, List<string> eventTypesToRemove)
         {
             var result = new Dictionary<Guid, PermissionDetails>();
             var markedForRemoval = new List<Guid>();
@@ -163,21 +217,15 @@ namespace UrbanSpork.DataAccess
                     }
                     else
                     {
+                        //might not even need this******because admin rights are handled in the aggregate.
                         //(admins can override eventTypes) Otherwise, if they are not an admin, remove it from requests
                         if (!byAgg.IsAdmin)
                         {
                             markedForRemoval.Add(request.Key);
                         }
                     }
-                }
-                else //any user should only be able to request or grant permissions that are not already in the forAgg's permission list
-                {
-                    if (request.Value.EventType != typeof(UserPermissionsRequestedEvent).FullName &&
-                        request.Value.EventType != typeof(UserPermissionGrantedEvent).FullName)
-                    {
-                        markedForRemoval.Add(request.Key);
-                    }
-                }
+                } // if the permission list does not contain, this case will be handled by the aggregate since admins can do 
+                  // whatever they want. and the aggregate will restrict user actions based on that
             }
 
             markedForRemoval.ForEach(a => result.Remove(a));

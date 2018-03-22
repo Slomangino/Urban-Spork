@@ -26,11 +26,13 @@ namespace UrbanSpork.DataAccess.Events
             ById = dto.ById;
             foreach (var permission in dto.PermissionsToDeny)
             {
+                var reason = String.IsNullOrWhiteSpace(permission.Value.Reason) ? "Reason Not Specified" : permission.Value.Reason;
+
                 var p = new PermissionDetails
                 {
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = false,
-                    Reason = "Denied", //IDK?
+                    Reason = reason,
                     RequestDate = TimeStamp,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
