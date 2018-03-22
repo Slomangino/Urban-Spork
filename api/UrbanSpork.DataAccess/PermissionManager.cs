@@ -10,6 +10,7 @@ using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess
 {
@@ -40,57 +41,69 @@ namespace UrbanSpork.DataAccess
             return Mapper.Map<PermissionDTO>(permAgg);
         }
 
-        public async Task<PermissionDTO> DisablePermission(Guid id)
+        /// <summary>
+        /// 
+        /// disabling a permission is a resource intensive action because it explicitly revokes this permission from all
+        /// users that have a record of it in their permission list.
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task<PermissionDTO> DisablePermission(DisablePermissionInputDTO dto)
         {
-            var permAgg = await _session.Get<PermissionAggregate>(id);
+            var permAgg = await _session.Get<PermissionAggregate>(dto.PermissionId);
 
             //only fire the event if the permission is already active, i dont think we want 
             //to have a bunch of events disabling a disabled permission
             if (permAgg.IsActive)
             {
-                permAgg.DisablePermission();
+                permAgg.DisablePermission(await _session.Get<UserAggregate>(dto.ById));
                 await _session.Commit();
 
-                /*
-                 * Explicitly revoke for each user that has requested, been granted, or been denied a permission
-                 * when the permission has been disabled, should take caution when allowing a permission to be disabled
-                 */
-                //get list of entities that have this permission
-                var userList = _context.UserDetailProjection.Where(a =>
-                    JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList)
-                        .ContainsKey(id));
-                if (userList.Any())
+                //if the permission was deactivated, explicitly revoke permissions of all user entities that have this permission
+                if (!permAgg.IsActive)
                 {
-                    foreach (var user in userList)
+                    /*
+                     * Explicitly revoke for each user that has requested, been granted, or been denied a permission
+                     * when the permission has been disabled, should take caution when allowing a permission to be disabled
+                     * HORRIBLY INEFICIENT AND IS CLOGGING UP OUR EVENT STORE NEEDLESSLY
+                     */
+                    //get list of entities that have this permission
+                    var userList = _context.UserDetailProjection.Where(a =>
+                        JsonConvert.DeserializeObject<Dictionary<Guid, PermissionDetails>>(a.PermissionList)
+                            .ContainsKey(dto.PermissionId));
+                    if (userList.Any())
                     {
-                        //get the aggregates for those entities
-                        var userAgg = await _session.Get<UserAggregate>(user.UserId);
-                        //revoke the permission through each aggregate, using a new dto
-                        //this will circumvent the usermanager and each aggregate will revoke its own access
-                        userAgg.RevokePermission(userAgg, new RevokeUserPermissionDTO
+                        foreach (var user in userList)
                         {
-                            ForId = userAgg.Id,
-                            ById = userAgg.Id,
-                            PermissionsToRevoke = new Dictionary<Guid, PermissionDetails>
+                            //get the entities
+                            var userAgg = await _session.Get<UserAggregate>(user.UserId);
+                            //revoke the permission through each aggregate, using a new dto
+                            //this will circumvent the usermanager and each aggregate will revoke its own access
+                            userAgg.RevokePermission(userAgg, new RevokeUserPermissionDTO
                             {
-                                { id, new PermissionDetails { Reason = "Permission was Disabled." } }
-                            }
-                        });
-                        await _session.Commit();
+                                ForId = userAgg.Id,
+                                ById = userAgg.Id,
+                                PermissionsToRevoke = new Dictionary<Guid, PermissionDetails>
+                                {
+                                    { dto.PermissionId, new PermissionDetails { Reason = "Permission was Disabled." } }
+                                }
+                            });
+                            await _session.Commit();
+                        }
                     }
                 }
-
             }
             return Mapper.Map<PermissionDTO>(permAgg);
         }
 
-        public async Task<PermissionDTO> EnablePermission(Guid id)
+        public async Task<PermissionDTO> EnablePermission(EnablePermissionInputDTO dto)
         {
-            var permAgg = await _session.Get<PermissionAggregate>(id);
+            var permAgg = await _session.Get<PermissionAggregate>(dto.PermissionId);
 
             if (!permAgg.IsActive)
             {
-                permAgg.EnablePermission();
+                permAgg.EnablePermission(await _session.Get<UserAggregate>(dto.ById));
                 await _session.Commit();
             }
             return Mapper.Map<PermissionDTO>(permAgg);

@@ -8,11 +8,11 @@ namespace UrbanSpork.WriteModel.Commands
 {
     public class DisablePermissionCommand : ICommand<PermissionDTO>
     {
-        public Guid Id;
+        public DisablePermissionInputDTO Input;
 
-        public DisablePermissionCommand(Guid id)
+        public DisablePermissionCommand(DisablePermissionInputDTO input)
         {
-            Id = id;
+            Input = input;
         }
     }
 }

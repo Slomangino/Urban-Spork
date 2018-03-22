@@ -33,14 +33,20 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new PermissionInfoUpdatedEvent(dto));
         }
 
-        public void DisablePermission()
+        public void DisablePermission(UserAggregate byAgg)
         {
-            ApplyChange(new PermissionDisabledEvent());
+            if (byAgg.IsAdmin)
+            {
+                ApplyChange(new PermissionDisabledEvent(byAgg.Id));
+            }
         }
 
-        public void EnablePermission()
+        public void EnablePermission(UserAggregate byAgg)
         {
-            ApplyChange(new PermissionEnabledEvent());
+            if (byAgg.IsAdmin)
+            {
+                ApplyChange(new PermissionEnabledEvent(byAgg.Id));
+            }
         }
 
         private void Apply(PermissionCreatedEvent @event)
