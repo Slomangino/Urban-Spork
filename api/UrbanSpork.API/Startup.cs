@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,17 +90,22 @@ namespace UrbanSpork.API
             // won't get called.
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             
+            //EF config for npgsql
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(
                 options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")), ServiceLifetime.Transient);
 
+            //Cors config
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                options.AddPolicy("Policy",
+                    builder => builder
+                        .WithHeaders("accept", "content-type", "origin", "x-custom-header")
+                        .WithOrigins("http://localhost:8080")
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
                         .AllowCredentials()
-                      );
+                        .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                        .Build()
+                );
             });
             services.AddMvc();
         }
@@ -235,8 +244,8 @@ namespace UrbanSpork.API
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseCors("CorsPolicy");
-            
+            app.UseCors("Policy");
+
             app.UseMvc();
         }
     }

@@ -52,6 +52,7 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.UserManagementProjection.Add(user);
                     break;
+
                 case UserUpdatedEvent uu:
                     user = await _context.UserManagementProjection.SingleAsync(b => b.UserId == uu.Id);
                     _context.UserManagementProjection.Attach(user);
@@ -71,6 +72,7 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.UserManagementProjection.Update(user);
                     break;
+
                 case UserDisabledEvent ud:
                     user = await _context.UserManagementProjection.SingleAsync(b => b.UserId == ud.Id);
                     _context.UserManagementProjection.Attach(user);
@@ -80,6 +82,7 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.UserManagementProjection.Update(user);
                     break;
+
                 case UserEnabledEvent ue:
                     user = await _context.UserManagementProjection.SingleAsync(b => b.UserId == ue.Id);
                     _context.UserManagementProjection.Attach(user);

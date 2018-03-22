@@ -59,6 +59,7 @@ namespace UrbanSpork.DataAccess.Projections
                         await _context.SystemActivityProjection.AddAsync(proj);
                     }
                     break;
+
                 case UserPermissionRevokedEvent pr:
                     foreach (var permission in pr.PermissionsToRevoke)
                     {
@@ -81,6 +82,7 @@ namespace UrbanSpork.DataAccess.Projections
                         await _context.SystemActivityProjection.AddAsync(proj);
                     }
                     break;
+
                 case UserUpdatedEvent uu:
                     var entries = await _context.SystemActivityProjection.Where(a => a.ForId == uu.Id || a.ById == uu.Id).ToListAsync();
                     if (entries.Any())
@@ -105,6 +107,7 @@ namespace UrbanSpork.DataAccess.Projections
                         }
                     }
                     break;
+
                 case PermissionInfoUpdatedEvent pi:
                     var rows = await _context.SystemActivityProjection.Where(a => a.PermissionId == pi.Id).ToListAsync();
                     if (rows.Any())

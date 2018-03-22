@@ -25,6 +25,7 @@ namespace UrbanSpork.DataAccess.Projections
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public string Image { get; set; }
 
         [Column(TypeName = "timestamp")]
         public DateTime DateCreated { get; set; }
@@ -40,20 +41,25 @@ namespace UrbanSpork.DataAccess.Projections
                     perm.Description = pc.Description;
                     perm.IsActive = pc.IsActive;
                     perm.DateCreated = pc.TimeStamp;
+                    perm.Image = pc.Image;
 
                     await _context.PermissionDetailProjection.AddAsync(perm);
                     break;
+
                 case PermissionInfoUpdatedEvent pu:
                     perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pu.Id);
                     _context.Attach(perm);
 
                     perm.Name = pu.Name;
                     perm.Description = pu.Description;
+                    perm.Image = pu.Image;
                     _context.Entry(perm).Property(a => a.Name).IsModified = true;
                     _context.Entry(perm).Property(a => a.Description).IsModified = true;
+                    _context.Entry(perm).Property(a => a.Image).IsModified = true;
 
                     _context.PermissionDetailProjection.Update(perm);
                     break;
+
                 case PermissionDisabledEvent pd:
                     perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pd.Id);
                     _context.Attach(perm);
@@ -63,6 +69,7 @@ namespace UrbanSpork.DataAccess.Projections
 
                     _context.PermissionDetailProjection.Update(perm);
                     break;
+
                 case PermissionEnabledEvent pe:
                     perm = await _context.PermissionDetailProjection.SingleAsync(a => a.PermissionId == pe.Id);
                     _context.Attach(perm);

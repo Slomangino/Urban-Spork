@@ -1,6 +1,7 @@
 ﻿using UrbanSpork.CQRS.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
@@ -65,10 +66,13 @@ namespace UrbanSpork.DataAccess
                 //for now, let us just remove it from the list of requests.
             }
 
-            ApplyChange(new UserPermissionsRequestedEvent(dto));
+            if (dto.Requests.Any())
+            {
+                ApplyChange(new UserPermissionsRequestedEvent(dto));
+            }
         }
 
-        public void DenyPermissionRequest(UserAggregate byAgg, DenyUserPermissionRequestDTO dto)
+        public void DenyPermissionRequest(UserAggregate byAgg, List<PermissionAggregate> permissions, DenyUserPermissionRequestDTO dto)
         {
             //business Logic here!
             if (byAgg.IsAdmin) // cant deny permissions if the byAgg is not an admin
@@ -77,10 +81,21 @@ namespace UrbanSpork.DataAccess
             }
         }
 
-        public void GrantPermission(GrantUserPermissionDTO dto)
+        public void GrantPermission(UserAggregate byAgg, List<PermissionAggregate> permissions, GrantUserPermissionDTO dto)
         {
             //business Logic here!
-            ApplyChange(new UserPermissionGrantedEvent(dto));
+            if (byAgg.IsAdmin)
+            {
+                foreach (var permission in permissions)
+                {
+                    if (!permission.IsActive) dto.PermissionsToGrant.Remove(permission.Id);
+                }
+
+                if (dto.PermissionsToGrant.Any())
+                {
+                    ApplyChange(new UserPermissionGrantedEvent(dto));
+                }
+            }
         }
 
         public void RevokePermission(UserAggregate byAgg, RevokeUserPermissionDTO dto)

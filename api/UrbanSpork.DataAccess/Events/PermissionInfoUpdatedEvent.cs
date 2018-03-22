@@ -12,6 +12,7 @@ namespace UrbanSpork.DataAccess.Events
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid UpdatedById { get; set; }
+        public string Image { get; set; }
 
         public PermissionInfoUpdatedEvent() { }
 
@@ -20,6 +21,7 @@ namespace UrbanSpork.DataAccess.Events
             Name = dto.Name;
             Description = dto.Description;
             UpdatedById = dto.UpdatedById;
+            Image = dto.Image;
         }  
     }
 }

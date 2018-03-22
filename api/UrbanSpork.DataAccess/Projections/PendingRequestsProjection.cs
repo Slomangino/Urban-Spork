@@ -47,7 +47,6 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionsRequestedEvent upr:
                     foreach (var r in upr.Requests)
                     {
-                       
                         var row = new PendingRequestsProjection
                         {
                             PermissionId = r.Key,
@@ -74,10 +73,12 @@ namespace UrbanSpork.DataAccess.Projections
                         }
                     }
                     break;
+
                 case PermissionDisabledEvent pd:
                     var list = _context.PendingRequestsProjection.Where(a => a.PermissionId == pd.Id);
                     _context.PendingRequestsProjection.RemoveRange(list);
                     break;
+
                 case UserPermissionRequestDeniedEvent pd:
                     var reqList = _context.PendingRequestsProjection.Where(a => a.ForId == pd.ForId && pd.PermissionsToDeny.ContainsKey(a.PermissionId));
                     if (reqList.Any())
@@ -88,6 +89,7 @@ namespace UrbanSpork.DataAccess.Projections
                         }
                     }
                     break;
+
                 case UserPermissionGrantedEvent pg:
                     var requests = _context.PendingRequestsProjection.Where(a => a.ForId == pg.ForId && pg.PermissionsToGrant.ContainsKey(a.PermissionId));
                     if (requests.Any())

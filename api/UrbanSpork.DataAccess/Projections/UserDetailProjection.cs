@@ -58,6 +58,8 @@ namespace UrbanSpork.DataAccess.Projections
                     {
                         foreach (var permission in uc.PermissionList)
                         {
+                            var userDetail = await _context.UserDetailProjection
+                                .Where(a => a.UserId == permission.Value.RequestedBy).SingleAsync();
                             permissionList.Add(permission.Key,
                                 new DetailedUserPermissionInfo
                                 {
@@ -65,14 +67,8 @@ namespace UrbanSpork.DataAccess.Projections
                                         await _context.PermissionDetailProjection
                                             .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
                                             .SingleAsync(),
-                                    ApproverFirstName =
-                                        await _context.UserDetailProjection
-                                            .Where(a => a.UserId == permission.Value.RequestedBy)
-                                            .Select(p => p.FirstName).SingleAsync(),
-                                    ApproverLastName =
-                                        await _context.UserDetailProjection
-                                            .Where(a => a.UserId == permission.Value.RequestedBy)
-                                            .Select(p => p.LastName).SingleAsync(),
+                                    ApproverFirstName = userDetail.FirstName,
+                                    ApproverLastName = userDetail.LastName,
                                     PermissionStatus = "Granted",
                                 });
                         }
@@ -82,6 +78,7 @@ namespace UrbanSpork.DataAccess.Projections
                     user.DateCreated = uc.TimeStamp;
                     _context.UserDetailProjection.Add(user);
                     break;
+
                 case UserUpdatedEvent uu:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == uu.Id);
                     _context.UserDetailProjection.Attach(user);
@@ -99,6 +96,7 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.IsAdmin).IsModified = true;
                     _context.UserDetailProjection.Update(user);
                     break;
+
                 case UserDisabledEvent ud:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ud.Id);
                     _context.UserDetailProjection.Attach(user);
@@ -106,6 +104,7 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.IsActive).IsModified = true;
                     _context.UserDetailProjection.Update(user);
                     break;
+
                 case UserEnabledEvent ue:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == ue.Id);
                     _context.UserDetailProjection.Attach(user);
@@ -113,6 +112,7 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.IsActive).IsModified = true;
                     _context.UserDetailProjection.Update(user);
                     break;
+
                 case UserPermissionsRequestedEvent upr:
                     user = await _context.UserDetailProjection.SingleAsync(b => b.UserId == upr.Id);
                     _context.UserDetailProjection.Attach(user);
@@ -123,6 +123,8 @@ namespace UrbanSpork.DataAccess.Projections
                     {
                         if (!permissionList.ContainsKey(permission.Key))
                         {
+                            var userDetail = await _context.UserDetailProjection
+                                .Where(a => a.UserId == permission.Value.RequestedBy).SingleAsync();
                             permissionList.Add(permission.Key,
                                 new DetailedUserPermissionInfo
                                 {
@@ -130,14 +132,8 @@ namespace UrbanSpork.DataAccess.Projections
                                         await _context.PermissionDetailProjection
                                             .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
                                             .SingleAsync(),
-                                    ApproverFirstName =
-                                        await _context.UserDetailProjection
-                                            .Where(a => a.UserId == permission.Value.RequestedBy)
-                                            .Select(p => p.FirstName).SingleAsync(),
-                                    ApproverLastName =
-                                        await _context.UserDetailProjection
-                                            .Where(a => a.UserId == permission.Value.RequestedBy)
-                                            .Select(p => p.LastName).SingleAsync(),
+                                    ApproverFirstName = userDetail.FirstName,
+                                    ApproverLastName = userDetail.LastName,
                                     PermissionStatus = "Requested",
                                     TimeStamp = upr.TimeStamp,
                                 });
@@ -153,6 +149,7 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
                     _context.UserDetailProjection.Update(user);
                     break;
+
                 case UserPermissionRequestDeniedEvent pde:
                     if (pde.PermissionsToDeny.Any())
                     {
@@ -176,6 +173,7 @@ namespace UrbanSpork.DataAccess.Projections
                         _context.UserDetailProjection.Update(user);
                     }
                     break;
+
                 case UserPermissionGrantedEvent pg:
                     if (pg.PermissionsToGrant.Any())
                     {
@@ -193,6 +191,8 @@ namespace UrbanSpork.DataAccess.Projections
                             }
                             else
                             {
+                                var userDetail = await _context.UserDetailProjection
+                                    .Where(a => a.UserId == permission.Value.RequestedBy).SingleAsync();
                                 permissionList.Add(permission.Key,
                                     new DetailedUserPermissionInfo
                                     {
@@ -200,14 +200,8 @@ namespace UrbanSpork.DataAccess.Projections
                                             await _context.PermissionDetailProjection
                                                 .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
                                                 .SingleAsync(),
-                                        ApproverFirstName =
-                                            await _context.UserDetailProjection
-                                                .Where(a => a.UserId == permission.Value.RequestedBy)
-                                                .Select(p => p.FirstName).SingleAsync(),
-                                        ApproverLastName =
-                                            await _context.UserDetailProjection
-                                                .Where(a => a.UserId == permission.Value.RequestedBy)
-                                                .Select(p => p.LastName).SingleAsync(),
+                                        ApproverFirstName = userDetail.FirstName,
+                                        ApproverLastName = userDetail.LastName,
                                         PermissionStatus = "Granted",
                                         TimeStamp = pg.TimeStamp,
                                     });
