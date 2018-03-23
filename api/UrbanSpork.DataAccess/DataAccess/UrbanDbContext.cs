@@ -34,6 +34,7 @@ namespace UrbanSpork.DataAccess.DataAccess
         public DbSet<SystemActivityProjection> SystemActivityProjection { get; set; }
         public DbSet<DepartmentProjection> DepartmentProjection { get; set; }
         public DbSet<PositionProjection> PositionProjection { get; set; }
+        public DbSet<PermissionTemplateProjection> PermissionTemplateProjection { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

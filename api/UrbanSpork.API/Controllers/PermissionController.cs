@@ -9,6 +9,7 @@ using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.PermissionTemplates;
 
 namespace UrbanSpork.API.Controllers
 {
@@ -88,5 +89,19 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        #region Templates
+
+        [HttpPost("createPermissionTemplate")]
+        public async Task<PermissionTemplateDTO> CreatePermissionTemplate([FromBody] CreatePermissionTemplateInputDTO input)
+        {
+            var command = new CreatePermissionTemplateCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        //create commands and queries to support updating templates and deleting templates.
+        //make sure permisison disabled(remove from template) and updated(name change) events change values in templates
+
+        #endregion
     }
 }

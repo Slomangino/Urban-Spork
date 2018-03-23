@@ -84,7 +84,7 @@ namespace UrbanSpork.Tests.Permission
             var agg = PermissionAggregate.CreateNewPermission(input);
 
             //apply
-            agg.DisablePermission();
+            //agg.DisablePermission();
 
             //assert
             var changes = agg.GetUncommittedChanges();
@@ -116,7 +116,7 @@ namespace UrbanSpork.Tests.Permission
             var agg = PermissionAggregate.CreateNewPermission(input);
 
             //apply
-            agg.EnablePermission();
+            //agg.EnablePermission();
 
             //Assert
             var changes = agg.GetUncommittedChanges();
