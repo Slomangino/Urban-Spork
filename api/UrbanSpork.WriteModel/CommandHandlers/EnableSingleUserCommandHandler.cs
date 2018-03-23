@@ -20,7 +20,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
 
         public async Task<UserDTO> Handle(EnableSingleUserCommand command)
         {
-            var dto = await _userManager.EnableSingleUser(command.id);
+            var dto = await _userManager.EnableSingleUser(command.Input);
             return dto;
         }
     }

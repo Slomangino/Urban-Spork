@@ -10,10 +10,14 @@ namespace UrbanSpork.DataAccess.Events.Users
         public DateTime TimeStamp { get; set; }
 
         public bool IsActive { get; set; }
-        
-        public UserEnabledEvent()
+        public Guid ByAgg { get; set; }
+
+        public UserEnabledEvent() { }
+
+        public UserEnabledEvent(Guid byAgg)
         {
             IsActive = true;
+            ByAgg = byAgg;
         }
     }
 }

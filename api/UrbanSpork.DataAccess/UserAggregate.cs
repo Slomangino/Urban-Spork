@@ -42,16 +42,22 @@ namespace UrbanSpork.DataAccess
             ApplyChange(new UserUpdatedEvent(dto));
         }
 
-        public void DisableSingleUser()
+        public void DisableSingleUser(UserAggregate byAgg)
         {
             //business Logic here!
-            ApplyChange(new UserDisabledEvent());
+            if (byAgg.IsAdmin)
+            {
+                ApplyChange(new UserDisabledEvent(byAgg.Id));
+            }
         }
 
-        public void EnableSingleUser()
+        public void EnableSingleUser(UserAggregate byAgg)
         {
             //business Logic here!
-            ApplyChange(new UserEnabledEvent());
+            if (byAgg.IsAdmin)
+            {
+                ApplyChange(new UserEnabledEvent(byAgg.Id));
+            }
         }
 
         public void UserRequestedPermissions(List<PermissionAggregate> permissions, RequestUserPermissionsDTO dto)

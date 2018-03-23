@@ -117,18 +117,18 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        [HttpPut("disable/{Id}")]
-        public async Task<UserDTO> DisableUser(Guid id)
+        [HttpPut("disable")]
+        public async Task<UserDTO> DisableUser([FromBody] DisableUserInputDTO input)
         {
-            var command = new DisableSingleUserCommand(id);
+            var command = new DisableSingleUserCommand(input);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
 
-        [HttpPut("enable/{Id}")]
-        public async Task<UserDTO> EnableUser(Guid id)
+        [HttpPut("enable")]
+        public async Task<UserDTO> EnableUser([FromBody] EnableUserInputDTO input)
         {
-            var command = new EnableSingleUserCommand(id);
+            var command = new EnableSingleUserCommand(input);
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
