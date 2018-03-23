@@ -51,26 +51,26 @@ namespace UrbanSpork.DataAccess
             return result;
         }
 
-        public async Task<UserDTO> DisableSingleUser(Guid id)
+        public async Task<UserDTO> DisableSingleUser(DisableUserInputDTO input)
         {
-            var userAgg = await _session.Get<UserAggregate>(id);
+            var userAgg = await _session.Get<UserAggregate>(input.UserId);
 
             if (userAgg.IsActive) 
             {
-                userAgg.DisableSingleUser();
+                userAgg.DisableSingleUser(await _session.Get<UserAggregate>(input.ById));
                 await _session.Commit();
             }
             var result = Mapper.Map<UserDTO>(userAgg);
             return result;
         }
 
-        public async Task<UserDTO> EnableSingleUser(Guid id)
+        public async Task<UserDTO> EnableSingleUser(EnableUserInputDTO input)
         {
-            var userAgg = await _session.Get<UserAggregate>(id);
+            var userAgg = await _session.Get<UserAggregate>(input.UserId);
 
             if (!userAgg.IsActive)
             {
-                userAgg.EnableSingleUser();
+                userAgg.EnableSingleUser(await _session.Get<UserAggregate>(input.ById));
                 await _session.Commit();
             }
             var result = Mapper.Map<UserDTO>(userAgg);
