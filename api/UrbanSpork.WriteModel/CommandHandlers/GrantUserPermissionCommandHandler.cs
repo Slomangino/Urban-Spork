@@ -18,9 +18,9 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             _userManager = userManager;
         }
 
-        public Task<UserDTO> Handle(GrantUserPermissionCommand command)
+        public async Task<UserDTO> Handle(GrantUserPermissionCommand command)
         {
-            var result = _userManager.GrantUserPermission(command.Input);
+            var result = await _userManager.GrantUserPermission(command.Input);
             return result;
         }
     }

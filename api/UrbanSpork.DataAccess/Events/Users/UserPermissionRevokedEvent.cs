@@ -21,7 +21,6 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserPermissionRevokedEvent(RevokeUserPermissionDTO dto)
         {
-            
             ForId = dto.ForId;
             ById = dto.ById;
             foreach (var permission in dto.PermissionsToRevoke)

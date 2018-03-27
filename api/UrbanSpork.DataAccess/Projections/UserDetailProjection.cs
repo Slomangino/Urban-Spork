@@ -182,23 +182,23 @@ namespace UrbanSpork.DataAccess.Projections
                         permissionList =
                             JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
                                 user.PermissionList);
-                        foreach (var permission in pg.PermissionsToGrant)
+                        foreach (var p in pg.PermissionsToGrant)
                         {
-                            if (permissionList.ContainsKey(permission.Key))
+                            if (permissionList.ContainsKey(p.Key))
                             {
-                                permissionList[permission.Key].PermissionStatus = "Granted";
-                                permissionList[permission.Key].TimeStamp = pg.TimeStamp;
+                                permissionList[p.Key].PermissionStatus = "Granted";
+                                permissionList[p.Key].TimeStamp = pg.TimeStamp;
                             }
                             else
                             {
                                 var userDetail = await _context.UserDetailProjection
-                                    .Where(a => a.UserId == permission.Value.RequestedBy).SingleAsync();
-                                permissionList.Add(permission.Key,
+                                    .Where(a => a.UserId == p.Value.RequestedBy).SingleAsync();
+                                permissionList.Add(p.Key,
                                     new DetailedUserPermissionInfo
                                     {
                                         PermissionName =
                                             await _context.PermissionDetailProjection
-                                                .Where(a => a.PermissionId == permission.Key).Select(p => p.Name)
+                                                .Where(a => a.PermissionId == p.Key).Select(b => b.Name)
                                                 .SingleAsync(),
                                         ApproverFirstName = userDetail.FirstName,
                                         ApproverLastName = userDetail.LastName,
@@ -208,7 +208,7 @@ namespace UrbanSpork.DataAccess.Projections
                             }
                         }
                         user.PermissionList = JsonConvert.SerializeObject(permissionList);
-                        _context.Entry(user).Property(a => a.PermissionList).IsModified = true;
+                        _context.Entry(user).Property(c => c.PermissionList).IsModified = true;
                         _context.UserDetailProjection.Update(user);
                     }
                     break;

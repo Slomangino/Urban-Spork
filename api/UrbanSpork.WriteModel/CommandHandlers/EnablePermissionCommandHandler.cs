@@ -18,9 +18,9 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             _permissionManager = permissionManager;
         }
 
-        public Task<PermissionDTO> Handle(EnablePermissionCommand command)
+        public async Task<PermissionDTO> Handle(EnablePermissionCommand command)
         {
-            var result = _permissionManager.EnablePermission(command.Input);
+            var result = await _permissionManager.EnablePermission(command.Input);
             return result;
         }
     }
