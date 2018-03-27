@@ -32,6 +32,7 @@ namespace UrbanSpork.DataAccess.DataAccess
         public DbSet<UserManagementProjection> UserManagementProjection { get; set; }
         public DbSet<ApproverActivityProjection> ApproverActivityProjection { get; set; }
         public DbSet<SystemActivityProjection> SystemActivityProjection { get; set; }
+        public DbSet<DashboardProjection> DashBoardProjection { get; set; }
         public DbSet<DepartmentProjection> DepartmentProjection { get; set; }
         public DbSet<PositionProjection> PositionProjection { get; set; }
         public DbSet<PermissionTemplateProjection> PermissionTemplateProjection { get; set; }
