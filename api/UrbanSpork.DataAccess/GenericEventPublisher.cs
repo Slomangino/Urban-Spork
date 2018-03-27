@@ -26,8 +26,7 @@ namespace UrbanSpork.DataAccess
             UserManagementProjection userManagementProjection,
             SystemActivityProjection systemActivityProjection,
             ApproverActivityProjection approverActivityProjection,
-            PermissionTemplateProjection permissionTemplateProjection
-            ApproverActivityProjection approverActivityProjection,
+            PermissionTemplateProjection permissionTemplateProjection,
             DashboardProjection dashboardProjection
             )
         {
