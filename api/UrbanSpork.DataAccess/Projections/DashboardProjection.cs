@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
+using UrbanSpork.DataAccess.Events.Users;
 
 namespace UrbanSpork.DataAccess.Projections
 {
@@ -38,11 +40,24 @@ namespace UrbanSpork.DataAccess.Projections
                     _context.Attach(dBProjection);
 
                     dBProjection.SystemName = pIUEvent.Name;
-                    //dBProjection.LogoUrl = pIUEvent.Url;
+                    dBProjection.LogoUrl = pIUEvent.Image;
                     _context.Entry(dBProjection).Property(a => a.SystemName).IsModified = true;
-                    //_context.Entry(dBProjection).Property(a => a.LogoUrl).IsModified = true;
-
+                    _context.Entry(dBProjection).Property(a => a.LogoUrl).IsModified = true;
                     _context.DashBoardProjection.Update(dBProjection);
+                    break;
+                case PermissionCreatedEvent pCEvent:
+                    dBProjection.Id = new Guid();
+                    dBProjection.PermissionId = pCEvent.Id;
+                    dBProjection.SystemName = pCEvent.Name;
+                    dBProjection.ActiveUsers = 0;
+                    dBProjection.PendingRequests = 0;
+                    dBProjection.LogoUrl = pCEvent.Image;
+                    break;
+                case UserPermissionsRequestedEvent uPermReqestedEvent:
+                    //List<DashboardProjection> rowsToBeUpdated = await _context.DashBoardProjection.SingleAsync(a => a.PermissionId == uPermReqestedEvent.Requests.);
+
+
+                    _context.Attach(dBProjection);
                     break;
             }
             await _context.SaveChangesAsync();
