@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using UrbanSpork.Common;
 using UrbanSpork.CQRS.Events;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
@@ -86,24 +88,35 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionGrantedEvent pge:
                     //increment active users, decrement pending requests
                     var rs = await _context.DashBoardProjection.Where(a => pge.PermissionsToGrant.ContainsKey(a.PermissionId)).ToListAsync();
+                    var user = await _context.UserDetailProjection.Where(a => a.UserId == pge.ForId).SingleOrDefaultAsync();
+                    var permissionList =
+                        JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
+                            user.PermissionList);
+
                     foreach (var entry in rs)
                     {
                         entry.ActiveUsers++;
-
-                        // this will be accurate as long as there are no events that grant without a previous requests
-                        // To-Do: Implement some way to check to see if there was a request out for this permission, 
-                        // if there was not, no need to decrement the pending requests
-
-                        if (entry.PendingRequests <= 1)
-                        {
-                            entry.PendingRequests = 0;
-                        }
-                        else
-                        {
-                            entry.PendingRequests--;
-                        }
-
                         _context.Entry(entry).Property(a => a.ActiveUsers).IsModified = true;
+                        
+                        //no need to go further because their list did not contain a definition for this permission meaning it was never previously requested.
+                        if (!permissionList.ContainsKey(entry.PermissionId))
+                        {
+                            _context.Update(entry);
+                            break;
+                        }
+
+                        // checks previous state of that permission
+                        if (string.Equals(permissionList[entry.PermissionId].PermissionStatus, "Requested"))
+                        {
+                            if (entry.PendingRequests <= 1)
+                            {
+                                entry.PendingRequests = 0;
+                            }
+                            else
+                            {
+                                entry.PendingRequests--;
+                            }
+                        }
                         _context.Entry(entry).Property(a => a.PendingRequests).IsModified = true;
                         _context.Update(entry);
                     }
