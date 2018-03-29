@@ -61,6 +61,7 @@ namespace UrbanSpork.DataAccess.Projections
                     foreach (var entry in rowsToBeUpdated)
                     {
                         entry.PendingRequests++;
+
                         _context.Entry(entry).Property(a => a.PendingRequests).IsModified = true;
                         _context.Update(entry);
                     }
@@ -83,11 +84,15 @@ namespace UrbanSpork.DataAccess.Projections
                     }
                     break;
                 case UserPermissionGrantedEvent pge:
-                    //increment active users
+                    //increment active users, decrement pending requests
                     var rs = await _context.DashBoardProjection.Where(a => pge.PermissionsToGrant.ContainsKey(a.PermissionId)).ToListAsync();
                     foreach (var entry in rs)
                     {
                         entry.ActiveUsers++;
+
+                        // this will be accurate as long as there are no events that grant without a previous requests
+                        // To-Do: Implement some way to check to see if there was a request out for this permission, 
+                        // if there was not, no need to decrement the pending requests
 
                         if (entry.PendingRequests <= 1)
                         {
