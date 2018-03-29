@@ -44,6 +44,10 @@ namespace UrbanSpork.DataAccess
         async Task IEventPublisher.Publish<T>(T @event, CancellationToken cancellationToken)
         {
             //throw all events to each projection
+
+            //order matters for this particular projection because it checks from previous state
+            await _dashBoardProjection.ListenForEvents(@event);
+
             await _userDetailProjection.ListenForEvents(@event);
             await _permissionDetailProjection.ListenForEvents(@event);
             await _pendingRequestsProjection.ListenForEvents(@event);
@@ -51,7 +55,6 @@ namespace UrbanSpork.DataAccess
             await _userManagementProjection.ListenForEvents(@event);
             await _approverActivityProjection.ListenForEvents(@event);
             await _systemActivityProjection.ListenForEvents(@event);
-            await _dashBoardProjection.ListenForEvents(@event);
             //await _permissionTemplateProjection.ListenForEvents(@event);
         }
     }
