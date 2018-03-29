@@ -16,8 +16,7 @@ namespace UrbanSpork.DataAccess.Events.Users
         public Guid ForId { get; set; }
         public Guid ById { get; set; }
         public Dictionary<Guid, PermissionDetails> PermissionsToGrant { get; set; } = new Dictionary<Guid, PermissionDetails>();
-
-
+        
         public UserPermissionGrantedEvent(){ }
 
         public UserPermissionGrantedEvent(GrantUserPermissionDTO dto)
@@ -40,6 +39,5 @@ namespace UrbanSpork.DataAccess.Events.Users
                 PermissionsToGrant[permission.Key] = p;
             }
         }
-
     }
 }

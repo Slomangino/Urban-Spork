@@ -106,8 +106,28 @@ namespace UrbanSpork.DataAccess
 
         public void RevokePermission(UserAggregate byAgg, RevokeUserPermissionDTO dto)
         {
-            //Users are allowed to revoke their own permissions, this is because permissionDisabledEvent requires it.
-            if (byAgg.IsAdmin || this == byAgg)
+            // only go through with revoke if the byAgg is an admin, or if the user is operating on themselves
+            if (!byAgg.IsAdmin)
+            {
+                if (this != byAgg)
+                {
+                    return; // invalid operation
+                }
+            }
+
+            var markedForRemoval = new List<Guid>();
+            foreach (var permission in dto.PermissionsToRevoke)
+            {
+                // do not revoke permissions that are not in the Granted state
+                if (!string.Equals(JsonConvert.DeserializeObject<string>(this.PermissionList[permission.Key].EventType), typeof(UserPermissionGrantedEvent).FullName))
+                {
+                    markedForRemoval.Add(permission.Key);
+                }
+            }
+
+            markedForRemoval.ForEach(a => dto.PermissionsToRevoke.Remove(a));
+
+            if (dto.PermissionsToRevoke.Any())
             {
                 ApplyChange(new UserPermissionRevokedEvent(dto));
             }

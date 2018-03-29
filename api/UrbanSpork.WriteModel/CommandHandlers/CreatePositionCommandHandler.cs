@@ -18,7 +18,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             _context = context;
         }
 
-        public Task<PositionProjection> Handle(CreatePositionCommand command)
+        public async Task<PositionProjection> Handle(CreatePositionCommand command)
         {
             var position = new PositionProjection
             {
@@ -28,14 +28,14 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             try
             {
                 _context.PositionProjection.Add(position);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.InnerException);
             }
 
-            return Task.FromResult(position);
+            return position;
         }
     }
 }

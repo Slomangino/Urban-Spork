@@ -19,9 +19,9 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             _userManager = userManager;
         }
 
-        public Task<UserDTO> Handle(UserPermissionsRequestedCommand requestedCommand)
+        public async Task<UserDTO> Handle(UserPermissionsRequestedCommand requestedCommand)
         {
-            return _userManager.UserPermissionsRequested(requestedCommand.Input);
+            return await _userManager.UserPermissionsRequested(requestedCommand.Input);
         }
     }
 }
