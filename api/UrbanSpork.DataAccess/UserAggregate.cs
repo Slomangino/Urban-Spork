@@ -109,7 +109,7 @@ namespace UrbanSpork.DataAccess
             // only go through with revoke if the byAgg is an admin, or if the user is operating on themselves
             if (!byAgg.IsAdmin)
             {
-                if (this != byAgg)
+                if (this.Id != byAgg.Id)
                 {
                     return; // invalid operation
                 }
@@ -119,7 +119,8 @@ namespace UrbanSpork.DataAccess
             foreach (var permission in dto.PermissionsToRevoke)
             {
                 // do not revoke permissions that are not in the Granted state
-                if (!string.Equals(JsonConvert.DeserializeObject<string>(this.PermissionList[permission.Key].EventType), typeof(UserPermissionGrantedEvent).FullName))
+                if (!string.Equals(JsonConvert.DeserializeObject<string>(this.PermissionList[permission.Key].EventType), 
+                    typeof(UserPermissionGrantedEvent).FullName))
                 {
                     markedForRemoval.Add(permission.Key);
                 }
