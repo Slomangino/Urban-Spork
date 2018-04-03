@@ -89,7 +89,7 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        #region Templates
+        #region Permission Templates
 
         [HttpPost("createPermissionTemplate")]
         public async Task<PermissionTemplateDTO> CreatePermissionTemplate([FromBody] CreatePermissionTemplateInputDTO input)
@@ -99,7 +99,22 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-        //create commands and queries to support updating templates and deleting templates.
+        [HttpPut("editPermissionTemplate")]
+        public async Task<PermissionTemplateDTO> EditPermissionTemplate([FromBody] EditPermissionTemplateInputDTO input)
+        {
+            var command = new EditPermissionTemplateCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+
+        [HttpPut("deletePermissionTemplate")]
+        public async Task<string> DeletePermissionTemplate([FromBody] DeletePermissionTemplateInputDTO input)
+        {
+            var command = new DeletePermissionTemplateCommand(input);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
+        
         //make sure permisison disabled(remove from template) and updated(name change) events change values in templates
 
         #endregion

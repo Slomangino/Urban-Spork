@@ -161,7 +161,7 @@ namespace UrbanSpork.API
             builder.RegisterType<DenyUserPermissionRequestCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GrantUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RevokeUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<CreatePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
 
 
             //permissions
@@ -169,6 +169,9 @@ namespace UrbanSpork.API
             builder.RegisterType<UpdatePermissionInfoCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<CreatePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EditPermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DeletePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             //Department
             builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -196,8 +199,10 @@ namespace UrbanSpork.API
             builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CreatePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<EditPermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DeletePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
-            
+
             //department
             builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
