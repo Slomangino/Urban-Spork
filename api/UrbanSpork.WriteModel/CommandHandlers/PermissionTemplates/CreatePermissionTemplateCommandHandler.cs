@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -24,9 +25,11 @@ namespace UrbanSpork.WriteModel.CommandHandlers.PermissionTemplates
         {
             PermissionTemplateProjection template = new PermissionTemplateProjection
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Name = command.Input.Name,
-                TemplatePermissions = JsonConvert.SerializeObject(command.Input.TemplatePermissions),
+                TemplatePermissions = command.Input.TemplatePermissions.Any() ? 
+                    JsonConvert.SerializeObject(command.Input.TemplatePermissions) : 
+                    JsonConvert.SerializeObject(new Dictionary<Guid, string>()),
             };
 
             await _context.PermissionTemplateProjection.AddAsync(template);

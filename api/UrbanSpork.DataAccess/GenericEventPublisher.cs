@@ -55,7 +55,7 @@ namespace UrbanSpork.DataAccess
             await _userManagementProjection.ListenForEvents(@event);
             await _approverActivityProjection.ListenForEvents(@event);
             await _systemActivityProjection.ListenForEvents(@event);
-            //await _permissionTemplateProjection.ListenForEvents(@event);
+            await _permissionTemplateProjection.ListenForEvents(@event);
         }
     }
 }
