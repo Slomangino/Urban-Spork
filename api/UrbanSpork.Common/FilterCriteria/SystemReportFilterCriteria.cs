@@ -6,6 +6,8 @@ namespace UrbanSpork.Common.FilterCriteria
 {
     public class SystemReportFilterCriteria
     {
+        public Guid PermissionId { get; set; } = Guid.Empty;
+
         public string SearchTerms { get; set; } = "";
 
         public string SortDirection { get; set; } = "ASC";

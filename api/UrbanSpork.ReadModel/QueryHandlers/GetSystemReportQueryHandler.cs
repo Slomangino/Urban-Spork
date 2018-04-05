@@ -58,9 +58,14 @@ namespace UrbanSpork.ReadModel.QueryHandlers
                 query = query.OrderByDescending(a => a.ForFullName);
             }
 
+            if (criteria.PermissionId != Guid.Empty)
+            {
+                query = query.Where(a => a.PermissionId == criteria.PermissionId);
+            }
+
             //return all actions within a range that are less than the given date, default date is time of query
             //when querying, enter a local time, this will take care of conversion from utc to local
-            query = query.Where(a => a.Timestamp.ToLocalTime() <= criteria.EndDate);
+            query = query.Where(a => a.Timestamp <= criteria.EndDate);
             
             var list = await query.ToListAsync();
 

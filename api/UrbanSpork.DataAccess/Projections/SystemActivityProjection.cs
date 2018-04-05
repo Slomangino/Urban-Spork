@@ -47,39 +47,46 @@ namespace UrbanSpork.DataAccess.Projections
                 case UserPermissionGrantedEvent pg:
                     foreach (var permission in pg.PermissionsToGrant)
                     {
-                        proj.ForId = pg.ForId;
-                        proj.ById = pg.ById;
-                        proj.PermissionId = permission.Key;
-                        proj.EventType = "Permission Granted";
-                        proj.Timestamp = pg.TimeStamp;
-                        proj.PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == permission.Key).Select(p => p.Name).SingleOrDefaultAsync();
-                        proj.ForFullName = await _context.UserDetailProjection.Where(a => a.UserId == pg.ForId).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync();
-                        proj.ByFullName = await _context.UserDetailProjection.Where(a => a.UserId == pg.ById).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync();
+                        //US-075
+                        var newGrantedRow = new SystemActivityProjection
+                        {
+                            ForId = pg.ForId,
+                            ById = pg.ById,
+                            PermissionId = permission.Key,
+                            EventType = "Permission Granted",
+                            Timestamp = pg.TimeStamp,
+                            PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == permission.Key).Select(p => p.Name).SingleOrDefaultAsync(),
+                            ForFullName = await _context.UserDetailProjection.Where(a => a.UserId == pg.ForId).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync(),
+                            ByFullName = await _context.UserDetailProjection.Where(a => a.UserId == pg.ById).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync()
+                        };
 
-                        await _context.SystemActivityProjection.AddAsync(proj);
+                        _context.SystemActivityProjection.Add(newGrantedRow);
                     }
                     break;
 
                 case UserPermissionRevokedEvent pr:
                     foreach (var permission in pr.PermissionsToRevoke)
                     {
-                        proj.ForId = pr.ForId;
-                        proj.ById = pr.ById;
-                        proj.PermissionId = permission.Key;
-                        proj.EventType = "Permission Revoked";
-                        proj.Timestamp = pr.TimeStamp;
-                        proj.PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == permission.Key).Select(p => p.Name).SingleOrDefaultAsync();
-                        proj.ForFullName = await _context.UserDetailProjection.Where(a => a.UserId == pr.ForId).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync();
+                        var newRevokedRow = new SystemActivityProjection
+                        {
+                            ForId = pr.ForId,
+                            ById = pr.ById,
+                            PermissionId = permission.Key,
+                            EventType = "Permission Revoked",
+                            Timestamp = pr.TimeStamp,
+                            PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == permission.Key).Select(p => p.Name).SingleOrDefaultAsync(),
+                            ForFullName = await _context.UserDetailProjection.Where(a => a.UserId == pr.ForId).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync()
+                        };
                         if (pr.ById != Guid.Empty)
                         {
-                            proj.ByFullName = await _context.UserDetailProjection.Where(a => a.UserId == pr.ById).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync();
+                            newRevokedRow.ByFullName = await _context.UserDetailProjection.Where(a => a.UserId == pr.ById).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync();
                         }
                         else
                         {
-                            proj.ByFullName = "System";
+                            newRevokedRow.ByFullName = "System";
                         }
 
-                        await _context.SystemActivityProjection.AddAsync(proj);
+                        await _context.SystemActivityProjection.AddAsync(newRevokedRow);
                     }
                     break;
 
