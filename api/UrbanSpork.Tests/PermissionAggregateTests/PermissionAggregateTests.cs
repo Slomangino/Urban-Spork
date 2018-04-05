@@ -8,7 +8,7 @@ using Xunit;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Events;
 
-namespace UrbanSpork.Tests.Permission
+namespace UrbanSpork.Tests.PermissionAggregateTests
 {
     public class PermissionAggregateTests
     {
@@ -82,9 +82,10 @@ namespace UrbanSpork.Tests.Permission
                 IsActive = true
             };
             var agg = PermissionAggregate.CreateNewPermission(input);
+            var adminUser = PermissionAggregateMockAggregate.SetupAdminUser();
 
             //apply
-            //agg.DisablePermission();
+            agg.DisablePermission(adminUser);
 
             //assert
             var changes = agg.GetUncommittedChanges();
@@ -114,9 +115,10 @@ namespace UrbanSpork.Tests.Permission
                 IsActive = false
             };
             var agg = PermissionAggregate.CreateNewPermission(input);
+            var adminUser = PermissionAggregateMockAggregate.SetupAdminUser();
 
             //apply
-            //agg.EnablePermission();
+            agg.EnablePermission(adminUser);
 
             //Assert
             var changes = agg.GetUncommittedChanges();
