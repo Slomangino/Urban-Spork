@@ -40,6 +40,7 @@ namespace UrbanSpork.DataAccess
                 string.IsNullOrWhiteSpace(dto.Department) ||
                 string.IsNullOrWhiteSpace(dto.Position))
             {
+                Console.WriteLine("One of the fields for creating a user was null or whitespace!");
                 throw new NullReferenceException();
             }
             return new UserAggregate(dto);
