@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Events;
@@ -28,6 +29,11 @@ namespace UrbanSpork.DataAccess.Events.Users
 
         public UserCreatedEvent(CreateUserInputDTO dto)
         {
+            if (dto.PermissionList == null)
+            {
+                PermissionList = new Dictionary<Guid, PermissionDetails>();
+            }
+
             FirstName = dto.FirstName;
             LastName = dto.LastName;
             Email = dto.Email;

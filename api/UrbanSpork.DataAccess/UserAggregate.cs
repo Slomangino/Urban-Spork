@@ -33,6 +33,16 @@ namespace UrbanSpork.DataAccess
 
         public static UserAggregate CreateNewUser(CreateUserInputDTO dto)
         {
+            //dont create a user without anyof these fields
+            if (string.IsNullOrWhiteSpace(dto.FirstName) ||
+                string.IsNullOrWhiteSpace(dto.LastName) ||
+                string.IsNullOrWhiteSpace(dto.Email) ||
+                string.IsNullOrWhiteSpace(dto.Department) ||
+                string.IsNullOrWhiteSpace(dto.Position))
+            {
+                Console.WriteLine("One of the fields for creating a user was null or whitespace!");
+                throw new NullReferenceException();
+            }
             return new UserAggregate(dto);
         }
 
