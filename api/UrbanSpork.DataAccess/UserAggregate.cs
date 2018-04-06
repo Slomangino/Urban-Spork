@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.Common.ExceptionHandling.Exceptions;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 
@@ -40,8 +41,7 @@ namespace UrbanSpork.DataAccess
                 string.IsNullOrWhiteSpace(dto.Department) ||
                 string.IsNullOrWhiteSpace(dto.Position))
             {
-                Console.WriteLine("One of the fields for creating a user was null or whitespace!");
-                throw new NullReferenceException();
+                throw new CreateUserDataNotFoundException("One of the fields for creating a user was null or whitespace!");
             }
             return new UserAggregate(dto);
         }
