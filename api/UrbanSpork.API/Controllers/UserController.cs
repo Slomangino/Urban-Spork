@@ -101,6 +101,14 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        [HttpGet("getSystemDashboard")]
+        public async Task<List<DashboardProjection>> GetSystemDashboard([FromQuery] DashboardFilterCriteria filter)
+        {
+            var command = new GetSystemDashboardQuery(filter);
+            var result = await _queryProcessor.Process(command);
+            return result;
+        }
+
         [HttpPost("createuser")]
         public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
         {
@@ -132,7 +140,9 @@ namespace UrbanSpork.API.Controllers
             var result = await _commandDispatcher.Execute(command);
             return result;
         }
+
         #region User Permission Operations
+
         [HttpPut("requestPermissions")]
         public async Task<UserDTO> RequestPermissions([FromBody] RequestUserPermissionsDTO input)
         {
