@@ -19,6 +19,7 @@ using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.Common.ExceptionHandling;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
 using UrbanSpork.DataAccess.Events;
@@ -263,6 +264,12 @@ namespace UrbanSpork.API
             }
             
             app.UseCors("Policy");
+
+            /*
+             * this line will prevent pretty postman errors, but will enable basic json data to be passed
+             * back to the web in an error response.
+             */
+            //app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc();
         }
