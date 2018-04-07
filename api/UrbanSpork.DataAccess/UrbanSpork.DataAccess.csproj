@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Specifications\AndSpecification.cs" />
+    <Compile Remove="Specifications\CompositeSpecification.cs" />
+    <Compile Remove="Specifications\ExpressionSpecification.cs" />
+    <Compile Remove="Specifications\ISpecification.cs" />
+    <Compile Remove="Specifications\NotSpecification.cs" />
+    <Compile Remove="Specifications\OrSpecification.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />

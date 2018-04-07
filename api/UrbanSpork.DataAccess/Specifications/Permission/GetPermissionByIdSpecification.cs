@@ -5,7 +5,7 @@ using UrbanSpork.DataAccess.Projections;
 
 namespace UrbanSpork.DataAccess.Specifications.Permission
 {
-    public class GetPermissionByIdSpecification : CompositeSpecification<PermissionDetailProjection>
+    public class GetPermissionByIdSpecification // : CompositeSpecification<PermissionDetailProjection>
     {
         private readonly Guid Id;
 
@@ -14,7 +14,7 @@ namespace UrbanSpork.DataAccess.Specifications.Permission
             Id = id;
         }
 
-        public override bool IsSatisfiedBy(PermissionDetailProjection o)
+        public bool IsSatisfiedBy(PermissionDetailProjection o)
         {
             return o.PermissionId == Id;
         }
