@@ -86,7 +86,7 @@ namespace UrbanSpork.Tests.Controllers.Permission
         public void setup_dispatcher_to_verify_createPermissionCommands_are_the_same()
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<CreatePermissionCommand>()))
-                .Callback<ICommand<PermissionDTO>>((a) => { PermissionCommand = a; })
+                .Callback<ICommand<PermissionDTO>>((a) => {  PermissionCommand = (CreatePermissionCommand) a; })
                 .ReturnsAsync(new PermissionDTO()
                 {
                     Name = "testName",
@@ -99,7 +99,7 @@ namespace UrbanSpork.Tests.Controllers.Permission
         public void setup_dispatcher_to_verify_updatePermissionCommands_are_the_same()
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<UpdatePermissionInfoCommand>()))
-                .Callback<ICommand<PermissionDTO>>((a) => { PermissionCommand = a; })
+                .Callback<ICommand<PermissionDTO>>((a) => { PermissionCommand = (UpdatePermissionInfoCommand) a; })
                 .ReturnsAsync(new PermissionDTO()
                 {
                     Name = "testName",

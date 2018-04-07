@@ -150,7 +150,7 @@ namespace UrbanSpork.Tests.PermissionAggregateTests
                 IsActive = true
             };
             var agg = PermissionAggregate.CreateNewPermission(input);
-            var userAgg = UserAggregate.CreateNewUser(new CreateUserInputDTO());
+            var userAgg = PermissionAggregateMockAggregate.SetupAdminUser();
 
             var updateInfo = new UpdatePermissionInfoDTO
             {

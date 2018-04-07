@@ -111,6 +111,7 @@ namespace UrbanSpork.Tests.Controllers.Permission
             var result = await mockAgg.CommandDispatcher.Execute(command);
 
             //Assert
+            Assert.IsType<CreatePermissionCommand>(mockAgg.PermissionCommand);
             Assert.Equal(command, mockAgg.PermissionCommand);
             Assert.IsType<PermissionDTO>(result);
             Assert.Equal(result.Name, input.Name);

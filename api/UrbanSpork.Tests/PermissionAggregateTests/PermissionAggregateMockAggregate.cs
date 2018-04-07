@@ -15,7 +15,7 @@ namespace UrbanSpork.Tests.PermissionAggregateTests
             {
                 FirstName = "Stephen",
                 LastName = "Lomangino",
-                Email = "iceman371@yahoo.com",
+                Email = "stephen@test.com",
                 Position = "API Lead",
                 Department = "Development",
                 IsAdmin = true,
