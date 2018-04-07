@@ -31,6 +31,7 @@ namespace UrbanSpork.Tests.Controllers.Permission
             //Assert
             Assert.Equal(command, mockAgg.CreatePermissionCommand);
             Assert.IsType<PermissionDTO>(result);
+            //Assert.Equal(result.Name, input.Name);
         }
     }
 }
