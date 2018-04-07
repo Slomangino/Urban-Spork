@@ -122,7 +122,6 @@ namespace UrbanSpork.API
         public void ConfigureContainer(ContainerBuilder builder)
         {
             //Utility
-            builder.RegisterType<UserRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<PermissionRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
