@@ -7,6 +7,7 @@ using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.Queries.Query;
 using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.CQRS.WriteModel.Command;
+using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
@@ -28,6 +29,10 @@ namespace UrbanSpork.Tests.Controllers.Permission
 
         public readonly IQueryProcessor QueryProcessor = QueryProcessorMock.Object;
 
+        #endregion
+
+        #region Commands & Queries
+
         public ICommand<PermissionDTO> PermissionCommand;
 
         public ICommand<PermissionTemplateDTO> PermissionTemplateCommand;
@@ -37,6 +42,10 @@ namespace UrbanSpork.Tests.Controllers.Permission
         public IQuery<PermissionDTO> PermissionQuery;
 
         public IQuery<List<PermissionDTO>> GetAllPermissionsQuery;
+
+        public IQuery<List<SystemDropdownProjection>> GetSystemDropdownProjectionQuery;
+
+        public IQuery<List<PendingRequestsProjection>> GetPendingRequestQuery;
 
         #endregion
 
@@ -58,6 +67,20 @@ namespace UrbanSpork.Tests.Controllers.Permission
             QueryProcessorMock.Setup(a => a.Process(It.IsAny<GetAllPermissionsQuery>()))
                 .Callback<IQuery<List<PermissionDTO>>>((a) => { GetAllPermissionsQuery = a; })
                 .ReturnsAsync(new List<PermissionDTO>());
+        }
+
+        public void setup_processor_to_verify_getSystemDropdownProjectionQueries_are_the_same()
+        {
+            QueryProcessorMock.Setup(a => a.Process(It.IsAny<GetSystemDropDownProjectionQuery>()))
+                .Callback<IQuery<List<SystemDropdownProjection>>>((a) => { GetSystemDropdownProjectionQuery = a; })
+                .ReturnsAsync(new List<SystemDropdownProjection>());
+        }
+
+        public void setup_processor_to_verify_getPendingRequestsQueries_are_the_same()
+        {
+            QueryProcessorMock.Setup(a => a.Process(It.IsAny<GetPendingRequestsProjectionQuery>()))
+                .Callback<IQuery<List<PendingRequestsProjection>>>((a) => { GetPendingRequestQuery = a; })
+                .ReturnsAsync(new List<PendingRequestsProjection>());
         }
 
         public void setup_dispatcher_to_verify_createPermissionCommands_are_the_same()

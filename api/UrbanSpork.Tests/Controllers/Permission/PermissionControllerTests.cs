@@ -4,6 +4,7 @@ using System.Text;
 using Castle.Components.DictionaryAdapter;
 using UrbanSpork.API.Controllers;
 using UrbanSpork.Common.DataTransferObjects.Permission;
+using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
@@ -24,11 +25,14 @@ namespace UrbanSpork.Tests.Controllers.Permission
             
             mockAgg.setup_processor_to_verify_getPermissionQueries_are_the_same(id);
 
+            var controller = mockAgg.PermissionControllerFactory();
+
             //Apply
-            var result = await mockAgg.QueryProcessor.Process(query);
+
+            var result = await controller.Get(id);
 
             //Assert
-            Assert.Equal(query, mockAgg.PermissionQuery);
+            //Assert.Equal(query, mockAgg.PermissionQuery);
             Assert.IsType<PermissionDTO>(result);
             Assert.Equal(result.Id, id);
         }
@@ -39,16 +43,52 @@ namespace UrbanSpork.Tests.Controllers.Permission
             //Assemble
             var mockAgg = new PermissionControllerMockAggregate();
 
-            var query = new GetAllPermissionsQuery();
-
             mockAgg.setup_processor_to_verify_getAllPermissionQueries_are_the_same();
 
+
+            var controller = mockAgg.PermissionControllerFactory();
+
             //Apply
-            var result = await mockAgg.QueryProcessor.Process(query);
+            var result = await controller.GetAllPermissions();
 
             //Assert
-            Assert.Equal(query, mockAgg.GetAllPermissionsQuery);
             Assert.IsType<List<PermissionDTO>>(result);
+        }
+
+        [Fact]
+        public async void given_get_System_dropdown_projection_query_queryprocessor_should_get_same_query_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new PermissionControllerMockAggregate();
+
+            mockAgg.setup_processor_to_verify_getSystemDropdownProjectionQueries_are_the_same();
+
+            var controller = mockAgg.PermissionControllerFactory();
+
+            //Apply
+            var result = await controller.GetSystemDropDownProjection();
+
+            //Assert
+            Assert.IsType<List<SystemDropdownProjection>>(result);
+        }
+
+        [Fact]
+        public async void given_get_pending_requests_query_queryprocessor_should_get_same_query_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new PermissionControllerMockAggregate();
+
+            mockAgg.setup_processor_to_verify_getPendingRequestsQueries_are_the_same();
+
+            var controller = mockAgg.PermissionControllerFactory();
+
+            //Apply
+            var result = await controller.GetPendingRequests();
+
+
+            //List<PendingRequestsProjection>
+            //Assert
+            Assert.IsType<List<PendingRequestsProjection>>(result);
         }
 
         [Fact]
