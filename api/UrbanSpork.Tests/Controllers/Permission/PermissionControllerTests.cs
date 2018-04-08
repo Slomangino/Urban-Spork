@@ -96,7 +96,6 @@ namespace UrbanSpork.Tests.Controllers.Permission
         {
             //Assemble
             var mockAgg = new PermissionControllerMockAggregate();
-            mockAgg.setup_dispatcher_to_verify_createPermissionCommands_are_the_same();
 
             var input = new CreateNewPermissionDTO
             {
@@ -106,6 +105,8 @@ namespace UrbanSpork.Tests.Controllers.Permission
                 Image = "testImage"
             };
             var command = new CreatePermissionCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_createPermissionCommands_are_the_same(command);
 
             //Apply
             var result = await mockAgg.CommandDispatcher.Execute(command);
@@ -134,7 +135,7 @@ namespace UrbanSpork.Tests.Controllers.Permission
 
             var command = new CreatePermissionCommand(input);
 
-            mockAgg.setup_dispatcher_to_verify_createPermissionCommands_are_the_same();
+            mockAgg.setup_dispatcher_to_verify_createPermissionCommands_are_the_same(command);
 
             var result = await controller.CreatePermission(input);
 

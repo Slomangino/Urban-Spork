@@ -83,16 +83,16 @@ namespace UrbanSpork.Tests.Controllers.Permission
                 .ReturnsAsync(new List<PendingRequestsProjection>());
         }
 
-        public void setup_dispatcher_to_verify_createPermissionCommands_are_the_same()
+        public void setup_dispatcher_to_verify_createPermissionCommands_are_the_same(CreatePermissionCommand command)
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<CreatePermissionCommand>()))
                 .Callback<ICommand<PermissionDTO>>((a) => {  PermissionCommand = (CreatePermissionCommand) a; })
                 .ReturnsAsync(new PermissionDTO()
                 {
-                    Name = "testName",
-                    Description = "testDesc",
-                    IsActive = true,
-                    Image = "testImage"
+                    Name = command.Input.Name,
+                    Description = command.Input.Description,
+                    IsActive = command.Input.IsActive,
+                    Image = command.Input.Image
                 });
         }
 

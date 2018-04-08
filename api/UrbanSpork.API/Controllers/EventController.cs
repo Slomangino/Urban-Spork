@@ -60,21 +60,21 @@ namespace UrbanSpork.API.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    //Console.WriteLine(e);
                 }
             }
-            Console.WriteLine("Done, Press key yo.");
-            Console.ReadLine();
+            //Console.WriteLine("Done, Press key yo.");
+            //Console.ReadLine();
             //Environment.Exit(0);
         }
 
-        private IEvent DeserializeEvent(EventStoreDataRow row)
-        {
-            Type type = myAss.GetType(row.EventType);
-            var @event = Activator.CreateInstance(type);
-            JsonConvert.PopulateObject(row.EventData, @event);
-            return (IEvent)@event;
-        }
+        //private IEvent DeserializeEvent(EventStoreDataRow row)
+        //{
+        //    Type type = myAss.GetType(row.EventType);
+        //    var @event = Activator.CreateInstance(type);
+        //    JsonConvert.PopulateObject(row.EventData, @event);
+        //    return (IEvent)@event;
+        //}
 
         private IEnumerable<IEvent> DeserializeEventList(IEnumerable<EventStoreDataRow> rowList)
         {
