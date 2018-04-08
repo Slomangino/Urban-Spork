@@ -26,14 +26,14 @@ namespace UrbanSpork.Tests.Controllers.Position
 
         public IQuery<List<PositionProjection>> PositionQuery;
 
-        public void setup_dispatcher_to_verify_createPositionCommands_are_the_same()
+        public void setup_dispatcher_to_verify_createPositionCommands_are_the_same(CreatePositionCommand command)
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<CreatePositionCommand>()))
                 .Callback<ICommand<PositionProjection>>((a) => { PositonCommand = (CreatePositionCommand)a; })
                 .ReturnsAsync(new PositionProjection()
                 {
-                    PositionName = "testName",
-                   
+                    PositionName = command.Input.PositionName,
+                    
                 });
         }
 

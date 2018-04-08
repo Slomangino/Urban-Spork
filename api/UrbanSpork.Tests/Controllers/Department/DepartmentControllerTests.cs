@@ -25,7 +25,7 @@ namespace UrbanSpork.Tests.Controllers.Department
 
             var command = new CreateDepartmentCommand(input);
 
-            mockAgg.setup_dispatcher_to_verify_createDepartmentCommands_are_the_same();
+            mockAgg.setup_dispatcher_to_verify_createDepartmentCommands_are_the_same(command);
 
             var result = await controller.CreateDepartment(input);
 

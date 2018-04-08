@@ -27,14 +27,13 @@ namespace UrbanSpork.Tests.Controllers.Department
 
         public IQuery<List<DepartmentProjection>> DepartmentQuery;
 
-        public void setup_dispatcher_to_verify_createDepartmentCommands_are_the_same()
+        public void setup_dispatcher_to_verify_createDepartmentCommands_are_the_same(CreateDepartmentCommand command)
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<CreateDepartmentCommand>()))
                 .Callback<ICommand<DepartmentProjection>>((a) => {DepartmentCommand = (CreateDepartmentCommand)a; })
                 .ReturnsAsync(new DepartmentProjection()
                 {
-                    Name = "testName",
-                   
+                    Name = command.Input.Name,
                 });
         }
 

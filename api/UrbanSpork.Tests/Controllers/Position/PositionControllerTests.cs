@@ -24,7 +24,7 @@ namespace UrbanSpork.Tests.Controllers.Position
 
             var command = new CreatePositionCommand(input);
 
-            mockAgg.setup_dispatcher_to_verify_createPositionCommands_are_the_same();
+            mockAgg.setup_dispatcher_to_verify_createPositionCommands_are_the_same(command);
 
             var result = await controller.CreatePosition(input);
 
