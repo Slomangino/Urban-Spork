@@ -14,6 +14,7 @@ using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.Tests.Controllers.Permission;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.WriteModel.Commands;
 using Xunit;
 
 namespace UrbanSpork.Tests.Controllers.User
@@ -265,7 +266,7 @@ namespace UrbanSpork.Tests.Controllers.User
         }
 
         [Fact]
-        public async void given_create_permission_command_command_dispatcher_should_get_same_command_created_in_controller()
+        public async void given_create_user_command_command_dispatcher_should_get_same_command_created_in_controller()
         {
             //Assemble
             var mockAgg = new UserControllerMockAggregate();
@@ -290,6 +291,95 @@ namespace UrbanSpork.Tests.Controllers.User
             Assert.IsType<UserDTO>(result);
             Assert.Equal(result.FirstName, input.FirstName);
             Assert.Equal(result.LastName, input.LastName);
+        }
+
+        [Fact]
+        public async void given_update_user_command_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+
+            var input = new UpdateUserInformationDTO()
+            {
+                ForID = id,
+                FirstName = "testFName",
+                LastName = "testLName"
+            };
+
+            var command = new UpdateSingleUserCommand(input.ForID, input);
+
+            mockAgg.setup_dispatcher_to_verify_updateUserInformationCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.UpdateUser(input);
+
+            //Assert
+            Assert.IsType<UpdateUserInformationDTO>(result);
+            Assert.Equal(result.FirstName, input.FirstName);
+            Assert.Equal(result.LastName, input.LastName);
+            Assert.Equal(result.ForID, input.ForID);
+        }
+
+        [Fact]
+        public async void given_enable_single_user_command_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+
+            var input = new EnableUserInputDTO()
+            {
+                ById = id,
+                UserId = userId
+            };
+
+            var command = new EnableSingleUserCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_enableSingleUserCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.EnableUser(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.UserId);
+        }
+
+        [Fact]
+        public async void given_disable_single_user_command_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+
+            var input = new DisableUserInputDTO()
+            {
+                ById = id,
+                UserId = userId
+            };
+
+            var command = new DisableSingleUserCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_disableSingleUserCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.DisableUser(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.UserId);
         }
     }
 }

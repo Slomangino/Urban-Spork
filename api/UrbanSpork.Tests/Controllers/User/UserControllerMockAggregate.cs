@@ -15,6 +15,7 @@ using UrbanSpork.CQRS.WriteModel.Command;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.WriteModel.Commands;
 
 namespace UrbanSpork.Tests.Controllers.User
 {
@@ -54,6 +55,8 @@ namespace UrbanSpork.Tests.Controllers.User
         public IQuery<List<LoginUserDTO>> LoginUserQuery;
 
         public ICommand<UserDTO> UserCommand;
+
+        public ICommand<UpdateUserInformationDTO> UpdateUserCommand;
 
         #endregion
 
@@ -142,6 +145,38 @@ namespace UrbanSpork.Tests.Controllers.User
                 {
                     FirstName = command.Input.FirstName,
                     LastName = command.Input.LastName
+                });
+        }
+
+        public void setup_dispatcher_to_verify_updateUserInformationCommands_are_the_same(UpdateSingleUserCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<UpdateSingleUserCommand>()))
+                .Callback<ICommand<UpdateUserInformationDTO>>((a) => { UpdateUserCommand = (UpdateSingleUserCommand)a; })
+                .ReturnsAsync(new UpdateUserInformationDTO()
+                {
+                    FirstName = command.Input.FirstName,
+                    LastName = command.Input.LastName,
+                    ForID = command.Input.ForID
+                });
+        }
+
+        public void setup_dispatcher_to_verify_enableSingleUserCommands_are_the_same(EnableSingleUserCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<EnableSingleUserCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (EnableSingleUserCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.UserId
+                });
+        }
+
+        public void setup_dispatcher_to_verify_disableSingleUserCommands_are_the_same(DisableSingleUserCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<DisableSingleUserCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (DisableSingleUserCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.UserId
                 });
         }
 
