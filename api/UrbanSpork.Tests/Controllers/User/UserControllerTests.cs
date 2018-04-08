@@ -381,5 +381,185 @@ namespace UrbanSpork.Tests.Controllers.User
             Assert.IsType<UserDTO>(result);
             Assert.Equal(result.Id, input.UserId);
         }
+
+        [Fact]
+        public async void given_requestuserpermissionscommand_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+            var requests = new Dictionary<Guid, PermissionDetails>
+            {
+                {
+                    new Guid(), new PermissionDetails
+                    {
+                        EventType = "testEvent",
+                        IsPending = true,
+                        Reason = "testReason",
+                        RequestedBy = id,
+                        RequestedFor = userId,
+                        RequestDate = new DateTime()
+                    }
+                }
+            };
+
+            var input = new RequestUserPermissionsDTO()
+            {
+                ById = id,
+                ForId = userId,
+                Requests = requests
+            };
+
+            var command = new UserPermissionsRequestedCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_userPermissionsRequestedCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.RequestPermissions(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.ForId);
+            Assert.Equal(result.PermissionList, input.Requests);
+        }
+
+        [Fact]
+        public async void given_denyuserpermissionscommand_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+            var requests = new Dictionary<Guid, PermissionDetails>
+            {
+                {
+                    new Guid(), new PermissionDetails
+                    {
+                        EventType = "testEvent",
+                        IsPending = true,
+                        Reason = "testReason",
+                        RequestedBy = id,
+                        RequestedFor = userId,
+                        RequestDate = new DateTime()
+                    }
+                }
+            };
+
+            var input = new DenyUserPermissionRequestDTO
+            {
+                ById = id,
+                ForId = userId,
+                PermissionsToDeny = requests
+            };
+
+            var command = new DenyUserPermissionRequestCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_denyUserPermissionRequestCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.DenyPermission(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.ForId);
+            Assert.Equal(result.PermissionList, input.PermissionsToDeny);
+        }
+
+        [Fact]
+        public async void given_grantuserpermissionscommand_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+            var requests = new Dictionary<Guid, PermissionDetails>
+            {
+                {
+                    new Guid(), new PermissionDetails
+                    {
+                        EventType = "testEvent",
+                        IsPending = true,
+                        Reason = "testReason",
+                        RequestedBy = id,
+                        RequestedFor = userId,
+                        RequestDate = new DateTime()
+                    }
+                }
+            };
+
+            var input = new GrantUserPermissionDTO()
+            {
+                ById = id,
+                ForId = userId,
+                PermissionsToGrant = requests
+            };
+
+            var command = new GrantUserPermissionCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_grantUserPermissionRequestCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.GrantPermission(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.ForId);
+            Assert.Equal(result.PermissionList, input.PermissionsToGrant);
+        }
+
+        [Fact]
+        public async void given_revokeuserpermissionscommand_command_dispatcher_should_get_same_command_created_in_controller()
+        {
+            //Assemble
+            var mockAgg = new UserControllerMockAggregate();
+
+            var id = new Guid();
+            var userId = new Guid();
+            var requests = new Dictionary<Guid, PermissionDetails>
+            {
+                {
+                    new Guid(), new PermissionDetails
+                    {
+                        EventType = "testEvent",
+                        IsPending = true,
+                        Reason = "testReason",
+                        RequestedBy = id,
+                        RequestedFor = userId,
+                        RequestDate = new DateTime()
+                    }
+                }
+            };
+
+            var input = new RevokeUserPermissionDTO()
+            {
+                ById = id,
+                ForId = userId,
+                PermissionsToRevoke = requests
+            };
+
+            var command = new RevokeUserPermissionCommand(input);
+
+            mockAgg.setup_dispatcher_to_verify_revokeUserPermissionRequestCommands_are_the_same(command);
+
+            var controller = mockAgg.CreateUserController();
+
+            //Apply
+            var result = await controller.RevokePermission(input);
+
+            //Assert
+            Assert.IsType<UserDTO>(result);
+            Assert.Equal(result.Id, input.ForId);
+            Assert.Equal(result.PermissionList, input.PermissionsToRevoke);
+        }
     }
 }

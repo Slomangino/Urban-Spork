@@ -66,7 +66,7 @@ namespace UrbanSpork.Tests.Controllers.User
         {
             return new UserController(QueryProcessor, CommandDispatcher);
         }
-        
+
         #endregion
 
         #region Setup Methods
@@ -140,7 +140,7 @@ namespace UrbanSpork.Tests.Controllers.User
         public void setup_dispatcher_to_verify_createUserCommands_are_the_same(CreateSingleUserCommand command)
         {
             CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<CreateSingleUserCommand>()))
-                .Callback<ICommand<UserDTO >>((a) => { UserCommand = (CreateSingleUserCommand)a; })
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (CreateSingleUserCommand)a; })
                 .ReturnsAsync(new UserDTO()
                 {
                     FirstName = command.Input.FirstName,
@@ -180,6 +180,49 @@ namespace UrbanSpork.Tests.Controllers.User
                 });
         }
 
+        public void setup_dispatcher_to_verify_userPermissionsRequestedCommands_are_the_same(UserPermissionsRequestedCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<UserPermissionsRequestedCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (UserPermissionsRequestedCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.ForId,
+                    PermissionList = command.Input.Requests
+                });
+        }
+
+        public void setup_dispatcher_to_verify_denyUserPermissionRequestCommands_are_the_same(DenyUserPermissionRequestCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<DenyUserPermissionRequestCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (DenyUserPermissionRequestCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.ForId,
+                    PermissionList = command.Input.PermissionsToDeny
+                });
+        }
+
+        public void setup_dispatcher_to_verify_grantUserPermissionRequestCommands_are_the_same(GrantUserPermissionCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<GrantUserPermissionCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (GrantUserPermissionCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.ForId,
+                    PermissionList = command.Input.PermissionsToGrant
+                });
+        }
+
+        public void setup_dispatcher_to_verify_revokeUserPermissionRequestCommands_are_the_same(RevokeUserPermissionCommand command)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<RevokeUserPermissionCommand>()))
+                .Callback<ICommand<UserDTO>>((a) => { UserCommand = (RevokeUserPermissionCommand)a; })
+                .ReturnsAsync(new UserDTO()
+                {
+                    Id = command.Input.ForId,
+                    PermissionList = command.Input.PermissionsToRevoke
+                });
+        }
         #endregion
     }
 }
