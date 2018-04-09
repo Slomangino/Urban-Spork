@@ -17,16 +17,19 @@ namespace UrbanSpork.ReadModel.QueryHandlers
     public class GetSystemActivityReportQueryHandler : IQueryHandler<GetSystemActivityReportQuery, List<SystemActivityDTO>>
     {
         private readonly UrbanDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetSystemActivityReportQueryHandler(UrbanDbContext context)
+
+        public GetSystemActivityReportQueryHandler(UrbanDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         
         public async Task<List<SystemActivityDTO>> Handle(GetSystemActivityReportQuery query)
         {
             var filteredList = await Filter(query.FilterCriteria).ToListAsync();
-            var mappedResult = Mapper.Map<List<SystemActivityProjection>, List<SystemActivityDTO>>(filteredList);
+            var mappedResult = _mapper.Map<List<SystemActivityProjection>, List<SystemActivityDTO>>(filteredList);
             return mappedResult;
         }
 

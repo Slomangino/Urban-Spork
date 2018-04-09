@@ -15,16 +15,18 @@ namespace UrbanSpork.ReadModel.QueryHandlers
     public class GetUserDetailByIdQueryHandler : IQueryHandler<GetUserDetailByIdQuery, UserDetailProjectionDTO>
     {
         private readonly UrbanDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetUserDetailByIdQueryHandler(UrbanDbContext context)
+        public GetUserDetailByIdQueryHandler(UrbanDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<UserDetailProjectionDTO> Handle(GetUserDetailByIdQuery query)
         {
             var result = await _context.UserDetailProjection.Where(a => a.UserId == query.Id).SingleOrDefaultAsync();
-            var mappedResult = Mapper.Map<UserDetailProjection, UserDetailProjectionDTO>(result);
+            var mappedResult = _mapper.Map<UserDetailProjection, UserDetailProjectionDTO>(result);
             return mappedResult;
         }
 

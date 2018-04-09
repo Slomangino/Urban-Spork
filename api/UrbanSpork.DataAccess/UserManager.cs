@@ -19,23 +19,13 @@ namespace UrbanSpork.DataAccess
     {
         private readonly ISession _session;
         private readonly IEmail _email;
-        
-        public UserManager(ISession session, IEmail email)
+        private readonly IMapper _mapper;
+
+        public UserManager(ISession session, IEmail email, IMapper mapper)
         {
             _session = session;
-            _email = email; 
-        }
-
-        public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
-        {
-            var userAgg = UserAggregate.CreateNewUser(input);
-            await _session.Add(userAgg);
-            await _session.Commit();
-            var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
-
-
-            _email.SendUserCreatedMessage(userDTO);
-            return userDTO;
+            _email = email;
+            _mapper = mapper;
         }
 
         public async Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
@@ -46,7 +36,7 @@ namespace UrbanSpork.DataAccess
 
             await _session.Commit();
 
-            var result = Mapper.Map<UpdateUserInformationDTO>(userAgg);
+            var result = _mapper.Map<UpdateUserInformationDTO>(userAgg);
 
             return result;
         }
@@ -60,7 +50,7 @@ namespace UrbanSpork.DataAccess
                 userAgg.DisableSingleUser(await _session.Get<UserAggregate>(input.ById));
                 await _session.Commit();
             }
-            var result = Mapper.Map<UserDTO>(userAgg);
+            var result = _mapper.Map<UserDTO>(userAgg);
             return result;
         }
 
@@ -73,7 +63,7 @@ namespace UrbanSpork.DataAccess
                 userAgg.EnableSingleUser(await _session.Get<UserAggregate>(input.ById));
                 await _session.Commit();
             }
-            var result = Mapper.Map<UserDTO>(userAgg);
+            var result = _mapper.Map<UserDTO>(userAgg);
             return result;
         }
 
@@ -100,7 +90,7 @@ namespace UrbanSpork.DataAccess
                 await _session.Commit();
                 _email.SendPermissionsRequestedMessage(forAgg, permissionAggregates);
             }
-            return Mapper.Map<UserDTO>(forAgg);
+            return _mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input)
@@ -129,7 +119,7 @@ namespace UrbanSpork.DataAccess
                 await _session.Commit();
                 _email.SendRequestDeniedMessage(forAgg, permissionAggregates);
             }
-            return Mapper.Map<UserDTO>(forAgg);
+            return _mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> GrantUserPermission(GrantUserPermissionDTO input)
@@ -158,7 +148,7 @@ namespace UrbanSpork.DataAccess
                 _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
             }
 
-            return Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
+            return _mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
         }
 
         public async Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input)
@@ -190,7 +180,7 @@ namespace UrbanSpork.DataAccess
             }
 
             
-            return Mapper.Map<UserDTO>(forAgg);
+            return _mapper.Map<UserDTO>(forAgg);
         }
 
         /**

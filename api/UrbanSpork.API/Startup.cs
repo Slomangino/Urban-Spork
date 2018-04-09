@@ -44,36 +44,6 @@ namespace UrbanSpork.API
                     .AddEnvironmentVariables();
             
             Configuration = builder.Build();
-
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<UserAggregate, UserDTO>();
-                cfg.CreateMap<UserDTO, UserAggregate>();
-                cfg.CreateMap<UserDetailProjection, UserDetailProjectionDTO>()
-                    .ForMember(dest => dest.PermissionList,
-                        opt => opt.MapFrom(src =>
-                            JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
-                                src.PermissionList)))
-                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
-                cfg.CreateMap<UserDetailProjection, LoginUserDTO>()
-                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
-                cfg.CreateMap<UserDetailProjection, OffBoardUserDTO>()
-                    .ForMember(dest => dest.PermissionList,
-                        opt => opt.MapFrom(src =>
-                            JsonConvert.DeserializeObject<Dictionary<Guid, DetailedUserPermissionInfo>>(
-                                src.PermissionList)));
-                cfg.CreateMap<UserAggregate, UpdateUserInformationDTO>()
-                    .ForMember(dest => dest.ForID, opt => opt.MapFrom(src => src.Id));
-                cfg.CreateMap<PermissionAggregate, PermissionDTO>();
-                cfg.CreateMap<PermissionDTO, PermissionAggregate>();
-                cfg.CreateMap<PermissionDTO, PermissionDetailProjection>();
-                cfg.CreateMap<PermissionDetailProjection, PermissionDTO>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PermissionId));
-                cfg.CreateMap<UserManagementProjection, UserManagementDTO>()
-                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
-                    .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Position))
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
-                cfg.CreateMap<SystemActivityProjection, SystemActivityDTO>();
-            });
         }
 
         public IConfiguration Configuration { get; private set; }
@@ -90,6 +60,7 @@ namespace UrbanSpork.API
             //EF config for npgsql
             services.AddEntityFrameworkNpgsql().AddDbContext<UrbanDbContext>(
                 options => options.UseNpgsql(connectionString, m => m.MigrationsAssembly("UrbanSpork.DataAccess")), ServiceLifetime.Transient);
+
 
             //Cors config
             services.AddCors(options =>
@@ -129,9 +100,20 @@ namespace UrbanSpork.API
             builder.RegisterType<EventStore>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GenericEventPublisher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UrbanDbContext>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
             builder.RegisterType<Email>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            // Configure Automapper
+            builder.Register(a => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutomapperProfile());
+            })).AsSelf().SingleInstance();
+
+            builder.Register(a => a.Resolve<MapperConfiguration>()
+                    .CreateMapper(a.Resolve))
+                .As<IMapper>()
+                .InstancePerLifetimeScope();
             #endregion
+
 
             #region Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
