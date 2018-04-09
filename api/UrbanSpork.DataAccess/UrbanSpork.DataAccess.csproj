@@ -20,6 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Migrations\20180409155912_User History.cs" />
+    <Compile Include="Migrations\20180409155912_User History.Designer.cs" />
+    <Compile Include="Migrations\UrbanDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />

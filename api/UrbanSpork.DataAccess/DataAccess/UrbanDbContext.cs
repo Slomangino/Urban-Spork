@@ -36,6 +36,7 @@ namespace UrbanSpork.DataAccess.DataAccess
         public DbSet<DepartmentProjection> DepartmentProjection { get; set; }
         public DbSet<PositionProjection> PositionProjection { get; set; }
         public DbSet<PermissionTemplateProjection> PermissionTemplateProjection { get; set; }
+        public DbSet<UserHistoryProjection> UserHistoryProjection { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,8 @@ namespace UrbanSpork.DataAccess.DataAccess
                 .HasKey(a => new { a.Id, a.Version });
             modelBuilder.Entity<PendingRequestsProjection>()
                 .HasKey(a => new {a.PermissionId, a.ForId, a.RequestType});
+            modelBuilder.Entity<UserHistoryProjection>()
+                .HasKey(a => new {a.UserId, a.Version});
 
             //https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL/issues/279
             modelBuilder.Model.GetEntityTypes()
