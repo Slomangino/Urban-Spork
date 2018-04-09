@@ -18,11 +18,13 @@ namespace UrbanSpork.DataAccess
     {
         private readonly ISession _session;
         private readonly UrbanDbContext _context;
+        private readonly IMapper _mapper;
 
-        public PermissionManager(ISession session, UrbanDbContext context)
+        public PermissionManager(ISession session, UrbanDbContext context, IMapper mapper)
         {
             _session = session;
             _context = context;
+            _mapper = mapper;
         }
         public async Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input)
         {
@@ -30,7 +32,7 @@ namespace UrbanSpork.DataAccess
             await _session.Add(permAgg);
             await _session.Commit();
 
-            return Mapper.Map<PermissionDTO>(permAgg);
+            return _mapper.Map<PermissionDTO>(permAgg);
         }
 
         public async Task<PermissionDTO> UpdatePermissionInfo(UpdatePermissionInfoDTO input)
@@ -38,7 +40,7 @@ namespace UrbanSpork.DataAccess
             var permAgg = await _session.Get<PermissionAggregate>(input.Id);
             permAgg.UpdatePermissionInfo(input);
             await _session.Commit();
-            return Mapper.Map<PermissionDTO>(permAgg);
+            return _mapper.Map<PermissionDTO>(permAgg);
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace UrbanSpork.DataAccess
                     }
                 }
             }
-            return Mapper.Map<PermissionDTO>(permAgg);
+            return _mapper.Map<PermissionDTO>(permAgg);
         }
 
         public async Task<PermissionDTO> EnablePermission(EnablePermissionInputDTO dto)
@@ -106,7 +108,7 @@ namespace UrbanSpork.DataAccess
                 permAgg.EnablePermission(await _session.Get<UserAggregate>(dto.ById));
                 await _session.Commit();
             }
-            return Mapper.Map<PermissionDTO>(permAgg);
+            return _mapper.Map<PermissionDTO>(permAgg);
         }
     }
 }

@@ -18,16 +18,18 @@ namespace UrbanSpork.ReadModel.QueryHandlers
     public class GetUserManagementProjectionQueryHandler : IQueryHandler<GetUserManagementProjectionQuery, List<UserManagementDTO>>
     {
         private readonly UrbanDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetUserManagementProjectionQueryHandler(UrbanDbContext context)
+        public GetUserManagementProjectionQueryHandler(UrbanDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<List<UserManagementDTO>> Handle(GetUserManagementProjectionQuery query)
         {
 
-            var mappedResult = Mapper.Map<List<UserManagementProjection>, List<UserManagementDTO>>(await Filter(query.FilterCriteria).ToListAsync());
+            var mappedResult = _mapper.Map<List<UserManagementProjection>, List<UserManagementDTO>>(await Filter(query.FilterCriteria).ToListAsync());
             return mappedResult;
 
         }

@@ -16,17 +16,19 @@ namespace UrbanSpork.ReadModel.QueryHandlers
     public class GetOffboardUserPermissionsQueryHandler : IQueryHandler<GetOffboardUserPermissionsQuery, OffBoardUserDTO>
     {
         private readonly UrbanDbContext _context;
-        
+        private readonly IMapper _mapper;
 
-        public GetOffboardUserPermissionsQueryHandler(UrbanDbContext context)
+
+        public GetOffboardUserPermissionsQueryHandler(UrbanDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<OffBoardUserDTO> Handle(GetOffboardUserPermissionsQuery query)
         {
             var result = await _context.UserDetailProjection.Where(a => a.UserId == query.UserID).SingleOrDefaultAsync();
-            var mappedResult = Mapper.Map<UserDetailProjection, OffBoardUserDTO>(result);
+            var mappedResult = _mapper.Map<UserDetailProjection, OffBoardUserDTO>(result);
             
 
 

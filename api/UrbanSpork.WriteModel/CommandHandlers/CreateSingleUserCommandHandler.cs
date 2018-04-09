@@ -13,11 +13,13 @@ namespace UrbanSpork.WriteModel.CommandHandlers
     {
         private readonly ISession _session;
         private readonly IEmail _email;
+        private readonly IMapper _mapper;
 
-        public CreateSingleUserCommandHandler(ISession session, IEmail email)
+        public CreateSingleUserCommandHandler(ISession session, IEmail email, IMapper mapper)
         {
             _session = session;
             _email = email;
+            _mapper = mapper;
         }
 
         public async Task<UserDTO> Handle(CreateSingleUserCommand command)
@@ -25,7 +27,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers
             var userAgg = UserAggregate.CreateNewUser(command.Input);
             await _session.Add(userAgg);
             await _session.Commit();
-            var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
+            var userDTO = _mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
 
             _email.SendUserCreatedMessage(userDTO);
             return userDTO;
