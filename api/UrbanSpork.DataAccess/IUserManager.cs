@@ -8,7 +8,7 @@ namespace UrbanSpork.DataAccess
 {
     public interface IUserManager
     {
-        Task<UserDTO> CreateNewUser(CreateUserInputDTO input);
+        //Task<UserDTO> CreateNewUser(CreateUserInputDTO input);
         Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO input);
         Task<UserDTO> DisableSingleUser(DisableUserInputDTO input);
         Task<UserDTO> EnableSingleUser(EnableUserInputDTO input);

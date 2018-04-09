@@ -26,18 +26,6 @@ namespace UrbanSpork.DataAccess
             _email = email; 
         }
 
-        public async Task<UserDTO> CreateNewUser(CreateUserInputDTO input)
-        {
-            var userAgg = UserAggregate.CreateNewUser(input);
-            await _session.Add(userAgg);
-            await _session.Commit();
-            var userDTO = Mapper.Map<UserDTO>(await _session.Get<UserAggregate>(userAgg.Id));
-
-
-            _email.SendUserCreatedMessage(userDTO);
-            return userDTO;
-        }
-
         public async Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
         {
             var userAgg = await _session.Get<UserAggregate>(id);
