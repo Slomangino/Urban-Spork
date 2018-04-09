@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
+﻿using Autofac;
 using AutoMapper;
-using UrbanSpork.CQRS.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
-using UrbanSpork.Common.ExceptionHandling;
+using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
+using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.DataAccess.Repositories;
@@ -30,11 +25,10 @@ using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.ReadModel.QueryHandlers;
 using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.CommandHandlers;
-using UrbanSpork.WriteModel.Commands;
-using UrbanSpork.WriteModel.WriteModel.Commands;
-using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.WriteModel.CommandHandlers.PermissionTemplates;
+using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
+using UrbanSpork.WriteModel.WriteModel.Commands;
 
 namespace UrbanSpork.API
 {
@@ -92,7 +86,7 @@ namespace UrbanSpork.API
         // "Without ConfigureContainer" mechanism.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //Utility
+            #region Utility
             builder.RegisterType<PermissionRepository>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -118,9 +112,10 @@ namespace UrbanSpork.API
                     .CreateMapper(a.Resolve))
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
+            #endregion
 
 
-            // Projections
+            #region Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PendingRequestsProjection>().AsSelf().InstancePerLifetimeScope();
@@ -131,69 +126,75 @@ namespace UrbanSpork.API
             builder.RegisterType<PermissionTemplateProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<DashboardProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UserHistoryProjection>().AsSelf().InstancePerLifetimeScope();
+            #endregion
 
+            #region Commands
+                #region users
+                builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EnableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UserPermissionsRequestedCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DenyUserPermissionRequestCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<GrantUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RevokeUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
 
-            //Commands
-            //users
-            builder.RegisterType<CreateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UpdateSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DisableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EnableSingleUserCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UserPermissionsRequestedCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DenyUserPermissionRequestCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GrantUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RevokeUserPermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #region permissions
+                builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UpdatePermissionInfoCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<CreatePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EditPermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DeletePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
 
+                #region Department
+                builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
 
+                #region Position
+                builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RemovePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
+            #endregion
 
-            //permissions
-            builder.RegisterType<CreatePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UpdatePermissionInfoCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DisablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EnablePermissionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<CreatePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EditPermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DeletePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #region  Command Handlers
+                #region  users
+                builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EnableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UserPermissionsRequestedCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DenyUserPermissionRequestCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<GrantUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RevokeUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
+            
+                #region permissions
+                builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<UpdatePermissionInfoCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<CreatePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<EditPermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<DeletePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
+            
+                #region department
+                builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
 
-            //Department
-            builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            //Position
-            builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RemovePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            //Command Handlers
-            //users
-            builder.RegisterType<CreateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UpdateSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DisableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EnableSingleUserCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UserPermissionsRequestedCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DenyUserPermissionRequestCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<GrantUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RevokeUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-
-            //permissions
-            builder.RegisterType<CreatePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UpdatePermissionInfoCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DisablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EnablePermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<CreatePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<EditPermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<DeletePermissionTemplateCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-
-            //department
-            builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            //Position
-            builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<RemovePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-
-            //Query
+                #region  Position
+                builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RemovePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                #endregion
+            #endregion
+            
+            #region Query
             builder.RegisterType<GetUserDetailByIdQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserCollectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserManagementProjectionQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -210,10 +211,10 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPositionsByDepartmentNameQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDashboardQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserHistoryQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #endregion
 
-
-
-            //Query Handlers
+            #region Query Handlers
             builder.RegisterType<GetUserDetailByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetPermissionByIdQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetAllPermissionsQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -230,6 +231,8 @@ namespace UrbanSpork.API
             builder.RegisterType<GetPositionsByDepartmentNameQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDashboardQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetUserHistoryQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #endregion
 
 
         }

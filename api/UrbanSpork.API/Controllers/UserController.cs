@@ -109,6 +109,14 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        [HttpGet("getUserHistory")]
+        public async Task<List<UserHistoryProjection>> GetUserHistory([FromQuery] UserHistoryFilterCriteria filter)
+        {
+            var query = new GetUserHistoryQuery(filter);
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
+
         [HttpPost("createuser")]
         public async Task<UserDTO> CreateUser([FromBody] CreateUserInputDTO input)
         {
