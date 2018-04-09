@@ -28,19 +28,6 @@ namespace UrbanSpork.DataAccess
             _mapper = mapper;
         }
 
-        public async Task<UpdateUserInformationDTO> UpdateUserInfo(Guid id, UpdateUserInformationDTO dto)
-        {
-            var userAgg = await _session.Get<UserAggregate>(id);
-
-            userAgg.UpdateUserInfo(dto);
-
-            await _session.Commit();
-
-            var result = _mapper.Map<UpdateUserInformationDTO>(userAgg);
-
-            return result;
-        }
-
         public async Task<UserDTO> DisableSingleUser(DisableUserInputDTO input)
         {
             var userAgg = await _session.Get<UserAggregate>(input.UserId);
