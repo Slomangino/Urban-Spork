@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutoMapper;
+using Moq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Moq;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
-using UrbanSpork.WriteModel.CommandHandlers;
+using UrbanSpork.WriteModel.CommandHandlers.User;
 
 namespace UrbanSpork.Tests.User.CommandHandlerTests
 {

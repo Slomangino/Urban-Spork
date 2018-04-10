@@ -1,9 +1,10 @@
-﻿using AutoMapper;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Moq;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
@@ -13,7 +14,7 @@ using UrbanSpork.WriteModel.CommandHandlers.User;
 
 namespace UrbanSpork.Tests.User.CommandHandlerTests
 {
-    public class UpdateSingleUserCommandHandlerMockAggregate
+    public class EnableSingleUserCommandHandlerMockAggregate
     {
         public static readonly Mock<ISession> SessionMock = new Mock<ISession>();
         public static readonly Mock<IEmail> EmailMock = new Mock<IEmail>();
@@ -26,9 +27,9 @@ namespace UrbanSpork.Tests.User.CommandHandlerTests
         public bool SessionGetWasCalled = false;
         public bool SessionCommitWasCalled = false;
 
-        public UpdateSingleUserCommandHandler HandlerFactory()
+        public EnableSingleUserCommandHandler HandlerFactory()
         {
-            return new UpdateSingleUserCommandHandler(Session, Mapper);
+            return new EnableSingleUserCommandHandler(Session, Mapper);
         }
 
         public UserAggregate SetupAdminUser()
@@ -51,9 +52,29 @@ namespace UrbanSpork.Tests.User.CommandHandlerTests
             return agg;
         }
 
+        public UserAggregate SetupDisabledUser()
+        {
+
+            var dto = new CreateUserInputDTO
+            {
+                FirstName = "testDisabled",
+                LastName = "testLastName",
+                Email = "testEmail",
+                Position = "testPosition",
+                Department = "testDepartment",
+                IsAdmin = true,
+                IsActive = false,
+
+                PermissionList = new Dictionary<Guid, PermissionDetails>()
+            };
+
+            var agg = UserAggregate.CreateNewUser(dto);
+            return agg;
+        }
+
         public void setup_session_to_ensure_GetAndCommit_are_called()
         {
-            var agg = SetupAdminUser();
+            var agg = SetupDisabledUser();
             SessionMock.Setup(a => a.Get<UserAggregate>(It.IsAny<Guid>(), It.IsAny<int?>(), It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
@@ -68,5 +89,6 @@ namespace UrbanSpork.Tests.User.CommandHandlerTests
                 })
                 .Returns(Task.FromResult(0));
         }
+
     }
 }

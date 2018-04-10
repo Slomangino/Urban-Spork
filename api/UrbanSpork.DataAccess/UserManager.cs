@@ -28,32 +28,6 @@ namespace UrbanSpork.DataAccess
             _mapper = mapper;
         }
 
-        public async Task<UserDTO> DisableSingleUser(DisableUserInputDTO input)
-        {
-            var userAgg = await _session.Get<UserAggregate>(input.UserId);
-
-            if (userAgg.IsActive) 
-            {
-                userAgg.DisableSingleUser(await _session.Get<UserAggregate>(input.ById));
-                await _session.Commit();
-            }
-            var result = _mapper.Map<UserDTO>(userAgg);
-            return result;
-        }
-
-        public async Task<UserDTO> EnableSingleUser(EnableUserInputDTO input)
-        {
-            var userAgg = await _session.Get<UserAggregate>(input.UserId);
-
-            if (!userAgg.IsActive)
-            {
-                userAgg.EnableSingleUser(await _session.Get<UserAggregate>(input.ById));
-                await _session.Commit();
-            }
-            var result = _mapper.Map<UserDTO>(userAgg);
-            return result;
-        }
-
         public async Task<UserDTO> UserPermissionsRequested(RequestUserPermissionsDTO input)
         {
             var forAgg = await _session.Get<UserAggregate>(input.ForId);

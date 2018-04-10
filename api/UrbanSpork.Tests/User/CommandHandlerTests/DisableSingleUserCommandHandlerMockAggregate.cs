@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Moq;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
@@ -13,7 +13,7 @@ using UrbanSpork.WriteModel.CommandHandlers.User;
 
 namespace UrbanSpork.Tests.User.CommandHandlerTests
 {
-    public class UpdateSingleUserCommandHandlerMockAggregate
+    public class DisableSingleUserCommandHandlerMockAggregate
     {
         public static readonly Mock<ISession> SessionMock = new Mock<ISession>();
         public static readonly Mock<IEmail> EmailMock = new Mock<IEmail>();
@@ -26,21 +26,20 @@ namespace UrbanSpork.Tests.User.CommandHandlerTests
         public bool SessionGetWasCalled = false;
         public bool SessionCommitWasCalled = false;
 
-        public UpdateSingleUserCommandHandler HandlerFactory()
+        public DisableSingleUserCommandHandler HandlerFactory()
         {
-            return new UpdateSingleUserCommandHandler(Session, Mapper);
+            return new DisableSingleUserCommandHandler(Session, Mapper);
         }
 
         public UserAggregate SetupAdminUser()
         {
-
             var dto = new CreateUserInputDTO
             {
                 FirstName = "test",
                 LastName = "testLastName",
-                Email = "testEmail",
+                Email = "test@email.com",
                 Position = "testPosition",
-                Department = "testDepartment",
+                Department = "testDeapartment",
                 IsAdmin = true,
                 IsActive = true,
 

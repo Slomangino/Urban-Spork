@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
-using UrbanSpork.DataAccess.DataAccess;
-using UrbanSpork.DataAccess.Events;
-using UrbanSpork.DataAccess.Events.Users;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
-using UrbanSpork.Tests.Controllers.Permission;
 using UrbanSpork.WriteModel.Commands;
-using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.User;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 using Xunit;
 
 namespace UrbanSpork.Tests.Controllers.User

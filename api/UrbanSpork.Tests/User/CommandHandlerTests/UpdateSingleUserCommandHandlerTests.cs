@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UrbanSpork.Common.DataTransferObjects.User;
-using UrbanSpork.WriteModel.WriteModel.Commands;
+﻿using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 using Xunit;
 
 namespace UrbanSpork.Tests.User.CommandHandlerTests

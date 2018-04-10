@@ -2,7 +2,7 @@
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.WriteModel.Command;
 
-namespace UrbanSpork.WriteModel.Commands
+namespace UrbanSpork.WriteModel.Commands.User
 {
     public class CreateSingleUserCommand : ICommand<UserDTO>
     {
