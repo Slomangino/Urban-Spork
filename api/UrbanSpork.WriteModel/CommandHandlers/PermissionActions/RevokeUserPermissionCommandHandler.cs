@@ -1,119 +1,64 @@
-﻿using AutoMapper;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
+using UrbanSpork.CQRS.WriteModel.CommandHandler;
+using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.WriteModel.Commands.PermissionActions;
 
-namespace UrbanSpork.DataAccess
+namespace UrbanSpork.WriteModel.CommandHandlers.PermissionActions
 {
-    public class UserManager : IUserManager
+    public class RevokeUserPermissionCommandHandler : ICommandHandler<RevokeUserPermissionCommand, UserDTO>
     {
-        private readonly ISession _session;
         private readonly IEmail _email;
         private readonly IMapper _mapper;
+        private readonly ISession _session;
 
-        public UserManager(ISession session, IEmail email, IMapper mapper)
+        public RevokeUserPermissionCommandHandler(IEmail email, IMapper mapper, ISession session)
         {
-            _session = session;
             _email = email;
             _mapper = mapper;
+            _session = session;
         }
 
-        public async Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input)
+        public async Task<UserDTO> Handle(RevokeUserPermissionCommand command)
         {
-            var forAgg = await _session.Get<UserAggregate>(input.ForId);
-            var byAgg = await _session.Get<UserAggregate>(input.ById);
+            var forAgg = await _session.Get<UserAggregate>(command.Input.ForId);
+            var byAgg = await _session.Get<UserAggregate>(command.Input.ById);
 
-            input.PermissionsToDeny = VerifyActions(
+            command.Input.PermissionsToRevoke = VerifyActions(
                 forAgg,
                 byAgg,
-                input.PermissionsToDeny,
-                new List<string>
-                {
-                    typeof(UserPermissionRevokedEvent).FullName,
-                    typeof(UserPermissionRequestDeniedEvent).FullName,
-                    typeof(UserPermissionGrantedEvent).FullName
-                });
-            if (input.PermissionsToDeny.Any())
-            {
-                var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in input.PermissionsToDeny)
-                {
-                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
-                }
-                forAgg.DenyPermissionRequest(byAgg, permissionAggregates, input);
-                await _session.Commit();
-                _email.SendRequestDeniedMessage(forAgg, permissionAggregates);
-            }
-            return _mapper.Map<UserDTO>(forAgg);
-        }
-
-        public async Task<UserDTO> GrantUserPermission(GrantUserPermissionDTO input)
-        {
-            var forAgg = await _session.Get<UserAggregate>(input.ForId);
-            var byAgg = await _session.Get<UserAggregate>(input.ById);
-
-            input.PermissionsToGrant = VerifyActions(
-                forAgg,
-                byAgg,
-                input.PermissionsToGrant,
-                new List<string>
-                {
-                    typeof(UserPermissionGrantedEvent).FullName
-                });
-
-            if (input.PermissionsToGrant.Any())
-            {
-                var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in input.PermissionsToGrant)
-                {
-                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
-                }
-                forAgg.GrantPermission(byAgg, permissionAggregates, input);
-                await _session.Commit();
-                _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
-            }
-
-            return _mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
-        }
-
-        public async Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input)
-        {
-            var forAgg = await _session.Get<UserAggregate>(input.ForId);
-            var byAgg = await _session.Get<UserAggregate>(input.ById);
-
-            input.PermissionsToRevoke = VerifyActions(
-                forAgg,
-                byAgg,
-                input.PermissionsToRevoke,
+                command.Input.PermissionsToRevoke,
                 new List<string> {
                     typeof(UserPermissionsRequestedEvent).FullName,
                     typeof(UserPermissionRevokedEvent).FullName,
                     typeof(UserPermissionRequestDeniedEvent).FullName
                 });
 
-            if (input.PermissionsToRevoke.Any())
+            if (command.Input.PermissionsToRevoke.Any())
             {
                 var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in input.PermissionsToRevoke)
+                foreach (var request in command.Input.PermissionsToRevoke)
                 {
                     permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
                 }
 
-                forAgg.RevokePermission(byAgg, input);
+                forAgg.RevokePermission(byAgg, command.Input);
                 await _session.Commit();
                 _email.SendPermissionsRevokedMessage(forAgg, permissionAggregates);
             }
 
-            
+
             return _mapper.Map<UserDTO>(forAgg);
         }
 

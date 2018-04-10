@@ -5,7 +5,7 @@ using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.WriteModel.Command;
 
-namespace UrbanSpork.WriteModel.Commands
+namespace UrbanSpork.WriteModel.Commands.PermissionActions
 {
     public class RevokeUserPermissionCommand : ICommand<UserDTO>
     {
