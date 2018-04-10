@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using UrbanSpork.Common.DataTransferObjects;
+﻿using AutoMapper;
+using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects.User;
-using UrbanSpork.DataAccess;
-using UrbanSpork.CQRS.WriteModel.CommandHandler;
-using UrbanSpork.WriteModel.WriteModel.Commands;
 using UrbanSpork.CQRS.Domain;
+using UrbanSpork.CQRS.WriteModel.CommandHandler;
+using UrbanSpork.DataAccess;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 
-namespace UrbanSpork.WriteModel.CommandHandlers
+namespace UrbanSpork.WriteModel.CommandHandlers.User
 {
     public class UpdateSingleUserCommandHandler : ICommandHandler<UpdateSingleUserCommand, UpdateUserInformationDTO>
     {

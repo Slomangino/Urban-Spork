@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using System.Threading.Tasks;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.CQRS.Domain;
-using UrbanSpork.DataAccess;
 using UrbanSpork.CQRS.WriteModel.CommandHandler;
+using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
-using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.User;
 
-namespace UrbanSpork.WriteModel.CommandHandlers
+namespace UrbanSpork.WriteModel.CommandHandlers.User
 {
     public class CreateSingleUserCommandHandler : ICommandHandler<CreateSingleUserCommand, UserDTO>
     {

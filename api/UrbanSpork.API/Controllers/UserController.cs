@@ -1,19 +1,18 @@
-﻿using UrbanSpork.CQRS.Queries;
-using UrbanSpork.CQRS.WriteModel;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.Common.FilterCriteria;
+using UrbanSpork.CQRS.Queries;
+using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
-using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.User;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 
 namespace UrbanSpork.API.Controllers
 {

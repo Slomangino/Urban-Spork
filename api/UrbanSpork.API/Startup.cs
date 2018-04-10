@@ -5,14 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.Permission;
-using UrbanSpork.Common.DataTransferObjects.Projection;
-using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
@@ -26,9 +20,11 @@ using UrbanSpork.ReadModel.QueryHandlers;
 using UrbanSpork.WriteModel;
 using UrbanSpork.WriteModel.CommandHandlers;
 using UrbanSpork.WriteModel.CommandHandlers.PermissionTemplates;
+using UrbanSpork.WriteModel.CommandHandlers.User;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
-using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.User;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 
 namespace UrbanSpork.API
 {

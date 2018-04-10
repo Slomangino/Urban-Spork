@@ -15,11 +15,11 @@ namespace UrbanSpork.Tests.User
 
             var dto = new CreateUserInputDTO
             {
-                FirstName = "Stephen",
-                LastName = "Lomangino",
-                Email = "stephen@test.com",
-                Position = "API Lead",
-                Department = "Development",
+                FirstName = "test",
+                LastName = "testLastName",
+                Email = "test@email.com",
+                Position = "testPosition",
+                Department = "testDeapartment",
                 IsAdmin = true,
                 IsActive = true,
 
@@ -35,11 +35,11 @@ namespace UrbanSpork.Tests.User
 
             var dto = new CreateUserInputDTO
             {
-                FirstName = "Stephen",
-                LastName = "Lomangino",
-                Email = "stephen@test.com",
-                Position = "API Lead",
-                Department = "Development",
+                FirstName = "test",
+                LastName = "testLastName",
+                Email = "test@email.com",
+                Position = "testPosition",
+                Department = "testDeapartment",
                 IsAdmin = false,
                 IsActive = true,
 

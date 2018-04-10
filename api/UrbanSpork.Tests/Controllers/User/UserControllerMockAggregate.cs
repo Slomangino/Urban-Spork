@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Moq;
 using UrbanSpork.API.Controllers;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.Projection;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Queries;
@@ -15,7 +12,8 @@ using UrbanSpork.CQRS.WriteModel.Command;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
-using UrbanSpork.WriteModel.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.User;
+using UrbanSpork.WriteModel.WriteModel.Commands.User;
 
 namespace UrbanSpork.Tests.Controllers.User
 {

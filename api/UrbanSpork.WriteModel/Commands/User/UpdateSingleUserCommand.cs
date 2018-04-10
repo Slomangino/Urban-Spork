@@ -1,9 +1,8 @@
-﻿using UrbanSpork.CQRS.WriteModel.Command;
-using System;
-using UrbanSpork.Common.DataTransferObjects;
+﻿using System;
 using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.CQRS.WriteModel.Command;
 
-namespace UrbanSpork.WriteModel.WriteModel.Commands
+namespace UrbanSpork.WriteModel.WriteModel.Commands.User
 {
     public class UpdateSingleUserCommand : ICommand<UpdateUserInformationDTO>
     {
