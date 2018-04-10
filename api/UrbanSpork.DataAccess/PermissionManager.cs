@@ -26,14 +26,14 @@ namespace UrbanSpork.DataAccess
             _context = context;
             _mapper = mapper;
         }
-        public async Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input)
-        {
-            var permAgg = PermissionAggregate.CreateNewPermission(input);
-            await _session.Add(permAgg);
-            await _session.Commit();
+        //public async Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input)
+        //{
+        //    var permAgg = PermissionAggregate.CreateNewPermission(input);
+        //    await _session.Add(permAgg);
+        //    await _session.Commit();
 
-            return _mapper.Map<PermissionDTO>(permAgg);
-        }
+        //    return _mapper.Map<PermissionDTO>(permAgg);
+        //}
 
         public async Task<PermissionDTO> UpdatePermissionInfo(UpdatePermissionInfoDTO input)
         {

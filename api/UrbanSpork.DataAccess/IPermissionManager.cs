@@ -8,7 +8,7 @@ namespace UrbanSpork.DataAccess
 {
     public interface IPermissionManager
     {
-        Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input);
+        //Task<PermissionDTO> CreateNewPermission(CreateNewPermissionDTO input);
         Task<PermissionDTO> UpdatePermissionInfo(UpdatePermissionInfoDTO input);
         Task<PermissionDTO> DisablePermission(DisablePermissionInputDTO input);
         Task<PermissionDTO> EnablePermission(EnablePermissionInputDTO input);

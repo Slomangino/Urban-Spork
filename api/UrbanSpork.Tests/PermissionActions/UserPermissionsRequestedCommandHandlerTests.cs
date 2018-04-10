@@ -6,7 +6,7 @@ using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.WriteModel.Commands.PermissionActions;
 using Xunit;
 
-namespace UrbanSpork.Tests.Permission
+namespace UrbanSpork.Tests.PermissionActions
 {
     public class UserPermissionsRequestedCommandHandlerTests
     {

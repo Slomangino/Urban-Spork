@@ -10,6 +10,7 @@ using UrbanSpork.CQRS.WriteModel.Command;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.Permission;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
 
 namespace UrbanSpork.Tests.Controllers.Permission

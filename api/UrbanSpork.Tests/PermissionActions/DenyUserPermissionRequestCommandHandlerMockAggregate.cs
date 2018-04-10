@@ -13,7 +13,7 @@ using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.WriteModel.CommandHandlers.PermissionActions;
 
-namespace UrbanSpork.Tests.Permission
+namespace UrbanSpork.Tests.PermissionActions
 {
     public class DenyUserPermissionRequestCommandHandlerMockAggregate
     {
