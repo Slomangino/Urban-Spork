@@ -7,11 +7,18 @@ namespace UrbanSpork.Common.FilterCriteria
 {
     public class ApproverActivityFilterCriteria : IFilterCriteria
     {
+        public Guid ApproverId { get; set; } = Guid.Empty;
+
         public string SearchTerms { get; set; }
+
         public string SortDirection { get; set; } = "ASC";
+
         public string SortField { get; set; }
+
         public bool EnablePaging { get; set; }
+
         public DateTime? MinDate { get; set; } = null;
+
         public DateTime? MaxDate { get; set; } = null;
     }
 }

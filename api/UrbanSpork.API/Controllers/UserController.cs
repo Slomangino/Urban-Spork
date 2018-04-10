@@ -11,6 +11,7 @@ using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.PermissionActions;
 using UrbanSpork.WriteModel.Commands.User;
 using UrbanSpork.WriteModel.WriteModel.Commands.User;
 
