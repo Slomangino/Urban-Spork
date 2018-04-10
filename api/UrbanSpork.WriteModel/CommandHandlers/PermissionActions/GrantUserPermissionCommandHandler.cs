@@ -1,70 +1,63 @@
-﻿using AutoMapper;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
-using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
+using UrbanSpork.CQRS.WriteModel.CommandHandler;
+using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
-using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
+using UrbanSpork.WriteModel.Commands.PermissionActions;
 
-namespace UrbanSpork.DataAccess
+namespace UrbanSpork.WriteModel.CommandHandlers.PermissionActions
 {
-    public class UserManager : IUserManager
+    public class GrantUserPermissionCommandHandler : ICommandHandler<GrantUserPermissionCommand, UserDTO>
     {
-        private readonly ISession _session;
         private readonly IEmail _email;
         private readonly IMapper _mapper;
-
-        public UserManager(ISession session, IEmail email, IMapper mapper)
+        private readonly ISession _session;
+        
+        public GrantUserPermissionCommandHandler(IEmail email, IMapper mapper, ISession session)
         {
-            _session = session;
             _email = email;
             _mapper = mapper;
+            _session = session;
         }
 
-        public async Task<UserDTO> RevokePermissions(RevokeUserPermissionDTO input)
+        public async Task<UserDTO> Handle(GrantUserPermissionCommand command)
         {
-            var forAgg = await _session.Get<UserAggregate>(input.ForId);
-            var byAgg = await _session.Get<UserAggregate>(input.ById);
+            var forAgg = await _session.Get<UserAggregate>(command.Input.ForId);
+            var byAgg = await _session.Get<UserAggregate>(command.Input.ById);
 
-            input.PermissionsToRevoke = VerifyActions(
+            command.Input.PermissionsToGrant = VerifyActions(
                 forAgg,
                 byAgg,
-                input.PermissionsToRevoke,
-                new List<string> {
-                    typeof(UserPermissionsRequestedEvent).FullName,
-                    typeof(UserPermissionRevokedEvent).FullName,
-                    typeof(UserPermissionRequestDeniedEvent).FullName
+                command.Input.PermissionsToGrant,
+                new List<string>
+                {
+                    typeof(UserPermissionGrantedEvent).FullName
                 });
 
-            if (input.PermissionsToRevoke.Any())
+            if (command.Input.PermissionsToGrant.Any())
             {
                 var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in input.PermissionsToRevoke)
+                foreach (var request in command.Input.PermissionsToGrant)
                 {
                     permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
                 }
-
-                forAgg.RevokePermission(byAgg, input);
+                forAgg.GrantPermission(byAgg, permissionAggregates, command.Input);
                 await _session.Commit();
-                _email.SendPermissionsRevokedMessage(forAgg, permissionAggregates);
+                _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
             }
 
-            
-            return _mapper.Map<UserDTO>(forAgg);
+            return _mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
         }
 
-        /**
-         * filters actions taken according to the forAgg's permissionList's event type, and the event types being passed in
-         *
-         * Ex: if a forAgg's permission list has VisualStudio permission's  eventType as "revoked", we do not want to be able to revoke it again, so we
-         * remove it from the list of actions.
-         */
         private Dictionary<Guid, PermissionDetails> VerifyActions(UserAggregate forAgg, UserAggregate byAgg, Dictionary<Guid, PermissionDetails> requests, List<string> eventTypesToRemove)
         {
             var result = new Dictionary<Guid, PermissionDetails>();
@@ -91,7 +84,7 @@ namespace UrbanSpork.DataAccess
                         }
                     }
                 } // if the permission list does not contain, this case will be handled by the aggregate since admins can do 
-                  // whatever they want. and the aggregate will restrict user actions based on that
+                // whatever they want. and the aggregate will restrict user actions based on that
             }
 
             markedForRemoval.ForEach(a => result.Remove(a));
