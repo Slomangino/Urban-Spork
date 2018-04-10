@@ -32,7 +32,10 @@ namespace UrbanSpork.ReadModel.QueryHandlers
         {
             IQueryable<ApproverActivityProjection> queryable = _context.ApproverActivityProjection;
 
-           
+            if (filter.ApproverId != Guid.Empty)
+            {
+                queryable = queryable.Where(a => a.ApproverId == filter.ApproverId);
+            }
 
             if (!String.IsNullOrWhiteSpace(filter.SearchTerms))
             {

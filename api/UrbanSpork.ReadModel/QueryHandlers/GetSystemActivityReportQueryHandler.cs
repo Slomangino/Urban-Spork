@@ -37,6 +37,11 @@ namespace UrbanSpork.ReadModel.QueryHandlers
         {
             IQueryable<SystemActivityProjection> query = _context.SystemActivityProjection;
 
+            if (criteria.PermissionId != Guid.Empty)
+            {
+                query = query.Where(a => a.PermissionId == criteria.PermissionId);
+            }
+
             if (!String.IsNullOrWhiteSpace(criteria.SearchTerms))
             {
                 criteria.SearchTerms = criteria.SearchTerms.ToLower();
