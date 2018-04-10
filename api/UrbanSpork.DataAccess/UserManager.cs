@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
-using UrbanSpork.CQRS.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.User;
+using UrbanSpork.CQRS.Domain;
+using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
-using UrbanSpork.DataAccess.Emails;
-using UrbanSpork.DataAccess.Repositories;
 
 namespace UrbanSpork.DataAccess
 {
@@ -26,32 +25,6 @@ namespace UrbanSpork.DataAccess
             _session = session;
             _email = email;
             _mapper = mapper;
-        }
-
-        public async Task<UserDTO> UserPermissionsRequested(RequestUserPermissionsDTO input)
-        {
-            var forAgg = await _session.Get<UserAggregate>(input.ForId);
-            var byAgg = await _session.Get<UserAggregate>(input.ById);
-            
-            input.Requests = VerifyActions(
-                forAgg, 
-                byAgg, 
-                input.Requests,
-                new List<string>{typeof(UserPermissionsRequestedEvent).FullName, typeof(UserPermissionGrantedEvent).FullName});
-            
-            if (input.Requests.Any())
-            {
-                var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in input.Requests)
-                {
-                    permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
-                }
-
-                forAgg.UserRequestedPermissions(permissionAggregates, input);
-                await _session.Commit();
-                _email.SendPermissionsRequestedMessage(forAgg, permissionAggregates);
-            }
-            return _mapper.Map<UserDTO>(forAgg);
         }
 
         public async Task<UserDTO> DenyUserPermissionRequest(DenyUserPermissionRequestDTO input)
