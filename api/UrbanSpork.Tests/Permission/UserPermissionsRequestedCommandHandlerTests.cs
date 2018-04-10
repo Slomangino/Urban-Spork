@@ -29,7 +29,7 @@ namespace UrbanSpork.Tests.Permission
                     {
                         testPermissionAgg.Id, new PermissionDetails
                         {
-                            Reason = "testReason"
+                            Reason = "testRequestReason"
                         }
                     }
                 }
@@ -45,6 +45,7 @@ namespace UrbanSpork.Tests.Permission
             Assert.True(mockAgg.SessionCommitWasCalled);
         }
 
+        //this test doesnt actually do what it says it is supposed to do
         [Fact]
         public async void handler_should_filter_already_requested_command_out_of_requests()
         {
@@ -64,7 +65,7 @@ namespace UrbanSpork.Tests.Permission
                     {
                         testPermissionAgg.Id, new PermissionDetails
                         {
-                            Reason = "testReason"
+                            Reason = "testRequestReason"
                         }
                     }
                 }

@@ -45,7 +45,7 @@ namespace UrbanSpork.Tests.Permission
                     {
                         testPermissionAgg.Id, new PermissionDetails
                         {
-                            Reason = "testReason"
+                            Reason = "testRequestReason"
                         }
                     }
                 }

@@ -11,51 +11,55 @@ using UrbanSpork.CQRS.Domain;
 using UrbanSpork.CQRS.WriteModel.CommandHandler;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
+using UrbanSpork.DataAccess.Events;
 using UrbanSpork.DataAccess.Events.Users;
 using UrbanSpork.WriteModel.Commands.PermissionActions;
 
 namespace UrbanSpork.WriteModel.CommandHandlers.PermissionActions
 {
-    public class GrantUserPermissionCommandHandler : ICommandHandler<GrantUserPermissionCommand, UserDTO>
+    public class RevokeUserPermissionCommandHandler : ICommandHandler<RevokeUserPermissionCommand, UserDTO>
     {
         private readonly IEmail _email;
         private readonly IMapper _mapper;
         private readonly ISession _session;
-        
-        public GrantUserPermissionCommandHandler(IEmail email, IMapper mapper, ISession session)
+
+        public RevokeUserPermissionCommandHandler(IEmail email, IMapper mapper, ISession session)
         {
             _email = email;
             _mapper = mapper;
             _session = session;
         }
 
-        public async Task<UserDTO> Handle(GrantUserPermissionCommand command)
+        public async Task<UserDTO> Handle(RevokeUserPermissionCommand command)
         {
             var forAgg = await _session.Get<UserAggregate>(command.Input.ForId);
             var byAgg = await _session.Get<UserAggregate>(command.Input.ById);
 
-            command.Input.PermissionsToGrant = VerifyActions(
+            command.Input.PermissionsToRevoke = VerifyActions(
                 forAgg,
                 byAgg,
-                command.Input.PermissionsToGrant,
-                new List<string>
-                {
-                    typeof(UserPermissionGrantedEvent).FullName
+                command.Input.PermissionsToRevoke,
+                new List<string> {
+                    typeof(UserPermissionsRequestedEvent).FullName,
+                    typeof(UserPermissionRevokedEvent).FullName,
+                    typeof(UserPermissionRequestDeniedEvent).FullName
                 });
 
-            if (command.Input.PermissionsToGrant.Any())
+            if (command.Input.PermissionsToRevoke.Any())
             {
                 var permissionAggregates = new List<PermissionAggregate>();
-                foreach (var request in command.Input.PermissionsToGrant)
+                foreach (var request in command.Input.PermissionsToRevoke)
                 {
                     permissionAggregates.Add(await _session.Get<PermissionAggregate>(request.Key));
                 }
-                forAgg.GrantPermission(byAgg, permissionAggregates, command.Input);
+
+                forAgg.RevokePermission(byAgg, command.Input);
                 await _session.Commit();
-                _email.SendPermissionsGrantedMessage(forAgg, permissionAggregates);
+                _email.SendPermissionsRevokedMessage(forAgg, permissionAggregates);
             }
 
-            return _mapper.Map<UserDTO>(await _session.Get<UserAggregate>(forAgg.Id));
+
+            return _mapper.Map<UserDTO>(forAgg);
         }
 
         /**
@@ -90,7 +94,7 @@ namespace UrbanSpork.WriteModel.CommandHandlers.PermissionActions
                         }
                     }
                 } // if the permission list does not contain, this case will be handled by the aggregate since admins can do 
-                // whatever they want. and the aggregate will restrict user actions based on that
+                  // whatever they want. and the aggregate will restrict user actions based on that
             }
 
             markedForRemoval.ForEach(a => result.Remove(a));

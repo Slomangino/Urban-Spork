@@ -90,7 +90,7 @@ namespace UrbanSpork.API
             builder.RegisterType<QueryProcessor>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            //builder.RegisterType<UserManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<PermissionManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<PermissionAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();

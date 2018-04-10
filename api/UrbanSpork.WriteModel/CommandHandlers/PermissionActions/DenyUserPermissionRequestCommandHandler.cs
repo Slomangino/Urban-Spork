@@ -61,6 +61,12 @@ namespace UrbanSpork.WriteModel.CommandHandlers.PermissionActions
             return _mapper.Map<UserDTO>(forAgg);
         }
 
+        /**
+         * filters actions taken according to the forAgg's permissionList's event type, and the event types being passed in
+         *
+         * Ex: if a forAgg's permission list has VisualStudio permission's  eventType as "revoked", we do not want to be able to revoke it again, so we
+         * remove it from the list of actions.
+         */
         private Dictionary<Guid, PermissionDetails> VerifyActions(UserAggregate forAgg, UserAggregate byAgg, Dictionary<Guid, PermissionDetails> requests, List<string> eventTypesToRemove)
         {
             var result = new Dictionary<Guid, PermissionDetails>();

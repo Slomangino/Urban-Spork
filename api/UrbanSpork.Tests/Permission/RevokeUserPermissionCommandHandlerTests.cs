@@ -8,18 +8,18 @@ using Xunit;
 
 namespace UrbanSpork.Tests.Permission
 {
-    public class GrantUserPermissionCommandHandlerTests
+    public class RevokeUserPermissionCommandHandlerTests
     {
         [Fact]
-        public void given_GrantUserPermissionCommand_handler_should_call_session_Get_and_Commit_on_requested_permission()
+        public void give_RevokeUserPermissionCommand_handler_should_call_session_Get_and_Commit_on_granted_permission()
         {
             // Assemble
-            var mockAgg = new GrantUserPermissionCommandHandlerMockAggregate();
-            var requestHandler = mockAgg.UserPermissionsRequestedHandlerFactory();
-            var granthandler = mockAgg.GrantUserPermissionHandlerFactory();
+            var mockAgg = new RevokeUserPermissionCommandHandlerMockAggregate();
             var testAgg = mockAgg.SetupAdminUser();
             var testPermissionAgg = mockAgg.SetupTestPermission();
             mockAgg.setup_session_to_return_correct_aggregate(testAgg, testPermissionAgg);
+            var grantHandler = mockAgg.GrantUserPermissionRequestHandlerFactory();
+            var revokeHandler = mockAgg.RevokeUserPermissionHandlerFactory();
 
             var grantInput = new GrantUserPermissionDTO
             {
@@ -38,27 +38,27 @@ namespace UrbanSpork.Tests.Permission
 
             var grantCommand = new GrantUserPermissionCommand(grantInput);
 
-            var requestInput = new RequestUserPermissionsDTO
+            var revokeInput = new RevokeUserPermissionDTO
             {
                 ForId = testAgg.Id,
                 ById = testAgg.Id,
-                Requests = new Dictionary<Guid, PermissionDetails>
+                PermissionsToRevoke = new Dictionary<Guid, PermissionDetails>
                 {
                     {
                         testPermissionAgg.Id, new PermissionDetails
                         {
-                            Reason = "testRequestReason"
+                            Reason = "testRevokeReason"
                         }
                     }
                 }
             };
 
-            var requestCommand = new UserPermissionsRequestedCommand(requestInput);
+            var revokeCommand = new RevokeUserPermissionCommand(revokeInput);
 
-            var requestResult = requestHandler.Handle(requestCommand);
+            var grantResult = grantHandler.Handle(grantCommand);
 
             // Apply
-            var grantResult = granthandler.Handle(grantCommand);
+            var revokeResult = revokeHandler.Handle(revokeCommand);
 
             // Assert
             Assert.True(mockAgg.SessionGetWasCalled);
