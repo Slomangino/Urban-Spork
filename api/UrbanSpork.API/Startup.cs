@@ -93,7 +93,6 @@ namespace UrbanSpork.API
             builder.RegisterType<CommandDispatcher>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserDTO>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<UserAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<PermissionManager>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<PermissionAggregate>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Session>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Repository>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -112,9 +111,9 @@ namespace UrbanSpork.API
                     .CreateMapper(a.Resolve))
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
+
             #endregion
-
-
+            
             #region Projections
             builder.RegisterType<UserDetailProjection>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<PermissionDetailProjection>().AsSelf().InstancePerLifetimeScope();

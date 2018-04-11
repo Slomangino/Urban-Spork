@@ -39,9 +39,6 @@ namespace UrbanSpork.WriteModel.CommandHandlers.Permission
         /// <returns></returns>
         public async Task<PermissionDTO> Handle(DisablePermissionCommand command)
         {
-            //var result = await _permissionManager.DisablePermission(command.Input);
-            //return result;
-
             var permAgg = await _session.Get<PermissionAggregate>(command.Input.PermissionId);
 
             //only fire the event if the permission is already active, i dont think we want 
