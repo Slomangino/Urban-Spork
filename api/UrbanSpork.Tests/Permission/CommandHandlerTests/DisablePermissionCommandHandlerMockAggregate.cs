@@ -27,10 +27,11 @@ namespace UrbanSpork.Tests.Permission.CommandHandlerTests
         public static readonly Mock<UrbanDbContext> ContextMock = new Mock<UrbanDbContext>();
         public static readonly Mock<DbSet<UserDetailProjection>> UserDetailMock = new Mock<DbSet<UserDetailProjection>>();
 
+
         public readonly ISession Session = SessionMock.Object;
         public readonly IMapper Mapper = MapperMock.Object;
         public readonly UrbanDbContext Context = ContextMock.Object;
-        public readonly DbSet<UserDetailProjection> UserDetail = UserDetailMock.Object;
+
 
         public bool SessionGetWasCalled = false;
         public bool SessionCommitWasCalled = false;
@@ -74,14 +75,21 @@ namespace UrbanSpork.Tests.Permission.CommandHandlerTests
             return permAgg;
         }
 
-        public void setup_session_to_ensure_addAndCommit_are_called(PermissionAggregate agg)
+        public async void setup_session_to_ensure_addAndCommit_are_called(PermissionAggregate permAagg, UserAggregate userAgg)
         {
-            SessionMock.Setup(a => a.Get<PermissionAggregate>(agg.Id, It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            SessionMock.Setup(a => a.Get<PermissionAggregate>(permAagg.Id, It.IsAny<int?>(), It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
                     SessionGetWasCalled = true;
                 })
-                .Returns(Task.FromResult(agg));
+                .ReturnsAsync(await Task.FromResult(permAagg));
+
+            SessionMock.Setup(a => a.Get<UserAggregate>(userAgg.Id, It.IsAny<int?>(), It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    SessionGetWasCalled = true;
+                })
+                .ReturnsAsync(await Task.FromResult(userAgg));
 
             SessionMock.Setup(a => a.Commit(It.IsAny<CancellationToken>()))
                 .Callback(() =>
@@ -93,18 +101,25 @@ namespace UrbanSpork.Tests.Permission.CommandHandlerTests
 
         public void setup_context_to_return_no_items()
         {
-            var users = new List<UserDetailProjection>
-            {
-
-            }.AsQueryable();
-
-            UserDetailMock.As<IQueryable<UserDetailProjection>>().Setup(m => m.Provider).Returns(users.Provider);
-            UserDetailMock.As<IQueryable<UserDetailProjection>>().Setup(m => m.Expression).Returns(users.Expression);
-            UserDetailMock.As<IQueryable<UserDetailProjection>>().Setup(m => m.ElementType).Returns(users.ElementType);
-            UserDetailMock.As<IQueryable<UserDetailProjection>>().Setup(m => m.GetEnumerator()).Returns(users.GetEnumerator());
-
+            // to return some test data, put some data in this list that is passed to MockDbSet!
             ContextMock.Setup(a => a.UserDetailProjection)
-                .Returns(UserDetailMock.Object);
+                .Returns(MockDbSet(new List<UserDetailProjection>()).Object);
+        }
+
+        // Generic mock of the DbSet from stack overflow
+        // https://stackoverflow.com/questions/37630564/how-to-mock-up-dbcontext
+        public Mock<DbSet<T>> MockDbSet<T>(IEnumerable<T> list) where T : class, new()
+        {
+            IQueryable<T> queryableList = list.AsQueryable();
+            Mock<DbSet<T>> dbSetMock = new Mock<DbSet<T>>();
+            dbSetMock.As<IQueryable<T>>().Setup(x => x.Provider).Returns(queryableList.Provider);
+            dbSetMock.As<IQueryable<T>>().Setup(x => x.Expression).Returns(queryableList.Expression);
+            dbSetMock.As<IQueryable<T>>().Setup(x => x.ElementType).Returns(queryableList.ElementType);
+            dbSetMock.As<IQueryable<T>>().Setup(x => x.GetEnumerator()).Returns(() => queryableList.GetEnumerator());
+
+            return dbSetMock;
         }
     }
+
+
 }
