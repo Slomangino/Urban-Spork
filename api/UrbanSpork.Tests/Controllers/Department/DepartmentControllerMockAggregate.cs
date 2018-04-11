@@ -48,6 +48,16 @@ namespace UrbanSpork.Tests.Controllers.Department
                 });
         }
 
+        public void setup_dispatcher_to_verify_removeDepartmentByNameCommands_are_the_same(string name)
+        {
+            CommandDispatcherMock.Setup(a => a.Execute(It.IsAny<RemoveDepartmentByNameCommand>()))
+                .Callback<ICommand<DepartmentProjection>>((a) => { DepartmentCommand = a; })
+                .ReturnsAsync(new DepartmentProjection()
+                {
+                    Name = name
+                });
+        }
+
         public void setup_processor_to_verify_getDepartmentQuery_are_the_same()
         {
             QueryProcessorMock.Setup(a => a.Process(It.IsAny<GetDepartmentsQuery>()))

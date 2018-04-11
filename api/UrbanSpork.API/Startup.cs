@@ -151,10 +151,11 @@ namespace UrbanSpork.API
                 #region Department
                 builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<RemoveDepartmentByNameCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 #endregion
 
-                #region Position
-                builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #region Position
+            builder.RegisterType<CreatePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemovePositionCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 #endregion
             #endregion
@@ -184,10 +185,11 @@ namespace UrbanSpork.API
                 #region department
                 builder.RegisterType<CreateDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemoveDepartmentCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
-                #endregion
+                builder.RegisterType<RemoveDepartmentByNameCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #endregion
 
-                #region  Position
-                builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #region  Position
+            builder.RegisterType<CreatePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemovePositionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 #endregion
             #endregion
