@@ -212,6 +212,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetSystemReportQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDashboardQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserHistoryQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetTemplatesQuery>().AsImplementedInterfaces().InstancePerLifetimeScope();
             #endregion
 
             #region Query Handlers
@@ -232,6 +233,7 @@ namespace UrbanSpork.API
             builder.RegisterType<GetSystemReportQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetSystemDashboardQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<GetUserHistoryQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<GetTemplatesQueryHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
             #endregion
 
 
