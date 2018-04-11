@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Department;
 using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.WriteModel;
@@ -49,7 +50,13 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
-
+        [HttpPut("removeByName")]
+        public async Task<DepartmentProjection> RemoveDepartmentByName([FromBody]RemoveDepartmentByNameInputDTO dto)
+        {
+            var command = new RemoveDepartmentByNameCommand(dto.Name);
+            var result = await _commandDispatcher.Execute(command);
+            return result;
+        }
 
 
 

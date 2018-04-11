@@ -20,8 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20180409155912_User History.cs" />
-    <Compile Include="Migrations\20180409155912_User History.Designer.cs" />
     <Compile Include="Migrations\UrbanDbContextModelSnapshot.cs" />
   </ItemGroup>
 

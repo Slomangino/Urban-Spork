@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Department;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
@@ -70,6 +71,29 @@ namespace UrbanSpork.Tests.Controllers.Department
             //Assert
             Assert.IsType<List<DepartmentProjection >> (result);
             
+        }
+
+        [Fact]
+        public async void given_remove_department__by_name_command_commandDispatcher_should_get_same_command_created_in_controller()
+        {
+            var mockAgg = new DepartmentControllerMockAggregate();
+
+            var controller = mockAgg.DepartmentControllerFactory();
+
+            var input =  new RemoveDepartmentByNameInputDTO
+            {
+                Name = "Test Deparment Name"
+            };
+
+            var command = new RemoveDepartmentByNameCommand(input.Name);
+
+            mockAgg.setup_dispatcher_to_verify_removeDepartmentByNameCommands_are_the_same(input.Name);
+
+            var result = await controller.RemoveDepartmentByName(input);
+
+            //Assert
+            Assert.IsType<DepartmentProjection>(result);
+            Assert.Equal(result.Name, input.Name);
         }
     }
 }
