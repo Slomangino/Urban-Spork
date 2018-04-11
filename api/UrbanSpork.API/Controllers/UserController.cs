@@ -10,6 +10,7 @@ using UrbanSpork.CQRS.Queries;
 using UrbanSpork.CQRS.WriteModel;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
+using UrbanSpork.ReadModel.QueryHandlers;
 using UrbanSpork.WriteModel.Commands;
 using UrbanSpork.WriteModel.Commands.PermissionActions;
 using UrbanSpork.WriteModel.Commands.User;
@@ -75,6 +76,14 @@ namespace UrbanSpork.API.Controllers
 
             var result = _queryProcessor.Process(query);
             return await result;
+        }
+
+        [HttpGet("getApproverList")]
+        public async Task<List<ApproverListDTO>> GetApproverList([FromQuery] GetApproverListFilterCriteria filterCriteria)
+        {
+            var query = new GetApproverListQuery(filterCriteria);
+            var result =  await _queryProcessor.Process(query);
+            return result;
         }
 
         [HttpGet("getusermanagementprojection")]
