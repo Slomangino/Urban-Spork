@@ -30,6 +30,7 @@ namespace UrbanSpork.DataAccess.Projections
         [Key]
         public Guid Id { get; set; }
         public Guid ApproverId { get; set; }
+        public string ApproverFullName { get; set; }
         public Guid ForId { get; set; }
         public DateTime TimeStamp { get; set; }
         public string ForFullName { get; set; }
@@ -49,6 +50,7 @@ namespace UrbanSpork.DataAccess.Projections
                         var approverActivity = new ApproverActivityProjection
                         {
                             ApproverId = permissionInfoUpdated.UpdatedById,
+                            ApproverFullName = await _context.UserDetailProjection.Where(a => a.UserId == permissionInfoUpdated.UpdatedById).Select(a => a.FirstName + " " + a.LastName).SingleOrDefaultAsync(),
                             TimeStamp = permissionInfoUpdated.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == permissionInfoUpdated.Id).Select(n => n.Name).SingleOrDefaultAsync(),
                             TruncatedEventType = "Updated Permission",
@@ -65,6 +67,7 @@ namespace UrbanSpork.DataAccess.Projections
                         var approverActivity = new ApproverActivityProjection
                         {
                             ApproverId = permissionGranted.ById,
+                            ApproverFullName = await _context.UserDetailProjection.Where(a => a.UserId == permissionGranted.ById).Select(a => a.FirstName + " " + a.LastName).SingleOrDefaultAsync(),
                             ForId = permissionGranted.Id,
                             TimeStamp = permissionGranted.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
@@ -85,6 +88,7 @@ namespace UrbanSpork.DataAccess.Projections
                         var approverActivity = new ApproverActivityProjection
                         {
                             ApproverId = permissionRevoked.ById,
+                            ApproverFullName = await _context.UserDetailProjection.Where(a => a.UserId == permissionRevoked.ById).Select(a => a.FirstName + " " + a.LastName).SingleOrDefaultAsync(),
                             ForId = permissionRevoked.Id,
                             TimeStamp = permissionRevoked.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
@@ -104,6 +108,7 @@ namespace UrbanSpork.DataAccess.Projections
                         var approverActivity = new ApproverActivityProjection
                         {
                             ApproverId = permissionDenied.ById,
+                            ApproverFullName = await _context.UserDetailProjection.Where(a => a.UserId == permissionDenied.ById).Select(a => a.FirstName + " " + a.LastName).SingleOrDefaultAsync(),
                             ForId = permissionDenied.Id,
                             TimeStamp = permissionDenied.TimeStamp,
                             PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == PermissionID).Select(n => n.Name).SingleOrDefaultAsync(),
