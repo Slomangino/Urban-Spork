@@ -13,6 +13,7 @@ namespace UrbanSpork.Tests.Permission.CommandHandlerTests
         [Fact]
         public async void given_DisablePermissionCommand_handler_should_call_session_Get_and_Commit_on_active_permission()
         {
+            // Assemble
             var mockAgg = new DisablePermissionCommandHandlerMockAggregate();
             var handler = mockAgg.DisablePermissionHandlerFactory();
             var testAgg = mockAgg.SetupAdminUser();
