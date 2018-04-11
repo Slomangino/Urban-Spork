@@ -25,7 +25,7 @@ namespace UrbanSpork.DataAccess.DataAccess
          * This ensures that when rebuilding projections, all data was previously deleted.
          */
 
-        public DbSet<UserDetailProjection> UserDetailProjection { get; set; }
+        public virtual DbSet<UserDetailProjection> UserDetailProjection { get; set; }
         public DbSet<PermissionDetailProjection> PermissionDetailProjection { get; set; }
         public DbSet<PendingRequestsProjection> PendingRequestsProjection { get; set; }
         public DbSet<SystemDropdownProjection> SystemDropDownProjection { get; set; }

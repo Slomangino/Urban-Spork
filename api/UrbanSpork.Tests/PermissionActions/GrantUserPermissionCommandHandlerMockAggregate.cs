@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Moq;
 using UrbanSpork.Common;
-using UrbanSpork.Common.DataTransferObjects;
 using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.WriteModel.CommandHandlers.PermissionActions;
-using UrbanSpork.WriteModel.CommandHandlers.User;
 
-namespace UrbanSpork.Tests.Permission
+namespace UrbanSpork.Tests.PermissionActions
 {
-    public class UserPermissionsRequestedCommandHandlerMockAggregate
+    public class GrantUserPermissionCommandHandlerMockAggregate
     {
         public static readonly Mock<ISession> SessionMock = new Mock<ISession>();
         public static readonly Mock<IEmail> EmailMock = new Mock<IEmail>();
@@ -31,7 +29,12 @@ namespace UrbanSpork.Tests.Permission
         public bool SessionCommitWasCalled = false;
         public bool SessionGetPermisisonWasCalled = false;
 
-        public UserPermissionsRequestedCommandHandler HandlerFactory()
+        public GrantUserPermissionCommandHandler GrantUserPermissionHandlerFactory()
+        {
+            return new GrantUserPermissionCommandHandler(Email, Mapper, Session);
+        }
+
+        public UserPermissionsRequestedCommandHandler UserPermissionsRequestedHandlerFactory()
         {
             return new UserPermissionsRequestedCommandHandler(Email, Mapper, Session);
         }
@@ -70,9 +73,9 @@ namespace UrbanSpork.Tests.Permission
             return permAgg;
         }
 
-        public void setup_session_to_ensure_addAndCommit_are_called()
+        public void setup_session_to_return_correct_aggregate(UserAggregate agg, PermissionAggregate permAgg)
         {
-            var agg = SetupAdminUser();
+            // Get UserAggregate
             SessionMock.Setup(a => a.Get<UserAggregate>(It.IsAny<Guid>(), It.IsAny<int?>(), It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
@@ -80,49 +83,21 @@ namespace UrbanSpork.Tests.Permission
                 })
                 .Returns(Task.FromResult(agg));
 
-            var permAgg = SetupTestPermission();
+            // Get PermissionAggregate
             SessionMock.Setup(a => a.Get<PermissionAggregate>(It.IsAny<Guid>(), It.IsAny<int?>(), It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
                     SessionGetPermisisonWasCalled = true;
                 })
                 .Returns(Task.FromResult(permAgg));
-            
+
+            // Commit
             SessionMock.Setup(a => a.Commit(It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
                     SessionCommitWasCalled = true;
                 })
                 .Returns(Task.FromResult(0));
-        }
-
-        public void setup_session_to_return_aggregate_with_requested_permission(UserAggregate agg, PermissionAggregate permAgg)
-        {
-            SessionCommitWasCalled = false;
-
-            var input = new RequestUserPermissionsDTO
-            {
-                ForId = agg.Id,
-                ById = agg.Id,
-                Requests = new Dictionary<Guid, PermissionDetails>
-                {
-                    {
-                        permAgg.Id, new PermissionDetails
-                        {
-                            Reason = "testReason"
-                        }
-                    }
-                }
-            };
-
-            agg.UserRequestedPermissions(new List<PermissionAggregate>{permAgg}, input);
-
-            SessionMock.Setup(a => a.Get<UserAggregate>(It.IsAny<Guid>(), It.IsAny<int?>(), It.IsAny<CancellationToken>()))
-                .Callback(() =>
-                {
-                    SessionGetWasCalled = true;
-                })
-                .Returns(Task.FromResult(agg));
         }
     }
 }

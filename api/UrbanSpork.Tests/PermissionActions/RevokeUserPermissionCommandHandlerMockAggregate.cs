@@ -13,9 +13,9 @@ using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.Emails;
 using UrbanSpork.WriteModel.CommandHandlers.PermissionActions;
 
-namespace UrbanSpork.Tests.Permission
+namespace UrbanSpork.Tests.PermissionActions
 {
-    public class GrantUserPermissionCommandHandlerMockAggregate
+    public class RevokeUserPermissionCommandHandlerMockAggregate
     {
         public static readonly Mock<ISession> SessionMock = new Mock<ISession>();
         public static readonly Mock<IEmail> EmailMock = new Mock<IEmail>();
@@ -29,14 +29,14 @@ namespace UrbanSpork.Tests.Permission
         public bool SessionCommitWasCalled = false;
         public bool SessionGetPermisisonWasCalled = false;
 
-        public GrantUserPermissionCommandHandler GrantUserPermissionHandlerFactory()
+        public GrantUserPermissionCommandHandler GrantUserPermissionRequestHandlerFactory()
         {
             return new GrantUserPermissionCommandHandler(Email, Mapper, Session);
         }
 
-        public UserPermissionsRequestedCommandHandler UserPermissionsRequestedHandlerFactory()
+        public RevokeUserPermissionCommandHandler RevokeUserPermissionHandlerFactory()
         {
-            return new UserPermissionsRequestedCommandHandler(Email, Mapper, Session);
+            return new RevokeUserPermissionCommandHandler(Email, Mapper, Session);
         }
 
         public UserAggregate SetupAdminUser()

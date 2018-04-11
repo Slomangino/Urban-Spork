@@ -7,6 +7,7 @@ using UrbanSpork.Common.DataTransferObjects.Permission;
 using UrbanSpork.DataAccess.Projections;
 using UrbanSpork.ReadModel.QueryCommands;
 using UrbanSpork.WriteModel.Commands;
+using UrbanSpork.WriteModel.Commands.Permission;
 using UrbanSpork.WriteModel.Commands.PermissionTemplates;
 using Xunit;
 
