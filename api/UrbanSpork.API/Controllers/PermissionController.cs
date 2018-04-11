@@ -91,6 +91,14 @@ namespace UrbanSpork.API.Controllers
 
         #region Permission Templates
 
+        [HttpGet("getTemplates")]
+        public async Task<List<PermissionTemplateProjection>> GetTemplates()
+        {
+            var query = new GetTemplatesQuery();
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
+
         [HttpPost("createPermissionTemplate")]
         public async Task<PermissionTemplateDTO> CreatePermissionTemplate([FromBody] CreatePermissionTemplateInputDTO input)
         {

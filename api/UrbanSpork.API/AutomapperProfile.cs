@@ -45,6 +45,7 @@ namespace UrbanSpork.API
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Position))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
             CreateMap<SystemActivityProjection, SystemActivityDTO>();
+            CreateMap<PermissionTemplateProjection, PermissionTemplateDTO>();
         }
     }
 }
