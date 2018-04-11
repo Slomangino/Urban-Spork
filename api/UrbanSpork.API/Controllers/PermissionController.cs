@@ -90,6 +90,17 @@ namespace UrbanSpork.API.Controllers
             return result;
         }
 
+        [HttpGet("getPendingRequestsById")]
+        public async Task<List<PendingRequestsProjection>> GetPendingRequestsById(Guid id)
+        {
+            var query = new GetPendingRequestsByIdQuery
+            {
+                Id = id
+            };
+            var result = await _queryProcessor.Process(query);
+            return result;
+        }
+
         #region Permission Templates
 
         [HttpGet("getTemplates")]
