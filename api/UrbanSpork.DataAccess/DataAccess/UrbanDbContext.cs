@@ -13,7 +13,7 @@ namespace UrbanSpork.DataAccess.DataAccess
 
         }
 
-        public DbSet<EventStoreDataRow> Events { get; set; }
+        public virtual DbSet<EventStoreDataRow> Events { get; set; }
 
 
         /*
@@ -26,17 +26,17 @@ namespace UrbanSpork.DataAccess.DataAccess
          */
 
         public virtual DbSet<UserDetailProjection> UserDetailProjection { get; set; }
-        public DbSet<PermissionDetailProjection> PermissionDetailProjection { get; set; }
-        public DbSet<PendingRequestsProjection> PendingRequestsProjection { get; set; }
-        public DbSet<SystemDropdownProjection> SystemDropDownProjection { get; set; }
-        public DbSet<UserManagementProjection> UserManagementProjection { get; set; }
-        public DbSet<ApproverActivityProjection> ApproverActivityProjection { get; set; }
-        public DbSet<SystemActivityProjection> SystemActivityProjection { get; set; }
-        public DbSet<DashboardProjection> DashBoardProjection { get; set; }
-        public DbSet<DepartmentProjection> DepartmentProjection { get; set; }
-        public DbSet<PositionProjection> PositionProjection { get; set; }
-        public DbSet<PermissionTemplateProjection> PermissionTemplateProjection { get; set; }
-        public DbSet<UserHistoryProjection> UserHistoryProjection { get; set; }
+        public virtual DbSet<PermissionDetailProjection> PermissionDetailProjection { get; set; }
+        public virtual DbSet<PendingRequestsProjection> PendingRequestsProjection { get; set; }
+        public virtual DbSet<SystemDropdownProjection> SystemDropDownProjection { get; set; }
+        public virtual DbSet<UserManagementProjection> UserManagementProjection { get; set; }
+        public virtual DbSet<ApproverActivityProjection> ApproverActivityProjection { get; set; }
+        public virtual DbSet<SystemActivityProjection> SystemActivityProjection { get; set; }
+        public virtual DbSet<DashboardProjection> DashBoardProjection { get; set; }
+        public virtual DbSet<DepartmentProjection> DepartmentProjection { get; set; } // Do not add to EventController
+        public virtual DbSet<PositionProjection> PositionProjection { get; set; } // Do not add to EventController
+        public virtual DbSet<PermissionTemplateProjection> PermissionTemplateProjection { get; set; } // Do not add to EventController
+        public virtual DbSet<UserHistoryProjection> UserHistoryProjection { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
