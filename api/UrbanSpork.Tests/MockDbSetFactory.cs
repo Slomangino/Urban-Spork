@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Moq;
 
 namespace UrbanSpork.Tests
@@ -18,6 +20,9 @@ namespace UrbanSpork.Tests
             dbSetMock.As<IQueryable<T>>().Setup(x => x.Expression).Returns(queryableList.Expression);
             dbSetMock.As<IQueryable<T>>().Setup(x => x.ElementType).Returns(queryableList.ElementType);
             dbSetMock.As<IQueryable<T>>().Setup(x => x.GetEnumerator()).Returns(() => queryableList.GetEnumerator());
+            dbSetMock.As<IAsyncEnumerable<T>>().Setup(x => x.GetEnumerator())
+                .Returns(() => queryableList.AsAsyncEnumerable().GetEnumerator());
+            dbSetMock.As<IQueryable<T>>().Setup(x => x.Provider).Returns(() => queryableList.Provider);
 
             return dbSetMock;
         }
