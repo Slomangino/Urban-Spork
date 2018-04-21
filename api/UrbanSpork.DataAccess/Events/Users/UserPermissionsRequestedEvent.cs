@@ -29,7 +29,7 @@ namespace UrbanSpork.DataAccess.Events.Users
                     EventType = JsonConvert.SerializeObject(GetType().FullName),
                     IsPending = true,
                     Reason = reason,
-                    RequestDate = TimeStamp,
+                    RequestDate = DateTime.UtcNow,
                     RequestedBy = dto.ById,
                     RequestedFor = dto.ForId
                 };
