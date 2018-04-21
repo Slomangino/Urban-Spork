@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UrbanSpork.Common;
 using UrbanSpork.Common.DataTransferObjects.User;
 using UrbanSpork.CQRS.Events;
@@ -32,6 +33,14 @@ namespace UrbanSpork.DataAccess.Events.Users
             if (dto.PermissionList == null)
             {
                 PermissionList = new Dictionary<Guid, PermissionDetails>();
+            }
+
+            if (dto.PermissionList != null && dto.PermissionList.Any())
+            {
+                foreach (var permission in dto.PermissionList)
+                {
+                    permission.Value.EventType = JsonConvert.SerializeObject(typeof(UserPermissionGrantedEvent).FullName);
+                }
             }
 
             FirstName = dto.FirstName;

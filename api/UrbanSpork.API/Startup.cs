@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.AspNetCore.Identity;
 using UrbanSpork.Common.DataTransferObjects;
+using UrbanSpork.Common.ExceptionHandling;
 using UrbanSpork.CQRS.Domain;
 using UrbanSpork.DataAccess;
 using UrbanSpork.DataAccess.DataAccess;
@@ -147,10 +148,11 @@ namespace UrbanSpork.API
                 builder.RegisterType<CreatePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<EditPermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<DeletePermissionTemplateCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<GrantRevokePermissionsCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 #endregion
 
-                #region Department
-                builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            #region Department
+            builder.RegisterType<CreateDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemoveDepartmentCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RemoveDepartmentByNameCommand>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 #endregion
@@ -171,6 +173,8 @@ namespace UrbanSpork.API
                 builder.RegisterType<DenyUserPermissionRequestCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<GrantUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
                 builder.RegisterType<RevokeUserPermissionCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+                builder.RegisterType<GrantRevokePermissionsCommandHandler>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
                 #endregion
             
                 #region permissions
@@ -260,7 +264,7 @@ namespace UrbanSpork.API
              * this line will prevent pretty postman errors, but will enable basic json data to be passed
              * back to the web in an error response.
              */
-            //app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc();
         }

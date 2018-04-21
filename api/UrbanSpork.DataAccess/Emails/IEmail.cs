@@ -12,5 +12,9 @@ namespace UrbanSpork.DataAccess.Emails
         void SendRequestDeniedMessage(UserAggregate forAgg, List<PermissionAggregate> deniedPermissions);
         void SendPermissionsGrantedMessage(UserAggregate forAgg, List<PermissionAggregate> grantedPermissions);
         void SendPermissionsRevokedMessage(UserAggregate forAgg, List<PermissionAggregate> revokedPermissions);
+
+        void SendPermissionsUpdatedMessage(UserAggregate forAgg, List<PermissionAggregate> revokedPermissions,
+            List<PermissionAggregate> grantedPermissions);
+
     }
 }

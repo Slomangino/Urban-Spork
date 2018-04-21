@@ -18,7 +18,7 @@ namespace UrbanSpork.WriteModel
             _context = context;
         }
 
-        public Task<TResult> Execute<TResult>(ICommand<TResult> command)
+        public async Task<TResult> Execute<TResult>(ICommand<TResult> command)
         //public async Task<TResult> Execute<TResult>(ICommand<TResult> command)
         {
             var tCommandType = command.GetType();
@@ -29,15 +29,15 @@ namespace UrbanSpork.WriteModel
             MethodInfo generic = method.MakeGenericMethod(tCommandType, tResultType);
             object result = generic.Invoke(this, new[] { command });
 
-            return (Task<TResult>)result;
+            return await (Task<TResult>)result;
             //return await (Task<TResult>)result;
         }
 
-        public Task<TResult> ExecuteInternal<TCommand, TResult>(TCommand command)
+        public async Task<TResult> ExecuteInternal<TCommand, TResult>(TCommand command)
             where TCommand : ICommand<TResult>
         {
             var handler = _context.Resolve<ICommandHandler<TCommand, TResult>>();
-            return handler.Handle(command);
+            return await handler.Handle(command);
         }
     }
 }
