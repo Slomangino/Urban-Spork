@@ -140,6 +140,17 @@ namespace UrbanSpork.DataAccess.Projections
                     }
                     break;
 
+                case UserCreatedEvent uc:
+                    if (uc.PermissionList.Any())
+                    {
+                        var rowsToChange = await _context.DashBoardProjection.Where(a => uc.PermissionList.ContainsKey(a.PermissionId)).ToListAsync();
+                        foreach (var row in rowsToChange)
+                        {
+                            row.ActiveUsers++;
+                        }
+                    }
+                    break;
+
             }
             await _context.SaveChangesAsync();
         }
