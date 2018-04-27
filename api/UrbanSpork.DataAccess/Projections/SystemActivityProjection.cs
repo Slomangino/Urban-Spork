@@ -115,6 +115,26 @@ namespace UrbanSpork.DataAccess.Projections
                     }
                     break;
 
+                case UserCreatedEvent uc:
+                    foreach (var permission in uc.PermissionList)
+                    {
+                        //US-075
+                        var newGrantedRow = new SystemActivityProjection
+                        {
+                            ForId = uc.Id,
+                            ById = uc.ById,
+                            PermissionId = permission.Key,
+                            EventType = "Permission Granted",
+                            Timestamp = uc.TimeStamp,
+                            PermissionName = await _context.PermissionDetailProjection.Where(a => a.PermissionId == permission.Key).Select(p => p.Name).SingleOrDefaultAsync(),
+                            ForFullName = await _context.UserDetailProjection.Where(a => a.UserId == uc.Id).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync(),
+                            ByFullName = await _context.UserDetailProjection.Where(a => a.UserId == uc.ById).Select(p => p.FirstName + " " + p.LastName).SingleOrDefaultAsync()
+                        };
+
+                        _context.SystemActivityProjection.Add(newGrantedRow);
+                    }
+                    break;
+
                 case PermissionInfoUpdatedEvent pi:
                     var rows = await _context.SystemActivityProjection.Where(a => a.PermissionId == pi.Id).ToListAsync();
                     if (rows.Any())

@@ -44,6 +44,40 @@ namespace UrbanSpork.DataAccess.Projections
         {
             switch (@event)
             {
+                case UserCreatedEvent userCreated:
+                    if (userCreated.PermissionList.Any())
+                    {
+                        foreach (var permission in userCreated.PermissionList)
+                        {
+                            var appAct = new ApproverActivityProjection();
+                            if (userCreated.ById == Guid.Empty)
+                            {
+                                appAct = new ApproverActivityProjection
+                                {
+                                    ApproverId = userCreated.ById,
+                                    ApproverFullName = "ADMIN",
+                                    TimeStamp = userCreated.TimeStamp,
+                                    PermissionName = "NO PERMISSIONS SHOULD BE HERE!!!",
+                                    TruncatedEventType = "User Created with Permissions",
+                                };
+                            }
+                            else
+                            {
+                                appAct = new ApproverActivityProjection
+                                    {
+                                        ApproverId = userCreated.ById,
+                                        ApproverFullName = await _context.UserDetailProjection.Where(a => a.UserId == userCreated.ById).Select(a => a.FirstName + " " + a.LastName).SingleOrDefaultAsync(),
+                                        TimeStamp = userCreated.TimeStamp,
+                                        PermissionName = await _context.PermissionDetailProjection.Where(p => p.PermissionId == permission.Key).Select(n => n.Name).SingleOrDefaultAsync(),
+                                        TruncatedEventType = "User Created with Permissions",
+                                    };
+                            }
+                            
+                            await _context.ApproverActivityProjection.AddAsync(appAct);
+                        }
+                        
+                    }
+                    break;
                 case PermissionInfoUpdatedEvent permissionInfoUpdated:
                     if(!(permissionInfoUpdated.Id == Guid.Empty))
                     {
