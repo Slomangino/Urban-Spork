@@ -39,7 +39,8 @@ namespace UrbanSpork.DataAccess
                 string.IsNullOrWhiteSpace(dto.LastName) ||
                 string.IsNullOrWhiteSpace(dto.Email) ||
                 string.IsNullOrWhiteSpace(dto.Department) ||
-                string.IsNullOrWhiteSpace(dto.Position))
+                string.IsNullOrWhiteSpace(dto.Position)
+                ) 
             {
                 throw new CreateUserDataNotFoundException("One of the fields for creating a user was null or whitespace!");
             }

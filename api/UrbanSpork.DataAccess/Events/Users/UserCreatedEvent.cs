@@ -16,6 +16,7 @@ namespace UrbanSpork.DataAccess.Events.Users
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; }
 
+        public Guid ById { get; set; }
         public string FirstName { get;  set; }
         public string LastName { get;  set; }
         public string Email { get;  set; }
@@ -43,6 +44,7 @@ namespace UrbanSpork.DataAccess.Events.Users
                 }
             }
 
+            ById = dto.ById == Guid.Empty ? Guid.Empty : dto.ById;
             FirstName = dto.FirstName;
             LastName = dto.LastName;
             Email = dto.Email;
