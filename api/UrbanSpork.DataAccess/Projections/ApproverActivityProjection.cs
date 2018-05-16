@@ -57,8 +57,8 @@ namespace UrbanSpork.DataAccess.Projections
                                     ApproverId = userCreated.ById,
                                     ApproverFullName = "ADMIN",
                                     TimeStamp = userCreated.TimeStamp,
-                                    PermissionName = "NO PERMISSIONS SHOULD BE HERE!!!",
-                                    TruncatedEventType = "User Created with Permissions",
+                                    PermissionName = "-",
+                                    TruncatedEventType = "User Created without Permissions",
                                 };
                             }
                             else

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render PendingRequests component correctly with no data 1`] = `
+<div>
+  <Modal
+    autoFocus={true}
+    backdrop={true}
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
+      }
+    }
+    centered={false}
+    fade={true}
+    isOpen={false}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    role="dialog"
+    toggle={[Function]}
+    zIndex={1050}
+  >
+    <ModalHeader
+      closeAriaLabel="Close"
+      tag="h5"
+      toggle={[Function]}
+      wrapTag="div"
+    >
+      Permission Request
+    </ModalHeader>
+    <ModalBody
+      tag="div"
+    />
+    <ModalFooter
+      tag="div"
+    >
+      <Button
+        color="danger"
+        onClick={[Function]}
+        tag="button"
+      >
+        Deny Request
+      </Button>
+       
+      <Button
+        color="success"
+        onClick={[Function]}
+        tag="button"
+      >
+        Grant Request
+      </Button>
+       
+      <Button
+        color="secondary"
+        onClick={[Function]}
+        tag="button"
+      >
+        Cancel
+      </Button>
+    </ModalFooter>
+  </Modal>
+</div>
+`;

@@ -1,0 +1,27 @@
+.ReactTable {
+    box-shadow: 0 2px 15px 1px rgba(0, 0, 0, 0.05);
+}
+
+.ReactTable .rt-tr:hover .rt-td {
+    background: rgba($color-pagination-testing, 0.1);
+}
+
+.ReactTable .-pagination .-btn {
+    background: rgba($color-pagination-testing, 0.5);
+}
+
+.ReactTable .-pagination .-btn:not([disabled]):hover {
+    background: rgba($color-pagination-testing, 0.4);
+    color: lighten($color-buttons-testing, 50%);
+
+}
+
+
+// This is the color styling for the small shadow that appears on the bottom/top of a selected column
+.ReactTable .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
+    box-shadow: inset 0 3px 0 0 lighten($color-buttons-testing, 50%);
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
+    box-shadow: inset 0 -3px 0 0 lighten($color-buttons-testing, 50%);
+}
