@@ -1,0 +1,54 @@
+.user-management-nav {
+    align-items: center;  // this needs to be here so that flex-box doesn't fuck the height up
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+
+    margin: 20px;
+    //max-width: 900px;
+
+}
+
+.form-group {
+    margin: 0;
+}
+
+
+//.user-management-nav button {
+//    background-color: #4CAF50; /* Green */
+//    border: none;
+//    color: white;
+//    padding: $m-size $l-size ;
+//    text-align: center;
+//    text-decoration: none;
+//    display: inline-block;
+//    font-size: $m-size;
+//    width: 15rem;
+//
+//
+//    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+//
+//}
+
+//
+//.user-management-nav input {
+//    border-radius: $m-size;
+//    padding-left: $s-size;
+//    width: 32rem;
+//
+//}
+
+//.user-management-table {
+//    border: 1px solid grey;
+//    height: 65rem;
+//    margin-bottom: $xl-size;
+//    margin-top: $xl-size;
+//    text-align: center;
+//    width: 100%;
+//}
+
+//.user-management-table h2 {
+//    line-height: 50rem;
+//    margin-bottom:0px;
+//    margin-top:0px;
+//}

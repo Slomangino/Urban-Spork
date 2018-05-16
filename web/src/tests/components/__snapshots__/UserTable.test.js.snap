@@ -1,0 +1,392 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render UserTable component correctly with data 1`] = `
+<div
+  style={
+    Object {
+      "margin": "20px",
+    }
+  }
+>
+  <ReactTable
+    AggregatedComponent={[Function]}
+    ExpanderComponent={[Function]}
+    FilterComponent={[Function]}
+    LoadingComponent={[Function]}
+    NoDataComponent={[Function]}
+    PadRowComponent={[Function]}
+    PaginationComponent={[Function]}
+    PivotValueComponent={[Function]}
+    ResizerComponent={[Function]}
+    TableComponent={[Function]}
+    TbodyComponent={[Function]}
+    TdComponent={[Function]}
+    TfootComponent={[Function]}
+    ThComponent={[Function]}
+    TheadComponent={[Function]}
+    TrComponent={[Function]}
+    TrGroupComponent={[Function]}
+    aggregatedKey="_aggregated"
+    className="-striped -highlight"
+    collapseOnDataChange={true}
+    collapseOnPageChange={true}
+    collapseOnSortingChange={true}
+    column={
+      Object {
+        "Aggregated": undefined,
+        "Cell": undefined,
+        "Expander": undefined,
+        "Filter": undefined,
+        "Footer": undefined,
+        "Header": undefined,
+        "Pivot": undefined,
+        "PivotValue": undefined,
+        "aggregate": undefined,
+        "className": "",
+        "filterAll": false,
+        "filterMethod": undefined,
+        "filterable": undefined,
+        "footerClassName": "",
+        "footerStyle": Object {},
+        "getFooterProps": [Function],
+        "getHeaderProps": [Function],
+        "getProps": [Function],
+        "headerClassName": "",
+        "headerStyle": Object {},
+        "minWidth": 100,
+        "resizable": undefined,
+        "show": true,
+        "sortMethod": undefined,
+        "sortable": undefined,
+        "style": Object {},
+      }
+    }
+    columns={
+      Array [
+        Object {
+          "Header": "Name",
+          "accessor": "forFullName",
+        },
+        Object {
+          "Header": "Request",
+          "accessor": "permissionName",
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Date",
+          "accessor": "dateOfRequest",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "byFirstName": "Stephen",
+          "byFullName": "Stephen Lomangino",
+          "byId": "d79196d2-4f55-4eb4-b23c-85e743955623",
+          "byLastName": "Lomangino",
+          "dateOfRequest": "0001-01-01T00:00:00",
+          "forFirstName": "Stephen",
+          "forFullName": "Stephen Lomangino",
+          "forId": "d79196d2-4f55-4eb4-b23c-85e743955623",
+          "forLastName": "Lomangino",
+          "permissionId": "945bc94b-aa7f-4aa9-b6b8-491cfb0eb9e5",
+          "permissionName": "Back Door",
+          "requestType": "Requested Permission",
+        },
+        Object {
+          "byFirstName": "Derf",
+          "byFullName": "Derf Lomangino",
+          "byId": "6da06fc4-02cb-4ce3-b63f-112596fe6bff",
+          "byLastName": "Lomangino",
+          "dateOfRequest": "0001-01-01T00:00:00",
+          "forFirstName": "Derf",
+          "forFullName": "Derf Lomangino",
+          "forId": "6da06fc4-02cb-4ce3-b63f-112596fe6bff",
+          "forLastName": "Lomangino",
+          "permissionId": "5db57441-9c67-4708-b82f-7a53c1eab8bc",
+          "permissionName": "Front Door",
+          "requestType": "Requested Permission",
+        },
+        Object {
+          "byFirstName": "Derf",
+          "byFullName": "Derf Lomangino",
+          "byId": "6da06fc4-02cb-4ce3-b63f-112596fe6bff",
+          "byLastName": "Lomangino",
+          "dateOfRequest": "0001-01-01T00:00:00",
+          "forFirstName": "Derf",
+          "forFullName": "Derf Lomangino",
+          "forId": "6da06fc4-02cb-4ce3-b63f-112596fe6bff",
+          "forLastName": "Lomangino",
+          "permissionId": "5e2f243d-c595-4000-be4a-9199c32e26d1",
+          "permissionName": "Visual Studio",
+          "requestType": "Requested Permission",
+        },
+        Object {
+          "byFirstName": "Derf",
+          "byFullName": "Derf Lomangino",
+          "byId": "6da06fc4-02cb-4ce3-b63f-112596fe6bff",
+          "byLastName": "Lomangino",
+          "dateOfRequest": "0001-01-01T00:00:00",
+          "forFirstName": "Derp",
+          "forFullName": "Derp Hall",
+          "forId": "692c0194-895f-4539-a4cf-97ab763a7e86",
+          "forLastName": "Hall",
+          "permissionId": "5db57441-9c67-4708-b82f-7a53c1eab8bc",
+          "permissionName": "Front Door",
+          "requestType": "Requested Permission",
+        },
+      ]
+    }
+    defaultExpanded={Object {}}
+    defaultFilterMethod={[Function]}
+    defaultFiltered={Array []}
+    defaultPageSize={10}
+    defaultResized={Array []}
+    defaultSortDesc={false}
+    defaultSortMethod={[Function]}
+    defaultSorted={
+      Array [
+        Object {
+          "desc": false,
+          "id": "forFullName",
+        },
+      ]
+    }
+    expanderDefaults={
+      Object {
+        "filterable": false,
+        "resizable": false,
+        "sortable": false,
+        "width": 35,
+      }
+    }
+    filterable={false}
+    freezeWhenExpanded={false}
+    getLoadingProps={[Function]}
+    getNoDataProps={[Function]}
+    getPaginationProps={[Function]}
+    getProps={[Function]}
+    getResizerProps={[Function]}
+    getTableProps={[Function]}
+    getTbodyProps={[Function]}
+    getTdProps={[Function]}
+    getTfootProps={[Function]}
+    getTfootTdProps={[Function]}
+    getTfootTrProps={[Function]}
+    getTheadFilterProps={[Function]}
+    getTheadFilterThProps={[Function]}
+    getTheadFilterTrProps={[Function]}
+    getTheadGroupProps={[Function]}
+    getTheadGroupThProps={[Function]}
+    getTheadGroupTrProps={[Function]}
+    getTheadProps={[Function]}
+    getTheadThProps={[Function]}
+    getTheadTrProps={[Function]}
+    getTrGroupProps={[Function]}
+    getTrProps={[Function]}
+    groupedByPivotKey="_groupedByPivot"
+    indexKey="_index"
+    loading={false}
+    loadingText="Loading..."
+    multiSort={true}
+    nestingLevelKey="_nestingLevel"
+    nextText="Next"
+    noDataText="No rows found"
+    ofText="of"
+    onFetchData={[Function]}
+    originalKey="_original"
+    pageSizeOptions={
+      Array [
+        5,
+        10,
+        20,
+        25,
+        50,
+        100,
+      ]
+    }
+    pageText="Page"
+    pivotDefaults={Object {}}
+    pivotIDKey="_pivotID"
+    pivotValKey="_pivotVal"
+    previousText="Previous"
+    resizable={false}
+    rowsText="rows"
+    showPageJump={true}
+    showPageSizeOptions={true}
+    showPagination={true}
+    showPaginationBottom={true}
+    showPaginationTop={false}
+    sortable={true}
+    style={Object {}}
+    subRowsKey="_subRows"
+  />
+</div>
+`;
+
+exports[`should render UserTable component correctly with no data 1`] = `
+<div
+  style={
+    Object {
+      "margin": "20px",
+    }
+  }
+>
+  <ReactTable
+    AggregatedComponent={[Function]}
+    ExpanderComponent={[Function]}
+    FilterComponent={[Function]}
+    LoadingComponent={[Function]}
+    NoDataComponent={[Function]}
+    PadRowComponent={[Function]}
+    PaginationComponent={[Function]}
+    PivotValueComponent={[Function]}
+    ResizerComponent={[Function]}
+    TableComponent={[Function]}
+    TbodyComponent={[Function]}
+    TdComponent={[Function]}
+    TfootComponent={[Function]}
+    ThComponent={[Function]}
+    TheadComponent={[Function]}
+    TrComponent={[Function]}
+    TrGroupComponent={[Function]}
+    aggregatedKey="_aggregated"
+    className="-striped -highlight"
+    collapseOnDataChange={true}
+    collapseOnPageChange={true}
+    collapseOnSortingChange={true}
+    column={
+      Object {
+        "Aggregated": undefined,
+        "Cell": undefined,
+        "Expander": undefined,
+        "Filter": undefined,
+        "Footer": undefined,
+        "Header": undefined,
+        "Pivot": undefined,
+        "PivotValue": undefined,
+        "aggregate": undefined,
+        "className": "",
+        "filterAll": false,
+        "filterMethod": undefined,
+        "filterable": undefined,
+        "footerClassName": "",
+        "footerStyle": Object {},
+        "getFooterProps": [Function],
+        "getHeaderProps": [Function],
+        "getProps": [Function],
+        "headerClassName": "",
+        "headerStyle": Object {},
+        "minWidth": 100,
+        "resizable": undefined,
+        "show": true,
+        "sortMethod": undefined,
+        "sortable": undefined,
+        "style": Object {},
+      }
+    }
+    columns={
+      Array [
+        Object {
+          "Header": "Name",
+          "accessor": "forFullName",
+        },
+        Object {
+          "Header": "Request",
+          "accessor": "permissionName",
+        },
+        Object {
+          "Cell": [Function],
+          "Header": "Date",
+          "accessor": "dateOfRequest",
+        },
+      ]
+    }
+    data={Array []}
+    defaultExpanded={Object {}}
+    defaultFilterMethod={[Function]}
+    defaultFiltered={Array []}
+    defaultPageSize={10}
+    defaultResized={Array []}
+    defaultSortDesc={false}
+    defaultSortMethod={[Function]}
+    defaultSorted={
+      Array [
+        Object {
+          "desc": false,
+          "id": "forFullName",
+        },
+      ]
+    }
+    expanderDefaults={
+      Object {
+        "filterable": false,
+        "resizable": false,
+        "sortable": false,
+        "width": 35,
+      }
+    }
+    filterable={false}
+    freezeWhenExpanded={false}
+    getLoadingProps={[Function]}
+    getNoDataProps={[Function]}
+    getPaginationProps={[Function]}
+    getProps={[Function]}
+    getResizerProps={[Function]}
+    getTableProps={[Function]}
+    getTbodyProps={[Function]}
+    getTdProps={[Function]}
+    getTfootProps={[Function]}
+    getTfootTdProps={[Function]}
+    getTfootTrProps={[Function]}
+    getTheadFilterProps={[Function]}
+    getTheadFilterThProps={[Function]}
+    getTheadFilterTrProps={[Function]}
+    getTheadGroupProps={[Function]}
+    getTheadGroupThProps={[Function]}
+    getTheadGroupTrProps={[Function]}
+    getTheadProps={[Function]}
+    getTheadThProps={[Function]}
+    getTheadTrProps={[Function]}
+    getTrGroupProps={[Function]}
+    getTrProps={[Function]}
+    groupedByPivotKey="_groupedByPivot"
+    indexKey="_index"
+    loading={false}
+    loadingText="Loading..."
+    multiSort={true}
+    nestingLevelKey="_nestingLevel"
+    nextText="Next"
+    noDataText="No rows found"
+    ofText="of"
+    onFetchData={[Function]}
+    originalKey="_original"
+    pageSizeOptions={
+      Array [
+        5,
+        10,
+        20,
+        25,
+        50,
+        100,
+      ]
+    }
+    pageText="Page"
+    pivotDefaults={Object {}}
+    pivotIDKey="_pivotID"
+    pivotValKey="_pivotVal"
+    previousText="Previous"
+    resizable={false}
+    rowsText="rows"
+    showPageJump={true}
+    showPageSizeOptions={true}
+    showPagination={true}
+    showPaginationBottom={true}
+    showPaginationTop={false}
+    sortable={true}
+    style={Object {}}
+    subRowsKey="_subRows"
+  />
+</div>
+`;

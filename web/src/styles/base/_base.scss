@@ -1,0 +1,62 @@
+html {
+    //font-size: 62.5%;
+    //padding: 0 150px 0 150px;
+}
+
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+//body {
+//    //font-family: "Helvetica Neue", sans-serif;
+//    //font-size: $m-size;
+//}
+
+//button {
+//    cursor: pointer;
+//
+//}
+
+//.btn:active,
+//.btn:focus {
+//    outline: none !important;
+//}
+
+//button:disabled {
+//    opacity: .5;
+//    cursor: default;
+//}
+
+
+//input:active,
+//input:focus {
+//    outline: none;
+//}
+
+//div:active,
+//div:focus {
+//    outline: none;
+//}
+//
+.titles {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.canvas {
+    min-width: 810px;
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.lower-canvas {
+    margin: 0 $s-size $s-size $s-size;
+    padding: 0 150px 0 150px;
+
+}

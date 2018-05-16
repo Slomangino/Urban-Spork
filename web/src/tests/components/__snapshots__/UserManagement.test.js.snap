@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render UserManagementPage component correctly with no data and altFilters 1`] = `
+<div>
+  <div
+    className="user-management-nav"
+  >
+    <Button
+      color="success"
+      onClick={[Function]}
+      tag="button"
+    >
+      Create User
+    </Button>
+    <FormGroup
+      tag="div"
+    >
+      <Input
+        onChange={[Function]}
+        placeholder="Search"
+        type="text"
+        value="yamnel"
+      />
+    </FormGroup>
+  </div>
+  <div>
+    <UserTable
+      columns={
+        Array [
+          Object {
+            "Header": "Name",
+            "accessor": "name",
+          },
+          Object {
+            "Header": "Email",
+            "accessor": "email",
+          },
+          Object {
+            "Header": "Department",
+            "accessor": "department",
+          },
+          Object {
+            "Header": "Title",
+            "accessor": "title",
+          },
+        ]
+      }
+      onRowClick={[Function]}
+    />
+  </div>
+  <UserDetailsModal
+    isOpen={false}
+    toggle={[Function]}
+  />
+</div>
+`;
+
+exports[`should render UserManagementPage component correctly with no data no filters 1`] = `
+<div>
+  <div
+    className="user-management-nav"
+  >
+    <Button
+      color="success"
+      onClick={[Function]}
+      tag="button"
+    >
+      Create User
+    </Button>
+    <FormGroup
+      tag="div"
+    >
+      <Input
+        onChange={[Function]}
+        placeholder="Search"
+        type="text"
+        value=""
+      />
+    </FormGroup>
+  </div>
+  <div>
+    <UserTable
+      columns={
+        Array [
+          Object {
+            "Header": "Name",
+            "accessor": "name",
+          },
+          Object {
+            "Header": "Email",
+            "accessor": "email",
+          },
+          Object {
+            "Header": "Department",
+            "accessor": "department",
+          },
+          Object {
+            "Header": "Title",
+            "accessor": "title",
+          },
+        ]
+      }
+      onRowClick={[Function]}
+    />
+  </div>
+  <UserDetailsModal
+    isOpen={false}
+    toggle={[Function]}
+  />
+</div>
+`;

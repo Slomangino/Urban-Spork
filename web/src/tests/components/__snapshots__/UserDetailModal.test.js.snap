@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render UserDetailsModal component correctly with no data 1`] = `
+<div>
+  <Modal
+    autoFocus={true}
+    backdrop={true}
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
+      }
+    }
+    centered={false}
+    fade={true}
+    isOpen={false}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    role="dialog"
+    toggle={[Function]}
+    zIndex={1050}
+  >
+    <ModalHeader
+      closeAriaLabel="Close"
+      tag="h5"
+      toggle={[Function]}
+      wrapTag="div"
+    >
+      User Detail
+    </ModalHeader>
+    <ModalBody
+      tag="div"
+    >
+      <div />
+    </ModalBody>
+    <ModalFooter
+      tag="div"
+    >
+      <Button
+        active={true}
+        color="primary"
+        onClick={[Function]}
+        tag="button"
+      >
+        Edit
+      </Button>
+       
+      <Button
+        color="secondary"
+        onClick={[Function]}
+        tag="button"
+      >
+        Cancel
+      </Button>
+    </ModalFooter>
+  </Modal>
+</div>
+`;
